@@ -45,6 +45,19 @@ a:hover {
     text-decoration: underline;
 }
 
+#chart-title {
+    text-align: center;
+}
+
+.stock-status {
+    color: white;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+    width: auto;
+}
+
+
 /* Dark Mode Styles */
 body.dark-mode {
     background-color: #121212;
@@ -73,12 +86,18 @@ body.dark-mode a {
     position: absolute;
     top: 20px;
     left: 20px;
-    padding: 10px 20px;
+    padding: 10px;
     background-color: #0073e6;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 50%;
     cursor: pointer;
+}
+
+#dark-mode-toggle img {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
 }
 
 #dark-mode-toggle:hover {

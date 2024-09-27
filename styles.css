@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: system-ui;
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
@@ -7,6 +7,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    transition: background-color 0.5s, color 0.5s;
 }
 
 .chart-container {
@@ -23,7 +24,7 @@ table {
 }
 
 th, td {
-    padding: 12px;
+    padding: 15px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
@@ -49,18 +50,26 @@ a:hover {
     text-align: center;
 }
 
-.stock-status {
-    color: white;
-    text-align: center;
+/* Stock Status Styles*/
+.in-stock {
     padding: 5px;
-    border-radius: 5px;
-    width: auto;
+    text-align: center;
+    background-color: green;
+    color: white;
+    font-weight: 600;
 }
 
+.out-of-stock {
+    padding: 5px;
+    text-align: center;
+    background-color: red;
+    color: white;
+    font-weight: 600;
+}
 
 /* Dark Mode Styles */
 body.dark-mode {
-    background-color: #121212;
+    background-color: #0e0e0e;
     color: #e0e0e0;
 }
 

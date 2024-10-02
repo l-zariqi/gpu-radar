@@ -67,6 +67,14 @@ a:hover {
     font-weight: 600;
 }
 
+.unknown-status {
+    padding: 5px;
+    text-align: center;
+    background-color: grey;
+    color: white;
+    font-weight: 600;
+}
+
 /* Dark Mode Styles */
 body.dark-mode {
     background-color: #0e0e0e;

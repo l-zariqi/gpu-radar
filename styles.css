@@ -7,7 +7,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    transition: background-color 0.5s, color 0.5s;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .chart-container {
@@ -51,28 +51,23 @@ a:hover {
 }
 
 /* Stock Status Styles*/
-.in-stock {
+.stock-status {
     padding: 5px;
-    text-align: center;
-    background-color: green;
     color: white;
+    text-align: center;
     font-weight: 600;
+}
+
+.in-stock {
+    background-color: green;
 }
 
 .out-of-stock {
-    padding: 5px;
-    text-align: center;
     background-color: red;
-    color: white;
-    font-weight: 600;
 }
 
 .unknown-status {
-    padding: 5px;
-    text-align: center;
     background-color: grey;
-    color: white;
-    font-weight: 600;
 }
 
 /* Dark Mode Styles */

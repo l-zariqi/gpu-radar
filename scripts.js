@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const toggleButton = document.getElementById("dark-mode-toggle");
-    const logoImages = document.querySelectorAll(".manufacturer-logo"); // Select all logo images
+    const logoImages = document.querySelectorAll(".nvidia-manufacturer-logo"); // Select all logo images
 
     toggleButton.addEventListener("click", function () {
         document.body.classList.toggle("dark-mode");
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok ' + response.statusText);
+                    throw new Error('Network response was not OK ' + response.statusText);
                 }
                 return response.json();
             })
@@ -58,15 +58,19 @@ document.addEventListener("DOMContentLoaded", function () {
     
 
     function updateStockStatus(products) {
-        console.log("Updating stock status for products:", products); // Log the products being processed
+        console.log("Updating stock status and prices for products:", products); // Log the products being processed
         const gpuRows = document.querySelectorAll("tbody tr");
     
-        // Clear previous statuses
+        // Clear previous statuses and prices
         gpuRows.forEach(row => {
             const statusCell = row.querySelector(".stock-status");
+            const priceCell = row.querySelector(".product-price"); // Select the price cell using the product-price class
             if (statusCell) {
                 statusCell.textContent = ""; // Clear previous status
                 statusCell.classList.remove("in-stock", "out-of-stock");
+            }
+            if (priceCell) {
+                priceCell.textContent = ""; // Clear previous price
             }
         });
     
@@ -76,13 +80,13 @@ document.addEventListener("DOMContentLoaded", function () {
             if (isNvidiaProduct) {
                 gpuRows.forEach(row => {
                     const productId = row.getAttribute("data-product-id"); // Get the productID from the row
-                    let found = false; // Flag to check if we found the product
     
                     // Match product using the productID from the API
-                    if (productId && product.productID === parseInt(productId)) { // Ensure we compare as numbers
-                        found = true; // Set found flag to true
+                    if (productId && product.productID === parseInt(productId)) {
                         const statusCell = row.querySelector(".stock-status");
+                        const priceCell = row.querySelector(".product-price"); // Select the price cell using the product-price class
     
+                        // Update stock status
                         if (statusCell) {
                             let stockStatus = "";
                             if (product.prdStatus === "buy_now") {
@@ -94,24 +98,39 @@ document.addEventListener("DOMContentLoaded", function () {
                                 statusCell.classList.remove("in-stock");
                                 statusCell.classList.add("out-of-stock");
                             }
-    
                             statusCell.textContent = stockStatus; // Update the status
+                        }
+    
+                        // Update price
+                        if (priceCell && product.productPrice) {
+                            let priceString = product.productPrice.replace(/[^0-9.]/g, ''); // Remove non-numeric characters
+                            let price = parseFloat(priceString); // Convert the cleaned string to a number
+                            
+                            if (!isNaN(price)) {
+                                priceCell.textContent = `£${price.toLocaleString('en-GB', { minimumFractionDigits: 2 })}`; // Format price and update if it's a valid number
+                            } else {
+                                priceCell.textContent = "Unknown"; // If price is not a valid number, set as "Unknown"
+                            }
                         }
                     }
                 });
             }
         });
     
-        // Set "Unknown" status for GPUs not found in API response
+        // Set "Unknown" status and price for GPUs not found in API response
         gpuRows.forEach(row => {
             const productId = row.getAttribute("data-product-id");
             const statusCell = row.querySelector(".stock-status");
+            const priceCell = row.querySelector(".product-price");
     
-            // Check if the status cell is still empty
+            // Check if the status or price cells are still empty
             if (statusCell && !statusCell.textContent) {
                 statusCell.textContent = "Unknown"; // Set status to Unknown
                 statusCell.classList.add("unknown-status"); // Optionally add a class for styling
             }
+            if (priceCell && !priceCell.textContent) {
+                priceCell.textContent = "Unknown"; // Set price to Unknown
+            }
         });
-    }    
+    }  
 });

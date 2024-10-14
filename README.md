@@ -1,3 +1,3 @@
 # gpu-stock-tracker
 
-GPU stock tracker for NVIDIA GPUs
+Stock tracker for NVIDIA GeForce Graphics cards using an NVIDIA partner store API

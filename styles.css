@@ -48,6 +48,12 @@ a:hover {
 
 #chart-title {
     text-align: center;
+    padding-bottom: 2%;
+}
+
+.manufacturer-logo {
+    width: 100px;
+    height: auto;
 }
 
 /* Stock Status Styles*/

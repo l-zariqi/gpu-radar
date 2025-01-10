@@ -134,3 +134,48 @@
         });
     }  
 });
+
+// Add click event listeners to all table headers with the "table-header" class
+document.querySelectorAll('.table-header').forEach(header => {
+    header.addEventListener('click', () => {
+        const currentSort = header.getAttribute('data-sort');
+        const newSort = currentSort === 'asc' ? 'desc' : 'asc';
+
+        // Reset all headers to "none"
+        document.querySelectorAll('.table-header').forEach(h => {
+            h.setAttribute('data-sort', 'none');
+            h.querySelector('.sort-icon').textContent = '';
+        });
+
+        // Set the new sort direction on the clicked header
+        header.setAttribute('data-sort', newSort);
+        header.querySelector('.sort-icon').textContent = newSort === 'asc' ? '▲' : '▼';
+
+        // Implement sorting logic here
+        sortTable(header.cellIndex, newSort);
+    });
+});
+
+// Sorting logic (Example: sorts numerically or alphabetically)
+function sortTable(columnIndex, sortDirection) {
+    const table = document.querySelector('table tbody');
+    const rows = Array.from(table.rows);
+
+    rows.sort((a, b) => {
+        const cellA = a.cells[columnIndex].textContent.trim();
+        const cellB = b.cells[columnIndex].textContent.trim();
+
+        if (!isNaN(cellA) && !isNaN(cellB)) {
+            // Numerical sorting
+            return sortDirection === 'asc' ? cellA - cellB : cellB - cellA;
+        } else {
+            // Alphabetical sorting
+            return sortDirection === 'asc'
+                ? cellA.localeCompare(cellB)
+                : cellB.localeCompare(cellA);
+        }
+    });
+
+    // Append rows in the new order
+    rows.forEach(row => table.appendChild(row));
+}

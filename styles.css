@@ -8,12 +8,11 @@ body {
     align-items: center;
     flex-direction: column;
     height: 100vh;
-    transition: background-color 0.3s, color 0.3s;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
 .chart-container {
     background-color: white;
-    border: 1px solid #ddd;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -97,7 +96,33 @@ a:hover {
     background-color: #6c757d;
 }
 
+.coming-soon {
+    background-color: #ffd700;
+}
 
+body.dark-mode .coming-soon {
+    color: #0e0e0e;
+}
+
+/* Add a subtle glowing animation for 50 series cards */
+.shining-row {
+    animation: subtle-glow 2s infinite alternate;
+    position: relative;
+    z-index: 1;
+  }
+  
+  @keyframes subtle-glow {
+    0% {
+      box-shadow: 0 0 5px #fff700, 0 0 10px #fff700;
+    }
+    50% {
+      box-shadow: 0 0 10px #ffd700, 0 0 15px #ffd700;
+    }
+    100% {
+      box-shadow: 0 0 5px #fff700, 0 0 10px #fff700;
+    }
+  }
+  
 /* Dark Mode Styles */
 body.dark-mode {
     background-color: #0e0e0e;
@@ -105,9 +130,7 @@ body.dark-mode {
 }
 
 body.dark-mode .chart-container {
-    /* background-color: #1e1e1e; */
     background-color: #181818;
-    border-color: #333;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 

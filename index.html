@@ -5,19 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GPU Stock Tracker</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="scripts.js" defer></script>
+    <script src="darkMode.js" defer></script>
+    <script src="fetchStock.js" defer></script>
+    <script src="seriesFilter.js" defer></script>
+    <script src="https://kit.fontawesome.com/89895eaa3a.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <button id="dark-mode-toggle">
-        <img src="./images/dark-mode.png" alt="Toggle Dark Mode"/>
+        <img src="./images/dark-mode.png" alt="Dark Mode Toggle"/>
     </button>
-
     <div class="chart-container">
         <h2 id="chart-title">GPU Stock Tracker</h2>
         <table>
             <thead>
                 <tr class="top-row">
-                    <th class="table-header" data-sort="asc">Model <span class="sort-icon">▲</span></th>
+                    <th class="model-header">
+                        <span id="model-header-text">Model <i class="fa-solid fa-caret-down"></i></span>
+                        <div id="model-dropdown" class="dropdown-menu" style="display: none;">
+                            <div class="dropdown-option" data-series="all">All</div>
+                            <div class="dropdown-option" data-series="5000">50 Series</div>
+                            <div class="dropdown-option" data-series="4000">40 Series</div>
+                        </div>
+                    </th>
                     <th>Manufacturer</th>
                     <th>Price</th>
                     <th>Link - <a href="https://marketplace.nvidia.com/en-gb/consumer/graphics-cards/" target="_blank" rel="noopener noreferrer">View All</a></th>
@@ -26,7 +35,7 @@
             </thead>
             <tbody>
                 <!-- NVIDIA GeForce RTX 5090 -->
-                <tr class="shining-row" data-product-id="">
+                <tr class="product-row" data-product-id="">
                     <td class="product-model">⭐ NVIDIA GeForce RTX 5090</td>
                     <td><img 
                         class="manufacturer-logo" 
@@ -37,10 +46,10 @@
                     </td>
                     <td class="">£1,939.00</td>
                     <td class="product-link"><a href="https://www.nvidia.com/en-gb/geforce/graphics-cards/50-series/" target="_blank" rel="noopener noreferrer">View</a></td>
-                    <td class="coming-soon">Coming Soon</td>
+                    <td class="stock-status"></td>
                 </tr>
                 <!-- NVIDIA GeForce RTX 5080 -->
-                <tr class="shining-row" data-product-id="">
+                <tr class="product-row" data-product-id="">
                     <td class="product-model">⭐ NVIDIA GeForce RTX 5080</td>
                     <td><img 
                         class="manufacturer-logo" 
@@ -51,10 +60,10 @@
                     </td>
                     <td class="">£979.00</td>
                     <td class="product-link"><a href="https://www.nvidia.com/en-gb/geforce/graphics-cards/50-series/" target="_blank" rel="noopener noreferrer">View</a></td>
-                    <td class="coming-soon">Coming Soon</td>
+                    <td class="stock-status"></td>
                 </tr>
                 <!-- NVIDIA GeForce RTX 5070 Ti -->
-                <tr class="shining-row" data-product-id="">
+                <tr class="product-row" data-product-id="">
                     <td class="product-model">⭐ NVIDIA GeForce RTX 5070 Ti</td>
                     <td><img 
                         class="manufacturer-logo" 
@@ -65,10 +74,10 @@
                     </td>
                     <td class="">£729.00</td>
                     <td class="product-link"><a href="https://www.nvidia.com/en-gb/geforce/graphics-cards/50-series/" target="_blank" rel="noopener noreferrer">View</a></td>
-                    <td class="coming-soon">Coming Soon</td>
+                    <td class="stock-status"></td>
                 </tr>
                 <!-- NVIDIA GeForce RTX 5070 -->
-                <tr class="shining-row" data-product-id="">
+                <tr class="product-row" data-product-id="">
                     <td class="product-model">⭐ NVIDIA GeForce RTX 5070</td>
                     <td><img 
                         class="manufacturer-logo" 
@@ -79,10 +88,10 @@
                     </td>
                     <td class="">£539.00</td>
                     <td class="product-link"><a href="https://www.nvidia.com/en-gb/geforce/graphics-cards/50-series/" target="_blank" rel="noopener noreferrer">View</a></td>
-                    <td class="coming-soon">Coming Soon</td>
+                    <td class="stock-status"></td>
                 </tr>
                 <!-- NVIDIA GeForce RTX 4090 -->
-                <tr data-product-id="197593">
+                <tr class="product-row" data-product-id="197593">
                     <td class="product-model">NVIDIA GeForce RTX 4090</td>
                     <td><img 
                         class="manufacturer-logo" 
@@ -96,7 +105,7 @@
                     <td class="stock-status"></td>
                 </tr>
                 <!-- MSI GeForce RTX 4090 Gaming X Slim -->
-                <tr data-product-id="">
+                <tr class="product-row" data-product-id="">
                     <td class="product-model">MSI GeForce RTX 4090 Gaming X Slim</td>
                     <td><img 
                         class="manufacturer-logo" 
@@ -105,12 +114,12 @@
                         data-dark-src="./images/msi-logo-dark.png" 
                         alt="MSI">
                     </td>
-                    <td class="product-price"></td>
+                    <td class="">£1,699.99</td>
                     <td class="product-link"><a href="https://marketplace.nvidia.com/en-gb/consumer/graphics-cards/?locale=en-gb&page=1&limit=9&gpu=RTX%204090&manufacturer=MSI&manufacturer_filter=ASUS~2,MSI~1" target="_blank" rel="noopener noreferrer">View</a></td>
-                    <td class="stock-status"></td>
+                    <td class="in-stock">In Stock</td>
                 </tr>
                 <!-- NVIDIA GeForce RTX 4080 SUPER -->
-                <tr data-product-id="326771">
+                <tr class="product-row" data-product-id="326771">
                     <td class="product-model">NVIDIA GeForce RTX 4080 SUPER</td>
                     <td><img 
                         class="manufacturer-logo" 
@@ -124,7 +133,7 @@
                     <td class="stock-status"></td>
                 </tr>
                 <!-- NVIDIA GeForce RTX 4080 -->
-                <tr data-product-id="89991">
+                <tr class="product-row" data-product-id="89991">
                     <td class="product-model">NVIDIA GeForce RTX 4080</td>
                     <td><img 
                         class="manufacturer-logo" 
@@ -138,7 +147,7 @@
                     <td class="stock-status"></td>
                 </tr>
                 <!-- NVIDIA GeForce RTX 4070 SUPER -->
-                <tr data-product-id="271498">
+                <tr class="product-row" data-product-id="271498">
                     <td class="product-model">NVIDIA GeForce RTX 4070 SUPER</td>
                     <td><img 
                         class="manufacturer-logo" 
@@ -152,7 +161,7 @@
                     <td class="stock-status"></td>
                 </tr>
                 <!-- NVIDIA GeForce RTX 4070 -->
-                <tr data-product-id="197594">
+                <tr class="product-row" data-product-id="197594">
                     <td class="product-model">NVIDIA GeForce RTX 4070</td>
                     <td><img 
                         class="manufacturer-logo" 
@@ -166,7 +175,7 @@
                     <td class="stock-status"></td>
                 </tr>
                 <!-- NVIDIA GeForce RTX 4060 Ti -->
-                <tr data-product-id="">
+                <tr class="product-row" data-product-id="">
                     <td class="product-model">NVIDIA GeForce RTX 4060 Ti</td>
                     <td><img 
                         class="manufacturer-logo" 

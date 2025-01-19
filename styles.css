@@ -23,36 +23,28 @@ table {
     border-collapse: collapse;
 }
 
-/* Styling for clickable table headers */
-.table-header {
-    cursor: pointer;
-}
-
-/* Sort icon styling */
-.sort-icon {
-    font-size: 12px;
-    margin-left: 8px;
-}
-
 th, td {
     padding: 15px;
     text-align: left;
+}
+
+td {
     border-bottom: 1px solid #ddd;
-} 
+}
 
 th {
     background-color: #f8f8f8;
+    border: 1px solid #ddd;
 }
 
-tr:not(.top-row) {
-    height: 91.16px;
+.product-row {
+    height: 95px;
 }
 
 tr:hover {
     background-color: #f8f8f8;
 }
 
-/* URL Styling */
 a {
     color: #0073e6;
     text-decoration: none;
@@ -64,7 +56,7 @@ a:hover {
 
 #chart-title {
     text-align: center;
-    padding-bottom: 2%;
+    padding-bottom: 3%;
 }
 
 .manufacturer-logo {
@@ -85,44 +77,73 @@ a:hover {
 }
 
 .in-stock {
+    padding: 8px 16px;
+    color: white;
+    min-width: 75px;
+    text-align: center;
     background-color: #28a745;
 }
 
 .out-of-stock {
+    padding: 8px 16px;
+    color: white;
+    min-width: 75px;
+    text-align: center;
     background-color: #dc3545;
 }
 
 .unknown-status {
+    padding: 8px 16px;
+    color: white;
+    min-width: 75px;
+    text-align: center;
     background-color: #6c757d;
 }
 
-.coming-soon {
-    background-color: #ffd700;
-}
-
-body.dark-mode .coming-soon {
-    color: #0e0e0e;
-}
-
-/* Add a subtle glowing animation for 50 series cards */
-.shining-row {
-    animation: subtle-glow 2s infinite alternate;
+/* Model Table Header */
+.model-header {
     position: relative;
-    z-index: 1;
-  }
-  
-  @keyframes subtle-glow {
-    0% {
-      box-shadow: 0 0 5px #fff700, 0 0 10px #fff700;
-    }
-    50% {
-      box-shadow: 0 0 10px #ffd700, 0 0 15px #ffd700;
-    }
-    100% {
-      box-shadow: 0 0 5px #fff700, 0 0 10px #fff700;
-    }
-  }
-  
+    cursor: pointer;
+}
+
+.model-header:hover {
+    background-color: #e0e0e0;
+}
+
+body.dark-mode .model-header:hover {
+    background-color: #444;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    z-index: 10;
+}
+
+.dropdown-option {
+    padding: 10px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.dropdown-option:hover {
+    background-color: #e0e0e0;
+}
+
+body.dark-mode .dropdown-menu {
+    background-color: #333;
+    border: 1px solid #555;
+}
+
+body.dark-mode .dropdown-option:hover {
+    background-color: #444;
+}
+
 /* Dark Mode Styles */
 body.dark-mode {
     background-color: #0e0e0e;
@@ -136,11 +157,11 @@ body.dark-mode .chart-container {
 
 body.dark-mode th {
     background-color: #333;
-    border-bottom: 1px solid #333;
+    border: 1px solid #555;
 }
 
 body.dark-mode td {
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid #555;
 }
 
 body.dark-mode tr:hover {
@@ -151,6 +172,7 @@ body.dark-mode a {
     color: #90caf9;
 }
 
+/* Dark Mode Button */
 #dark-mode-toggle {
     position: absolute;
     top: 20px;

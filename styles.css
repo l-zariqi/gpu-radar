@@ -1,3 +1,4 @@
+/* Body - Light Mode */
 body {
     font-family: system-ui, sans-serif;
     background-color: #f8f8f8;
@@ -11,11 +12,26 @@ body {
     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
+/* Body - Dark Mode */
+body.dark-mode {
+    background-color: #0e0e0e;
+    color: #e0e0e0;
+}
+
+/* Table - Light Mode */
 .chart-container {
-    background-color: white;
     border-radius: 8px;
     padding: 20px;
+    background-color: white;
+    border: 1px solid #ddd;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Table - Dark Mode */
+body.dark-mode .chart-container {
+    background-color: #181818;
+    border: 1px solid #333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 table {
@@ -34,20 +50,46 @@ td {
 
 th {
     background-color: #f8f8f8;
-    border: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Table Headers - Dark Mode */
+body.dark-mode th {
+    background-color: #333;
+    border-bottom: 1px solid #555;
+}
+
+body.dark-mode td {
+    border-bottom: 1px solid #555;
+}
+
+.status-header {
+    text-align: center;
 }
 
 .product-row {
     height: 95px;
 }
 
+/* Table Row Hover - Light Mode */
 tr:hover {
     background-color: #f8f8f8;
 }
 
+/* Table Row Hover - Dark Mode */
+body.dark-mode tr:hover {
+    background-color: #333;
+}
+
+/* URL Styling - Light Mode */
 a {
     color: #0073e6;
     text-decoration: none;
+}
+
+/* URL Styling - Dark Mode */
+body.dark-mode a {
+    color: #90caf9;
 }
 
 a:hover {
@@ -100,21 +142,67 @@ a:hover {
     background-color: #6c757d;
 }
 
+/* Tooltip for Unknown Status */
+.stock-status.unknown-status {
+    position: relative;
+    cursor: help;
+}
+
+.stock-status.unknown-status::after {
+    content: "⚠️This GPU may have been delisted or the API can't find it.";
+    position: absolute;
+    top: 50%;
+    left: calc(100% + 10px);
+    transform: translateY(-50%);
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    white-space: normal;
+    width: 200px;
+    text-align: left;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Tooltip - Light Mode */
+body:not(.dark-mode) .stock-status.unknown-status::after {
+    background-color: white;
+    color: black;
+    border: 1px solid #ddd;
+}
+
+/* Tooltip - Dark Mode */
+body.dark-mode .stock-status.unknown-status::after {
+    background-color: #181818;
+    color: #e0e0e0;
+    border: 1px solid #333;
+}
+
+.stock-status.unknown-status:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
 /* Model Table Header */
 .model-header {
     position: relative;
     cursor: pointer;
 }
 
+/* Light Mode */
 .model-header:hover {
     background-color: #e0e0e0;
 }
 
+/* Dark Mode */
 body.dark-mode .model-header:hover {
     background-color: #444;
 }
 
-/* Dropdown Menu */
+/* Dropdown Menu - Light Mode */
 .dropdown-menu {
     position: absolute;
     top: 100%;
@@ -135,6 +223,7 @@ body.dark-mode .model-header:hover {
     background-color: #e0e0e0;
 }
 
+/* Dark Mode */
 body.dark-mode .dropdown-menu {
     background-color: #333;
     border: 1px solid #555;
@@ -144,35 +233,7 @@ body.dark-mode .dropdown-option:hover {
     background-color: #444;
 }
 
-/* Dark Mode Styles */
-body.dark-mode {
-    background-color: #0e0e0e;
-    color: #e0e0e0;
-}
-
-body.dark-mode .chart-container {
-    background-color: #181818;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-body.dark-mode th {
-    background-color: #333;
-    border: 1px solid #555;
-}
-
-body.dark-mode td {
-    border-bottom: 1px solid #555;
-}
-
-body.dark-mode tr:hover {
-    background-color: #333;
-}
-
-body.dark-mode a {
-    color: #90caf9;
-}
-
-/* Dark Mode Button */
+/* Dark Mode Button Toggle */
 #dark-mode-toggle {
     position: absolute;
     top: 20px;
@@ -185,12 +246,12 @@ body.dark-mode a {
     cursor: pointer;
 }
 
+#dark-mode-toggle:hover {
+    background-color: #005bb5;
+}
+
 #dark-mode-toggle img {
     width: 30px;
     height: 30px;
     vertical-align: middle;
-}
-
-#dark-mode-toggle:hover {
-    background-color: #005bb5;
 }

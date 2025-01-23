@@ -1,28 +1,40 @@
-// Fetch product stock data from the API
+// Fetch product stock data from multiple API pages
 fetchStockData();
 
-function fetchStockData() {
-    const apiUrl = "https://api.nvidia.partners/edge/product/search?page=1&limit=9&locale=en-gb";
+async function fetchStockData() {
+    const baseApiUrl = "https://api.nvidia.partners/edge/product/search";
+    const limit = 9; // Number of items per page
+    const totalPages = 3; // Number of pages to fetch (adjust as needed)
+    let allProducts = [];
 
     console.log("Fetching stock data from API..."); // Log when fetching starts
-    fetch(apiUrl)
-        .then(response => {
+
+    try {
+        // Loop through multiple pages
+        for (let page = 1; page <= totalPages; page++) {
+            const apiUrl = `${baseApiUrl}?page=${page}&limit=${limit}&locale=en-gb`;
+            const response = await fetch(apiUrl);
+
             if (!response.ok) {
-                throw new Error('Network response was not OK ' + response.statusText);
+                throw new Error(`Network response was not OK for page ${page}: ${response.statusText}`);
             }
-            return response.json();
-        })
-        .then(data => {
-            console.log("Data fetched successfully:", data); // Log the fetched data
+
+            const data = await response.json();
+            console.log(`Data fetched successfully for page ${page}:`, data); // Log the fetched data
+
+            // Add products from this page to the allProducts array
             if (data.searchedProducts && data.searchedProducts.productDetails) {
-                updateStockStatus(data.searchedProducts.productDetails);
+                allProducts = allProducts.concat(data.searchedProducts.productDetails);
             } else {
-                console.error("Error: No 'productDetails' key in 'searchedProducts'.");
+                console.error(`Error: No 'productDetails' key in 'searchedProducts' for page ${page}.`);
             }
-        })
-        .catch(error => {
-            console.error('Error fetching stock data:', error);
-        });
+        }
+
+        // Update stock status with all products
+        updateStockStatus(allProducts);
+    } catch (error) {
+        console.error('Error fetching stock data:', error);
+    }
 }
 
 
@@ -55,14 +67,14 @@ function updateStockStatus(products) {
                     const statusCell = row.querySelector(".stock-status");
                     const priceCell = row.querySelector(".product-price"); // Select the price cell using the product-price class
 
-                    // Update stock status
+                    // Update stock status based on productAvailable
                     if (statusCell) {
                         let stockStatus = "";
-                        if (product.prdStatus === "buy_now") {
+                        if (product.productAvailable === true) {
                             stockStatus = "In Stock";
                             statusCell.classList.remove("out-of-stock");
                             statusCell.classList.add("in-stock");
-                        } else if (product.prdStatus === "out_of_stock") {
+                        } else if (product.productAvailable === false) {
                             stockStatus = "Out of Stock";
                             statusCell.classList.remove("in-stock");
                             statusCell.classList.add("out-of-stock");
@@ -94,7 +106,7 @@ function updateStockStatus(products) {
 
         // Check if the status or price cells are still empty
         if (statusCell && !statusCell.textContent) {
-            statusCell.textContent = "Unknown"; // Set status to Unknown
+            statusCell.textContent = "Unknown";
             statusCell.classList.add("unknown-status");
         }
         if (priceCell && !priceCell.textContent) {

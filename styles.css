@@ -14,7 +14,7 @@ body {
 
 /* Body - Dark Mode */
 body.dark-mode {
-    background-color: #0e0e0e;
+    background-color: black;
     color: #e0e0e0;
 }
 
@@ -34,6 +34,11 @@ body.dark-mode .chart-container {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
+#chart-title {
+    text-align: center;
+    padding-bottom: 2%;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -48,6 +53,11 @@ td {
     border-bottom: 1px solid #ddd;
 }
 
+body.dark-mode td {
+    border-bottom: 1px solid #555;
+}
+
+/* Table Headers - Light Mode */
 th {
     background-color: #f8f8f8;
     border-bottom: 1px solid #ddd;
@@ -56,10 +66,6 @@ th {
 /* Table Headers - Dark Mode */
 body.dark-mode th {
     background-color: #333;
-    border-bottom: 1px solid #555;
-}
-
-body.dark-mode td {
     border-bottom: 1px solid #555;
 }
 
@@ -94,11 +100,6 @@ body.dark-mode a {
 
 a:hover {
     text-decoration: underline;
-}
-
-#chart-title {
-    text-align: center;
-    padding-bottom: 3%;
 }
 
 .manufacturer-logo {
@@ -192,12 +193,12 @@ body.dark-mode .stock-status.unknown-status::after {
     cursor: pointer;
 }
 
-/* Light Mode */
+/* Model Table Header Hover - Light Mode */
 .model-header:hover {
     background-color: #e0e0e0;
 }
 
-/* Dark Mode */
+/* Model Table Header Hover - Dark Mode */
 body.dark-mode .model-header:hover {
     background-color: #444;
 }
@@ -223,7 +224,7 @@ body.dark-mode .model-header:hover {
     background-color: #e0e0e0;
 }
 
-/* Dark Mode */
+/* Dropdown Menu - Dark Mode */
 body.dark-mode .dropdown-menu {
     background-color: #333;
     border: 1px solid #555;

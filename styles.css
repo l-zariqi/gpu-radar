@@ -15,7 +15,7 @@ body {
 /* Body - Dark Mode */
 body.dark-mode {
     background-color: black;
-    color: #e0e0e0;
+    color: white;
 }
 
 /* Table - Light Mode */
@@ -31,12 +31,10 @@ body.dark-mode {
 body.dark-mode .chart-container {
     background-color: #181818;
     border: 1px solid #333;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 #chart-title {
     text-align: center;
-    padding-bottom: 2%;
 }
 
 table {
@@ -102,6 +100,7 @@ a:hover {
     text-decoration: underline;
 }
 
+/* Manufacturer Logo */
 .manufacturer-logo {
     width: 100px;
     height: auto;
@@ -119,6 +118,7 @@ a:hover {
     text-align: center;
 }
 
+/* In Stock Styling */
 .in-stock {
     padding: 8px 16px;
     color: white;
@@ -127,6 +127,7 @@ a:hover {
     background-color: #28a745;
 }
 
+/* Out of Stock Styling */
 .out-of-stock {
     padding: 8px 16px;
     color: white;
@@ -135,6 +136,7 @@ a:hover {
     background-color: #dc3545;
 }
 
+/* Unknown Status Styling */
 .unknown-status {
     padding: 8px 16px;
     color: white;
@@ -153,7 +155,7 @@ a:hover {
     content: "⚠️This GPU may have been delisted or the API can't find it.";
     position: absolute;
     top: 50%;
-    left: calc(100% + 10px);
+    left: calc(100% + 30px);
     transform: translateY(-50%);
     padding: 12px;
     border-radius: 6px;
@@ -178,7 +180,7 @@ body:not(.dark-mode) .stock-status.unknown-status::after {
 /* Tooltip - Dark Mode */
 body.dark-mode .stock-status.unknown-status::after {
     background-color: #181818;
-    color: #e0e0e0;
+    color: white;
     border: 1px solid #333;
 }
 
@@ -234,25 +236,55 @@ body.dark-mode .dropdown-option:hover {
     background-color: #444;
 }
 
-/* Dark Mode Button Toggle */
-#dark-mode-toggle {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    padding: 10px;
-    background-color: #0073e6;
+#auto-refresh-toggle {
+    padding: 10px 20px;
+    background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 50%;
+    border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
+    margin: 10px 0;
 }
 
-#dark-mode-toggle:hover {
-    background-color: #005bb5;
+#auto-refresh-toggle:hover {
+    background-color: #0056b3;
 }
 
-#dark-mode-toggle img {
-    width: 30px;
-    height: 30px;
-    vertical-align: middle;
+/* Dark Mode Button Toggle */
+#theme-toggle {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.dark-mode #theme-toggle {
+    background-color: #181818;
+    border: 1px solid #555;
+}
+
+#theme-toggle svg {
+    width: 24px; /* Set a fixed size for the icons */
+    height: 24px;
+    color: black; /* Default icon color (black for light mode) */
+}
+
+body.dark-mode #theme-toggle svg {
+    color: white;
+}
+
+#theme-toggle:hover {
+    background-color: #f8f8f8;
+}
+
+body.dark-mode #theme-toggle:hover {
+    background-color: #333;
 }

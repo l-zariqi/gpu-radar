@@ -8,19 +8,24 @@
     <script src="darkMode.js" defer></script>
     <script src="fetchStock.js" defer></script>
     <script src="seriesFilter.js" defer></script>
+    <script src="autoRefresh.js" defer></script>
     <script src="https://kit.fontawesome.com/89895eaa3a.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <button id="dark-mode-toggle">
-        <img src="./images/dark-mode.png" alt="Dark Mode Toggle"/>
-    </button>
     <div class="chart-container">
+        <button id="theme-toggle">
+            <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></g></svg>
+            <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="display: none;"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 14a9 9 0 1 1-9-11a7 7 0 0 0 9 11"/></svg>
+        </button>
         <h2 id="chart-title">GPU Stock Tracker</h2>
+        <button id="auto-refresh-toggle">
+            Enable Auto Refresh (30s)
+        </button>
         <table>
             <thead>
                 <tr class="top-row">
                     <th class="model-header">
-                        <span id="model-header-text">Model <i class="fa-solid fa-caret-down"></i></span>
+                        <span id="model-header-text">Model <i class="fa-solid fa-chevron-down"></i></span>
                         <div id="model-dropdown" class="dropdown-menu" style="display: none;">
                             <div class="dropdown-option" data-series="all">All</div>
                             <div class="dropdown-option" data-series="5000">50 Series</div>
@@ -34,9 +39,8 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- NVIDIA GeForce RTX 5090 -->
                 <tr class="product-row" data-product-id="1145381">
-                    <td class="product-model">⭐ NVIDIA GeForce RTX 5090</td>
+                    <td class="product-model">NVIDIA GeForce RTX 5090</td>
                     <td><img 
                         class="manufacturer-logo" 
                         src="./images/nvidia-logo-light.png"
@@ -45,12 +49,11 @@
                         alt="NVIDIA">
                     </td>
                     <td class="product-price"></td>
-                    <td class="product-link"><a href="https://marketplace.nvidia.com/en-gb/consumer/graphics-cards/?locale=en-gb&page=1&limit=12&gpu=RTX%205090&manufacturer=NVIDIA&manufacturer_filter=NVIDIA~1,ASUS~3,GAINWARD~2,MSI~3,PALIT~1,ZOTAC~3" target="_blank" rel="noopener noreferrer">View</a></td>
+                    <td class="product-link"><a href="https://marketplace.nvidia.com/en-gb/consumer/graphics-cards/nvidia-geforce-rtx-5090/" target="_blank" rel="noopener noreferrer">View</a></td>
                     <td class="stock-status" ></td>
                 </tr>
-                <!-- NVIDIA GeForce RTX 5080 -->
                 <tr class="product-row" data-product-id="1145488">
-                    <td class="product-model">⭐ NVIDIA GeForce RTX 5080</td>
+                    <td class="product-model">NVIDIA GeForce RTX 5080</td>
                     <td><img 
                         class="manufacturer-logo" 
                         src="./images/nvidia-logo-light.png"
@@ -59,12 +62,11 @@
                         alt="NVIDIA">
                     </td>
                     <td class="product-price"></td>
-                    <td class="product-link"><a href="https://marketplace.nvidia.com/en-gb/consumer/graphics-cards/?locale=en-gb&page=1&limit=12&gpu=RTX%205080&manufacturer=NVIDIA&gpu_filter=RTX%205090~1,RTX%205080~1" target="_blank" rel="noopener noreferrer">View</a></td>
+                    <td class="product-link"><a href="https://marketplace.nvidia.com/en-gb/consumer/graphics-cards/nvidia-geforce-rtx-5080/" target="_blank" rel="noopener noreferrer">View</a></td>
                     <td class="stock-status"></td>
                 </tr>
-                <!-- NVIDIA GeForce RTX 5070 Ti -->
                 <tr class="product-row" data-product-id="">
-                    <td class="product-model">⭐ NVIDIA GeForce RTX 5070 Ti</td>
+                    <td class="product-model">NVIDIA GeForce RTX 5070 Ti</td>
                     <td><img 
                         class="manufacturer-logo" 
                         src="./images/nvidia-logo-light.png"
@@ -76,9 +78,8 @@
                     <td class="product-link"><a href="https://www.nvidia.com/en-gb/geforce/graphics-cards/50-series/" target="_blank" rel="noopener noreferrer">View</a></td>
                     <td class="stock-status"></td>
                 </tr>
-                <!-- NVIDIA GeForce RTX 5070 -->
                 <tr class="product-row" data-product-id="">
-                    <td class="product-model">⭐ NVIDIA GeForce RTX 5070</td>
+                    <td class="product-model">NVIDIA GeForce RTX 5070</td>
                     <td><img 
                         class="manufacturer-logo" 
                         src="./images/nvidia-logo-light.png"
@@ -90,7 +91,6 @@
                     <td class="product-link"><a href="https://www.nvidia.com/en-gb/geforce/graphics-cards/50-series/" target="_blank" rel="noopener noreferrer">View</a></td>
                     <td class="stock-status"></td>
                 </tr>
-                <!-- NVIDIA GeForce RTX 4090 -->
                 <tr class="product-row" data-product-id="197593">
                     <td class="product-model">NVIDIA GeForce RTX 4090</td>
                     <td><img 
@@ -104,8 +104,7 @@
                     <td class="product-link"><a href="https://marketplace.nvidia.com/en-gb/consumer/graphics-cards/?locale=en-gb&page=1&limit=12&gpu=RTX%204090&manufacturer=NVIDIA&manufacturer_filter=NVIDIA~1,ASUS~2,MSI~1" target="_blank" rel="noopener noreferrer">View</a></td>
                     <td class="stock-status"></td>
                 </tr>
-                <!-- MSI GeForce RTX 4090 Gaming X Slim -->
-                <tr class="product-row" data-product-id="">
+                <!-- <tr class="product-row" data-product-id="">
                     <td class="product-model">MSI GeForce RTX 4090 Gaming X Slim</td>
                     <td><img 
                         class="manufacturer-logo" 
@@ -117,8 +116,7 @@
                     <td class="product-price"></td>
                     <td class="product-link"><a href="https://marketplace.nvidia.com/en-gb/consumer/graphics-cards/?locale=en-gb&page=1&limit=9&gpu=RTX%204090&manufacturer=MSI&manufacturer_filter=ASUS~2,MSI~1" target="_blank" rel="noopener noreferrer">View</a></td>
                     <td class="in-stock">In Stock</td>
-                </tr>
-                <!-- NVIDIA GeForce RTX 4080 SUPER -->
+                </tr> -->
                 <tr class="product-row" data-product-id="326771">
                     <td class="product-model">NVIDIA GeForce RTX 4080 SUPER</td>
                     <td><img 
@@ -132,7 +130,6 @@
                     <td class="product-link"><a href="https://marketplace.nvidia.com/en-gb/consumer/graphics-cards/?locale=en-gb&page=1&limit=12&gpu=RTX%204080%20SUPER&manufacturer=NVIDIA&gpu_filter=RTX%204090~1,RTX%204080%20SUPER~1,RTX%204080~1,RTX%204070%20SUPER~1,RTX%204070~1,RTX%204060%20Ti~1" target="_blank" rel="noopener noreferrer">View</a></td>
                     <td class="stock-status"></td>
                 </tr>
-                <!-- NVIDIA GeForce RTX 4080 -->
                 <tr class="product-row" data-product-id="89991">
                     <td class="product-model">NVIDIA GeForce RTX 4080</td>
                     <td><img 
@@ -146,7 +143,6 @@
                     <td class="product-link"><a href="https://marketplace.nvidia.com/en-gb/consumer/graphics-cards/?locale=en-gb&page=1&limit=12&gpu=RTX%204080&manufacturer=NVIDIA&gpu_filter=RTX%204090~1,RTX%204080%20SUPER~1,RTX%204080~1,RTX%204070%20SUPER~1,RTX%204070~1,RTX%204060%20Ti~1" target="_blank" rel="noopener noreferrer">View</a></td>
                     <td class="stock-status"></td>
                 </tr>
-                <!-- NVIDIA GeForce RTX 4070 SUPER -->
                 <tr class="product-row" data-product-id="271498">
                     <td class="product-model">NVIDIA GeForce RTX 4070 SUPER</td>
                     <td><img 
@@ -160,7 +156,6 @@
                     <td class="product-link"><a href="https://marketplace.nvidia.com/en-gb/consumer/graphics-cards/?locale=en-gb&page=1&limit=12&gpu=RTX%204070%20SUPER&manufacturer=NVIDIA&gpu_filter=RTX%204090~1,RTX%204080%20SUPER~1,RTX%204080~1,RTX%204070%20SUPER~1,RTX%204070~1,RTX%204060%20Ti~1" target="_blank" rel="noopener noreferrer">View</a></td>
                     <td class="stock-status"></td>
                 </tr>
-                <!-- NVIDIA GeForce RTX 4070 -->
                 <tr class="product-row" data-product-id="197594">
                     <td class="product-model">NVIDIA GeForce RTX 4070</td>
                     <td><img 
@@ -174,7 +169,6 @@
                     <td class="product-link"><a href="https://marketplace.nvidia.com/en-gb/consumer/graphics-cards/?locale=en-gb&page=1&limit=12&gpu=RTX%204070&manufacturer=NVIDIA&gpu_filter=RTX%204090~1,RTX%204080%20SUPER~1,RTX%204080~1,RTX%204070%20SUPER~1,RTX%204070~1,RTX%204060%20Ti~1" target="_blank" rel="noopener noreferrer">View</a></td>
                     <td class="stock-status"></td>
                 </tr>
-                <!-- NVIDIA GeForce RTX 4060 Ti -->
                 <tr class="product-row" data-product-id="">
                     <td class="product-model">NVIDIA GeForce RTX 4060 Ti</td>
                     <td><img 

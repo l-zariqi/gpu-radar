@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const modelDropdown = document.getElementById("model-dropdown");
     const dropdownOptions = document.querySelectorAll(".dropdown-option");
     const gpuRows = document.querySelectorAll("tbody tr");
+    const modelHeaderText = document.getElementById("model-header-text");
 
     // Toggle dropdown visibility when clicking "Model"
     modelHeader.addEventListener("click", function (event) {
@@ -18,6 +19,16 @@ document.addEventListener("DOMContentLoaded", function () {
             event.stopPropagation(); // Prevent document click listener from firing
             const selectedSeries = option.getAttribute("data-series");
 
+            // Update the model header text to show the selected series
+            if (selectedSeries === "all") {
+                modelHeaderText.innerHTML = `Model <i class="fa-solid fa-chevron-down"></i>`;
+            } else if (selectedSeries === "4000") {
+                modelHeaderText.innerHTML = `40 Series <i class="fa-solid fa-chevron-down"></i>`;
+            } else if (selectedSeries === "5000") {
+                modelHeaderText.innerHTML = `50 Series <i class="fa-solid fa-chevron-down"></i>`;
+            }
+
+            // Filter the rows based on the selected series
             gpuRows.forEach(row => {
                 const modelCell = row.querySelector(".product-model");
                 if (modelCell) {

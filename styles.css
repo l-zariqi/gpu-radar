@@ -3,12 +3,9 @@ body {
     font-family: system-ui, sans-serif;
     background-color: #f8f8f8;
     margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100vh;
+    padding: 20px;
+    display: block;
+    height: auto;
     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
@@ -20,8 +17,14 @@ body.dark-mode {
 
 /* Table - Light Mode */
 .chart-container {
-    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0 auto;
+    max-width: 800px;
     padding: 20px;
+    border-radius: 8px;
     background-color: white;
     border: 1px solid #ddd;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -31,6 +34,20 @@ body.dark-mode {
 body.dark-mode .chart-container {
     background-color: #181818;
     border: 1px solid #333;
+}
+
+.header-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.header-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px;
 }
 
 #chart-title {
@@ -69,10 +86,6 @@ body.dark-mode th {
 
 .status-header {
     text-align: center;
-}
-
-.product-row {
-    height: 95px;
 }
 
 /* Table Row Hover - Light Mode */
@@ -158,7 +171,7 @@ a:hover {
     left: calc(100% + 30px);
     transform: translateY(-50%);
     padding: 12px;
-    border-radius: 6px;
+    border-radius: 5px;
     font-size: 14px;
     white-space: normal;
     width: 200px;
@@ -214,6 +227,8 @@ body.dark-mode .model-header:hover {
     background-color: #f8f8f8;
     border: 1px solid #ddd;
     z-index: 10;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .dropdown-option {
@@ -236,27 +251,66 @@ body.dark-mode .dropdown-option:hover {
     background-color: #444;
 }
 
+/* Auto Refresh Button */
 #auto-refresh-toggle {
     padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
+    background-color: white;
+    color: black;
+    border: 1px solid #ddd;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
     margin: 10px 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+body.dark-mode #auto-refresh-toggle {
+    color: white;
+    background-color: #181818;
+    border: 1px solid #555;
+}
+
+/* Auto Refresh Button Hover - Light Mode */
 #auto-refresh-toggle:hover {
-    background-color: #0056b3;
+    background-color: #28a74634;
+    border-color: #28a745;
 }
 
-/* Dark Mode Button Toggle */
+/* Auto Refresh Button Hover - Dark Mode */
+body.dark-mode #auto-refresh-toggle:hover {
+    background-color: #28a74634;
+    border-color: #28a745;
+}
+
+/* Auto Refresh Button Enabled - Light Mode */
+#auto-refresh-toggle.enabled {
+    background-color: #28a74634;
+    border-color: #28a745;
+}
+
+/* Auto Refresh Button Enabled - Dark Mode */
+body.dark-mode #auto-refresh-toggle.enabled {
+    background-color: #28a74634;
+    border-color: #28a745;
+}
+
+/* Auto Refresh Button Enabled Hover - Light Mode */
+#auto-refresh-toggle.enabled:hover {
+    background-color: #c8233336;
+    border-color: #bd2130;
+}
+
+/* Auto Refresh Button Enabled Hover - Dark Mode */
+body.dark-mode #auto-refresh-toggle.enabled:hover {
+    background-color: #c8233336;
+    border-color: #bd2130;
+}
+
+/* Theme Toggle Button - Light Mode */
 #theme-toggle {
     width: 40px;
     height: 40px;
     padding: 0;
-    border: none;
     border-radius: 5px;
     background-color: white;
     border: 1px solid #ddd;
@@ -264,21 +318,13 @@ body.dark-mode .dropdown-option:hover {
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Theme Toggle Button - Dark Mode */
 body.dark-mode #theme-toggle {
     background-color: #181818;
     border: 1px solid #555;
-}
-
-#theme-toggle svg {
-    width: 24px; /* Set a fixed size for the icons */
-    height: 24px;
-    color: black; /* Default icon color (black for light mode) */
-}
-
-body.dark-mode #theme-toggle svg {
-    color: white;
 }
 
 #theme-toggle:hover {
@@ -287,4 +333,16 @@ body.dark-mode #theme-toggle svg {
 
 body.dark-mode #theme-toggle:hover {
     background-color: #333;
+}
+
+/* Theme Toggle Button Icon - Light Mode */
+#theme-toggle svg {
+    width: 24px;
+    height: 24px;
+    color: black;
+}
+
+/* Theme Toggle Button Icon - Dark Mode */
+body.dark-mode #theme-toggle svg {
+    color: white;
 }

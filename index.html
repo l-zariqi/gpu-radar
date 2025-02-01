@@ -13,17 +13,19 @@
 </head>
 <body>
     <div class="chart-container">
-        <button id="theme-toggle">
-            <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></g></svg>
-            <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="display: none;"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 14a9 9 0 1 1-9-11a7 7 0 0 0 9 11"/></svg>
-        </button>
-        <h2 id="chart-title">GPU Stock Tracker</h2>
-        <button id="auto-refresh-toggle">
-            Enable Auto Refresh (30s)
-        </button>
+        <div class="header-container">
+            <h1 id="chart-title">GPU Stock Tracker</h1>
+            <div class="header-buttons">
+                <button id="auto-refresh-toggle">Enable Auto Refresh (30s)</button>
+                <button id="theme-toggle">
+                    <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></g></svg>
+                    <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="display: none;"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 14a9 9 0 1 1-9-11a7 7 0 0 0 9 11"/></svg>
+                </button>
+            </div>
+        </div>
         <table>
             <thead>
-                <tr class="top-row">
+                <tr class="table-header-row">
                     <th class="model-header">
                         <span id="model-header-text">Model <i class="fa-solid fa-chevron-down"></i></span>
                         <div id="model-dropdown" class="dropdown-menu" style="display: none;">
@@ -33,7 +35,7 @@
                         </div>
                     </th>
                     <th class="brand-header">Manufacturer</th>
-                    <th class="price-header">Price</th>
+                    <th class="price-header">Price (£)</th>
                     <th class="link-header">Link - <a href="https://marketplace.nvidia.com/en-gb/consumer/graphics-cards/" target="_blank" rel="noopener noreferrer">View All</a></th>
                     <th class="status-header">Status</th>
                 </tr>
@@ -185,6 +187,5 @@
             </tbody>
         </table>
     </div>
-
 </body>
 </html>

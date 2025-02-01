@@ -40,6 +40,7 @@ function toggleAutoRefresh() {
         clearInterval(autoRefreshInterval);
         autoRefreshInterval = null;
         stopCountdown(); // Stop the countdown
+        autoRefreshButton.classList.remove("enabled"); // Remove the "enabled" class
         console.log("Auto refresh disabled.");
     } else {
         // If auto-refresh is disabled, enable it
@@ -51,6 +52,7 @@ function toggleAutoRefresh() {
         // Fetch data immediately when auto-refresh is enabled
         fetchStockData();
         startCountdown(); // Start the countdown
+        autoRefreshButton.classList.add("enabled"); // Add the "enabled" class
         console.log("Auto refresh enabled. Checking API every 30 seconds.");
     }
 }

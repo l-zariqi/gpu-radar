@@ -1,4 +1,4 @@
-# gpu-stock-tracker
+# <img src="https://raw.githubusercontent.com/l-zariqi/fe-radar/main/images/favicon.svg" alt="fe-radar-icon" width="24" height="24"> FE-Radar
 
 Stock tracker for NVIDIA GeForce Graphics cards using an NVIDIA partner store API.
 

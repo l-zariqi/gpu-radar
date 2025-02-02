@@ -1,4 +1,3 @@
-// Fetch product stock data from multiple API pages
 fetchStockData();
 
 async function fetchStockData() {

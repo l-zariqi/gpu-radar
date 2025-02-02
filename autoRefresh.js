@@ -15,11 +15,21 @@ function startCountdown() {
     // Update the countdown every second
     countdownInterval = setInterval(() => {
         timeLeft--;
-        autoRefreshButton.textContent = `Disable Auto Refresh (${timeLeft}s)`;
+        autoRefreshButton.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 11A8.1 8.1 0 0 0 4.5 9M4 5v4h4m-4 4a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>
+            </svg>
+            Disable Auto Refresh (${timeLeft}s)
+        `;
 
         if (timeLeft <= 0) {
             clearInterval(countdownInterval); // Stop the countdown when it reaches 0
-            autoRefreshButton.textContent = "Disable Auto Refresh"; // Reset button text
+            autoRefreshButton.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 11A8.1 8.1 0 0 0 4.5 9M4 5v4h4m-4 4a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>
+                </svg>
+                Disable Auto Refresh
+            `; // Reset button text
         }
     }, 1000);
 }
@@ -28,7 +38,12 @@ function startCountdown() {
 function stopCountdown() {
     clearInterval(countdownInterval); // Stop the countdown
     const autoRefreshButton = document.getElementById("auto-refresh-toggle");
-    autoRefreshButton.textContent = "Enable Auto Refresh (30s)"; // Reset button text
+    autoRefreshButton.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 11A8.1 8.1 0 0 0 4.5 9M4 5v4h4m-4 4a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>
+        </svg>
+        Enable Auto Refresh (30s)
+    `; // Reset button text
 }
 
 // Function to toggle auto-refresh

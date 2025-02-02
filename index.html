@@ -3,20 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GPU Stock Tracker</title>
+    <title>FE-Radar</title>
+    <link rel="icon" type="image/x-con" href="images/favicon.ico">
     <link rel="stylesheet" href="styles.css">
     <script src="darkMode.js" defer></script>
     <script src="fetchStock.js" defer></script>
     <script src="seriesFilter.js" defer></script>
     <script src="autoRefresh.js" defer></script>
+    <script src="favourites.js" defer></script>
     <script src="https://kit.fontawesome.com/89895eaa3a.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="chart-container">
         <div class="header-container">
-            <h1 id="chart-title">GPU Stock Tracker</h1>
+            <h1 id="chart-title"><img class="fe-radar-icon" src="images/favicon.svg" alt="Radar Icon">FE-Radar</h1>
             <div class="header-buttons">
-                <button id="auto-refresh-toggle">Enable Auto Refresh (30s)</button>
+                <button id="auto-refresh-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 11A8.1 8.1 0 0 0 4.5 9M4 5v4h4m-4 4a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/></svg>
+                    Enable Auto Refresh (30s)
+                </button>
                 <button id="theme-toggle">
                     <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></g></svg>
                     <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="display: none;"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 14a9 9 0 1 1-9-11a7 7 0 0 0 9 11"/></svg>
@@ -26,8 +31,9 @@
         <table>
             <thead>
                 <tr class="table-header-row">
+                    <th class="favourite-header">Favourite</th>
                     <th class="model-header">
-                        <span id="model-header-text">Model <i class="fa-solid fa-chevron-down"></i></span>
+                        <span id="model-header-text">Model<i class="fa-solid fa-chevron-down"></i></span>
                         <div id="model-dropdown" class="dropdown-menu" style="display: none;">
                             <div class="dropdown-option" data-series="all">All</div>
                             <div class="dropdown-option" data-series="5000">50 Series</div>
@@ -42,6 +48,9 @@
             </thead>
             <tbody>
                 <tr class="product-row" data-product-id="1145381">
+                    <td class="favourite-cell">
+                        <i class="fa-regular fa-heart favourite-icon" data-favourite="false"></i>
+                    </td>
                     <td class="product-model">NVIDIA GeForce RTX 5090</td>
                     <td><img 
                         class="manufacturer-logo" 
@@ -55,6 +64,9 @@
                     <td class="stock-status" ></td>
                 </tr>
                 <tr class="product-row" data-product-id="1145488">
+                    <td class="favourite-cell">
+                        <i class="fa-regular fa-heart favourite-icon" data-favourite="false"></i>
+                    </td>
                     <td class="product-model">NVIDIA GeForce RTX 5080</td>
                     <td><img 
                         class="manufacturer-logo" 
@@ -68,6 +80,9 @@
                     <td class="stock-status"></td>
                 </tr>
                 <tr class="product-row" data-product-id="">
+                    <td class="favourite-cell">
+                        <i class="fa-regular fa-heart favourite-icon" data-favourite="false"></i>
+                    </td>
                     <td class="product-model">NVIDIA GeForce RTX 5070 Ti</td>
                     <td><img 
                         class="manufacturer-logo" 
@@ -81,6 +96,9 @@
                     <td class="stock-status"></td>
                 </tr>
                 <tr class="product-row" data-product-id="">
+                    <td class="favourite-cell">
+                        <i class="fa-regular fa-heart favourite-icon" data-favourite="false"></i>
+                    </td>
                     <td class="product-model">NVIDIA GeForce RTX 5070</td>
                     <td><img 
                         class="manufacturer-logo" 
@@ -94,6 +112,9 @@
                     <td class="stock-status"></td>
                 </tr>
                 <tr class="product-row" data-product-id="197593">
+                    <td class="favourite-cell">
+                        <i class="fa-regular fa-heart favourite-icon" data-favourite="false"></i>
+                    </td>
                     <td class="product-model">NVIDIA GeForce RTX 4090</td>
                     <td><img 
                         class="manufacturer-logo" 
@@ -120,6 +141,9 @@
                     <td class="in-stock">In Stock</td>
                 </tr> -->
                 <tr class="product-row" data-product-id="326771">
+                    <td class="favourite-cell">
+                        <i class="fa-regular fa-heart favourite-icon" data-favourite="false"></i>
+                    </td>
                     <td class="product-model">NVIDIA GeForce RTX 4080 SUPER</td>
                     <td><img 
                         class="manufacturer-logo" 
@@ -133,6 +157,9 @@
                     <td class="stock-status"></td>
                 </tr>
                 <tr class="product-row" data-product-id="89991">
+                    <td class="favourite-cell">
+                        <i class="fa-regular fa-heart favourite-icon" data-favourite="false"></i>
+                    </td>
                     <td class="product-model">NVIDIA GeForce RTX 4080</td>
                     <td><img 
                         class="manufacturer-logo" 
@@ -146,6 +173,9 @@
                     <td class="stock-status"></td>
                 </tr>
                 <tr class="product-row" data-product-id="271498">
+                    <td class="favourite-cell">
+                        <i class="fa-regular fa-heart favourite-icon" data-favourite="false"></i>
+                    </td>
                     <td class="product-model">NVIDIA GeForce RTX 4070 SUPER</td>
                     <td><img 
                         class="manufacturer-logo" 
@@ -159,6 +189,9 @@
                     <td class="stock-status"></td>
                 </tr>
                 <tr class="product-row" data-product-id="197594">
+                    <td class="favourite-cell">
+                        <i class="fa-regular fa-heart favourite-icon" data-favourite="false"></i>
+                    </td>
                     <td class="product-model">NVIDIA GeForce RTX 4070</td>
                     <td><img 
                         class="manufacturer-logo" 
@@ -172,6 +205,9 @@
                     <td class="stock-status"></td>
                 </tr>
                 <tr class="product-row" data-product-id="">
+                    <td class="favourite-cell">
+                        <i class="fa-regular fa-heart favourite-icon" data-favourite="false"></i>
+                    </td>
                     <td class="product-model">NVIDIA GeForce RTX 4060 Ti</td>
                     <td><img 
                         class="manufacturer-logo" 
@@ -187,5 +223,6 @@
             </tbody>
         </table>
     </div>
+    <div class="footer"><a href="https://www.flaticon.com/free-icons/radar" title="radar icons">Radar icons created by Freepik - Flaticon</a></div>
 </body>
 </html>

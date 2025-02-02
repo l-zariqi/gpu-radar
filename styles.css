@@ -22,7 +22,8 @@ body.dark-mode {
     align-items: center;
     justify-content: flex-start;
     margin: 0 auto;
-    max-width: 800px;
+    max-width: 900px;
+    width: auto;
     padding: 20px;
     border-radius: 8px;
     background-color: white;
@@ -36,6 +37,17 @@ body.dark-mode .chart-container {
     border: 1px solid #333;
 }
 
+#chart-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.fe-radar-icon {
+    width: 24px;
+    height: 24px;
+}
+
 .header-container {
     display: flex;
     flex-direction: column;
@@ -47,11 +59,7 @@ body.dark-mode .chart-container {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin: 10px;
-}
-
-#chart-title {
-    text-align: center;
+    margin: 20px;
 }
 
 table {
@@ -98,6 +106,37 @@ body.dark-mode tr:hover {
     background-color: #333;
 }
 
+/* Favourites Column */
+.favourite-header {
+    width: 50px;
+    text-align: center;
+}
+
+.favourite-cell {
+    text-align: center;
+    cursor: pointer;
+}
+
+.favourite-icon {
+    font-size: 18px;
+    color: lightgrey;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.favourite-icon:hover {
+    color: #f91880;
+}
+
+.favourite-icon.fa-solid {
+    color: #f91880;
+}
+
+.dimmed-row {
+    opacity: 0.4;
+    transition: opacity 0.2s ease;
+}
+
 /* URL Styling - Light Mode */
 a {
     color: #0073e6;
@@ -113,14 +152,14 @@ a:hover {
     text-decoration: underline;
 }
 
+.product-link {
+    text-align: center;
+}
+
 /* Manufacturer Logo */
 .manufacturer-logo {
     width: 100px;
     height: auto;
-}
-
-.product-link {
-    text-align: center;
 }
 
 /* Stock Status Styling */
@@ -208,6 +247,13 @@ body.dark-mode .stock-status.unknown-status::after {
     cursor: pointer;
 }
 
+/* Model Header Text */
+#model-header-text {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 /* Model Table Header Hover - Light Mode */
 .model-header:hover {
     background-color: #e0e0e0;
@@ -241,6 +287,10 @@ body.dark-mode .model-header:hover {
     background-color: #e0e0e0;
 }
 
+.dropdown-option.selected {
+    background-color: #e0e0e0;
+}
+
 /* Dropdown Menu - Dark Mode */
 body.dark-mode .dropdown-menu {
     background-color: #333;
@@ -251,19 +301,28 @@ body.dark-mode .dropdown-option:hover {
     background-color: #444;
 }
 
-/* Auto Refresh Button */
+body.dark-mode .dropdown-option.selected {
+    background-color: #444;
+}
+
+/* Auto Refresh Button - Light Mode */
 #auto-refresh-toggle {
-    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: auto;
+    height: 40px;
     background-color: white;
     color: black;
     border: 1px solid #ddd;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    margin: 10px 0;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Auto Refresh Button - Dark Mode */
 body.dark-mode #auto-refresh-toggle {
     color: white;
     background-color: #181818;
@@ -345,4 +404,9 @@ body.dark-mode #theme-toggle:hover {
 /* Theme Toggle Button Icon - Dark Mode */
 body.dark-mode #theme-toggle svg {
     color: white;
+}
+
+.footer {
+    text-align: center;
+    padding: 100px;
 }

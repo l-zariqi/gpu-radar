@@ -1,4 +1,3 @@
-// Dark Mode toggle
 document.addEventListener("DOMContentLoaded", function () {
     const toggleButton = document.getElementById("theme-toggle");
     const sunIcon = document.getElementById("sun-icon");

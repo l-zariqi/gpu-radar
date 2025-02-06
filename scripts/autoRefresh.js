@@ -5,7 +5,7 @@ const countdownDuration = 30; // Countdown duration in seconds
 // Function to start the countdown timer
 function startCountdown() {
     let timeLeft = countdownDuration;
-    const autoRefreshButton = document.getElementById("auto-refresh-toggle");
+    const toggleText = document.querySelector(".toggle-text");
 
     // Clear any existing countdown interval
     if (countdownInterval) {
@@ -15,21 +15,11 @@ function startCountdown() {
     // Update the countdown every second
     countdownInterval = setInterval(() => {
         timeLeft--;
-        autoRefreshButton.innerHTML = `
-            <svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 11A8.1 8.1 0 0 0 4.5 9M4 5v4h4m-4 4a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>
-            </svg>
-            Disable Auto Refresh (${timeLeft}s)
-        `;
+        toggleText.textContent = `Auto Refresh (${timeLeft}s)`;
 
         if (timeLeft <= 0) {
             clearInterval(countdownInterval); // Stop the countdown when it reaches 0
-            autoRefreshButton.innerHTML = `
-                <svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 11A8.1 8.1 0 0 0 4.5 9M4 5v4h4m-4 4a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>
-                </svg>
-                Disable Auto Refresh
-            `; // Reset button text
+            toggleText.textContent = "Auto Refresh (30s)"; // Reset text
         }
     }, 1000);
 }
@@ -37,25 +27,19 @@ function startCountdown() {
 // Function to stop the countdown timer
 function stopCountdown() {
     clearInterval(countdownInterval); // Stop the countdown
-    const autoRefreshButton = document.getElementById("auto-refresh-toggle");
-    autoRefreshButton.innerHTML = `
-        <svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 11A8.1 8.1 0 0 0 4.5 9M4 5v4h4m-4 4a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>
-        </svg>
-        Enable Auto Refresh (30s)
-    `; // Reset button text
+    const toggleText = document.querySelector(".toggle-text");
+    toggleText.textContent = "Auto Refresh (30s)"; // Reset text
 }
 
 // Function to toggle auto-refresh
 function toggleAutoRefresh() {
-    const autoRefreshButton = document.getElementById("auto-refresh-toggle");
+    const autoRefreshCheckbox = document.getElementById("auto-refresh-checkbox");
 
     if (autoRefreshInterval) {
         // If auto-refresh is already enabled, disable it
         clearInterval(autoRefreshInterval);
         autoRefreshInterval = null;
         stopCountdown(); // Stop the countdown
-        autoRefreshButton.classList.remove("enabled"); // Remove the "enabled" class
         console.log("Auto refresh disabled.");
     } else {
         // If auto-refresh is disabled, enable it
@@ -67,10 +51,9 @@ function toggleAutoRefresh() {
         // Fetch data immediately when auto-refresh is enabled
         fetchStockData();
         startCountdown(); // Start the countdown
-        autoRefreshButton.classList.add("enabled"); // Add the "enabled" class
         console.log("Auto refresh enabled. Checking API every 30 seconds.");
     }
 }
 
-// Add event listener to the button
-document.getElementById("auto-refresh-toggle").addEventListener("click", toggleAutoRefresh);
+// Add event listener to the checkbox
+document.getElementById("auto-refresh-checkbox").addEventListener("change", toggleAutoRefresh);

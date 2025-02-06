@@ -1,4 +1,3 @@
-/* Body - Light Mode */
 body {
     font-family: system-ui, sans-serif;
     background-color: #f8f8f8;
@@ -9,13 +8,11 @@ body {
     transition: background-color 0.2s ease-in-out;
 }
 
-/* Body - Dark Mode */
 body.dark-mode {
     background-color: black;
     color: white;
 }
 
-/* Table - Light Mode */
 .chart-container {
     display: flex;
     flex-direction: column;
@@ -31,7 +28,6 @@ body.dark-mode {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Table - Dark Mode */
 body.dark-mode .chart-container {
     background-color: #181818;
     border: 1px solid #333;
@@ -80,13 +76,11 @@ body.dark-mode td {
     border-bottom: 1px solid #555;
 }
 
-/* Table Headers - Light Mode */
 th {
     background-color: #f8f8f8;
     border-bottom: 1px solid #ddd;
 }
 
-/* Table Headers - Dark Mode */
 body.dark-mode th {
     background-color: #333;
     border-bottom: 1px solid #555;
@@ -96,17 +90,15 @@ body.dark-mode th {
     text-align: center;
 }
 
-/* Table Row Hover - Light Mode */
 tr:hover {
     background-color: #f8f8f8;
 }
 
-/* Table Row Hover - Dark Mode */
 body.dark-mode tr:hover {
     background-color: #333;
 }
 
-/* Alert Column */
+/* Alerts Column */
 .alert-header {
     width: auto;
     text-align: center;
@@ -136,13 +128,12 @@ body.dark-mode tr:hover {
     transition: opacity 0.2s ease;
 }
 
-/* URL Styling - Light Mode */
+/* URL Styling */
 a {
     color: #0073e6;
     text-decoration: none;
 }
 
-/* URL Styling - Dark Mode */
 body.dark-mode a {
     color: #90caf9;
 }
@@ -161,14 +152,14 @@ a:hover {
     height: auto;
 }
 
-/* Stock Status Styling */
+/* Stock Status */
 .stock-status {
     color: white;
     min-width: 75px;
     text-align: center;
 }
 
-/* In Stock Styling */
+/* In Stock Status */
 .in-stock {
     padding: 10px;
     color: white;
@@ -177,7 +168,7 @@ a:hover {
     background-color: #28a745;
 }
 
-/* Out of Stock Styling */
+/* Out of Stock Status */
 .out-of-stock {
     padding: 10px;
     color: white;
@@ -186,7 +177,7 @@ a:hover {
     background-color: #dc3545;
 }
 
-/* Unknown Status Styling */
+/* Unknown Status */
 .unknown-status {
     padding: 10px;
     color: white;
@@ -220,14 +211,12 @@ a:hover {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Tooltip - Light Mode */
 body:not(.dark-mode) .stock-status.unknown-status::after {
     background-color: white;
     color: black;
     border: 1px solid #ddd;
 }
 
-/* Tooltip - Dark Mode */
 body.dark-mode .stock-status.unknown-status::after {
     background-color: #181818;
     color: white;
@@ -245,24 +234,21 @@ body.dark-mode .stock-status.unknown-status::after {
     cursor: pointer;
 }
 
-/* Model Header Text */
 #model-header-text {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-/* Model Table Header Hover - Light Mode */
 .model-header:hover {
     background-color: #e0e0e0;
 }
 
-/* Model Table Header Hover - Dark Mode */
 body.dark-mode .model-header:hover {
     background-color: #444;
 }
 
-/* Dropdown Menu - Light Mode */
+/* Series Filter Dropdown Menu */
 .dropdown-menu {
     position: absolute;
     top: 100%;
@@ -289,7 +275,6 @@ body.dark-mode .model-header:hover {
     background-color: #e0e0e0;
 }
 
-/* Dropdown Menu - Dark Mode */
 body.dark-mode .dropdown-menu {
     background-color: #333;
     border: 1px solid #555;
@@ -303,70 +288,78 @@ body.dark-mode .dropdown-option.selected {
     background-color: #444;
 }
 
-/* Auto Refresh Button - Light Mode */
-#auto-refresh-toggle {
+/* Toggle Switch Container */
+.toggle-switch {
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 8px;
-    width: auto;
-    height: 40px;
-    background-color: white;
-    color: black;
+    padding: 8px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
+    background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Auto Refresh Button - Dark Mode */
-body.dark-mode #auto-refresh-toggle {
-    color: white;
+body.dark-mode .toggle-switch {
     background-color: #181818;
     border: 1px solid #555;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
-/* Auto Refresh Button Hover - Light Mode */
-#auto-refresh-toggle:hover {
-    background-color: #28a74634;
-    border-color: #28a745;
+#auto-refresh-checkbox {
+    display: none;
 }
 
-/* Auto Refresh Button Hover - Dark Mode */
-body.dark-mode #auto-refresh-toggle:hover {
-    background-color: #28a74634;
-    border-color: #28a745;
-}
-
-/* Auto Refresh Button Enabled - Light Mode */
-#auto-refresh-toggle.enabled {
-    background-color: #28a74634;
-    border-color: #28a745;
-}
-
-/* Auto Refresh Button Enabled - Dark Mode */
-body.dark-mode #auto-refresh-toggle.enabled {
-    background-color: #28a74634;
-    border-color: #28a745;
-}
-
-/* Auto Refresh Button Enabled Hover - Light Mode */
-#auto-refresh-toggle.enabled:hover {
-    background-color: #c8233336;
-    border-color: #bd2130;
-}
-
-/* Auto Refresh Button Enabled Hover - Dark Mode */
-body.dark-mode #auto-refresh-toggle.enabled:hover {
-    background-color: #c8233336;
-    border-color: #bd2130;
-}
-
-/* Theme Toggle Button - Light Mode */
-#theme-toggle {
+/* Toggle Label - Container for the switch */
+.toggle-label {
+    position: relative;
+    display: inline-block;
     width: 40px;
-    height: 40px;
+    height: 24px;
+    cursor: pointer;
+}
+
+/* Toggle Slider - The actual switch */
+.toggle-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 24px;
+    transition: background-color 0.2s ease;
+}
+
+/* Toggle Slider - Circle inside the switch */
+.toggle-slider::before {
+    content: "";
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+}
+
+#auto-refresh-checkbox:checked + .toggle-label .toggle-slider {
+    background-color: #28a745;
+}
+
+#auto-refresh-checkbox:checked + .toggle-label .toggle-slider::before {
+    transform: translateX(16px);
+}
+
+body.dark-mode .toggle-slider {
+    background-color: #555;
+}
+
+/* Theme Toggle Button */
+#theme-toggle {
+    width: 42px;
+    height: 42px;
     padding: 0;
     border-radius: 5px;
     background-color: white;
@@ -378,20 +371,18 @@ body.dark-mode #auto-refresh-toggle.enabled:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Theme Toggle Button - Dark Mode */
 body.dark-mode #theme-toggle {
     background-color: #181818;
     border: 1px solid #555;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
-/* Theme Toggle Button Icon - Light Mode */
 #theme-toggle svg {
     width: 24px;
     height: 24px;
     color: black;
 }
 
-/* Theme Toggle Button Icon - Dark Mode */
 body.dark-mode #theme-toggle svg {
     color: white;
 }
@@ -401,47 +392,6 @@ body.dark-mode #theme-toggle svg {
 }
 
 body.dark-mode #theme-toggle:hover {
-    background-color: #333;
-}
-
-/* Notification Toggle - Light Mode */
-#notification-toggle {
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    border-radius: 5px;
-    background-color: white;
-    border: 1px solid #ddd;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Notification Toggle - Dark Mode */
-body.dark-mode #notification-toggle {
-    background-color: #181818;
-    border: 1px solid #555;
-}
-
-/* Notification Toggle Icon - Light Mode */
-#notification-toggle svg {
-    width: 24px;
-    height: 24px;
-    color: black;
-}
-
-/* Notification Toggle Icon - Dark Mode */
-body.dark-mode #notification-toggle svg {
-    color: white;
-}
-
-#notification-toggle:hover {
-    background-color: #f8f8f8;
-}
-
-body.dark-mode #notification-toggle:hover {
     background-color: #333;
 }
 

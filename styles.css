@@ -6,7 +6,7 @@ body {
     padding: 20px;
     display: block;
     height: auto;
-    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out;
 }
 
 /* Body - Dark Mode */
@@ -44,8 +44,8 @@ body.dark-mode .chart-container {
 }
 
 .fe-radar-icon {
-    width: 24px;
-    height: 24px;
+    width: 32px;
+    height: auto;
 }
 
 .header-container {
@@ -68,7 +68,7 @@ table {
 }
 
 th, td {
-    padding: 15px;
+    padding: 10px;
     text-align: left;
 }
 
@@ -106,30 +106,29 @@ body.dark-mode tr:hover {
     background-color: #333;
 }
 
-/* Favourites Column */
-.favourite-header {
-    width: 50px;
+/* Alert Column */
+.alert-header {
+    width: auto;
     text-align: center;
 }
 
-.favourite-cell {
+.alert-cell {
     text-align: center;
     cursor: pointer;
 }
 
-.favourite-icon {
+.alert-icon {
     font-size: 18px;
-    color: lightgrey;
     cursor: pointer;
-    transition: color 0.2s ease;
+    color: grey;
 }
 
-.favourite-icon:hover {
-    color: #f91880;
+.alert-icon:hover {
+    color: gold;
 }
 
-.favourite-icon.fa-solid {
-    color: #f91880;
+.alert-icon.fa-solid {
+    color: gold;
 }
 
 .dimmed-row {
@@ -164,7 +163,6 @@ a:hover {
 
 /* Stock Status Styling */
 .stock-status {
-    padding: 8px 16px;
     color: white;
     min-width: 75px;
     text-align: center;
@@ -172,7 +170,7 @@ a:hover {
 
 /* In Stock Styling */
 .in-stock {
-    padding: 8px 16px;
+    padding: 10px;
     color: white;
     min-width: 75px;
     text-align: center;
@@ -181,7 +179,7 @@ a:hover {
 
 /* Out of Stock Styling */
 .out-of-stock {
-    padding: 8px 16px;
+    padding: 10px;
     color: white;
     min-width: 75px;
     text-align: center;
@@ -190,7 +188,7 @@ a:hover {
 
 /* Unknown Status Styling */
 .unknown-status {
-    padding: 8px 16px;
+    padding: 10px;
     color: white;
     min-width: 75px;
     text-align: center;
@@ -386,14 +384,6 @@ body.dark-mode #theme-toggle {
     border: 1px solid #555;
 }
 
-#theme-toggle:hover {
-    background-color: #f8f8f8;
-}
-
-body.dark-mode #theme-toggle:hover {
-    background-color: #333;
-}
-
 /* Theme Toggle Button Icon - Light Mode */
 #theme-toggle svg {
     width: 24px;
@@ -406,7 +396,69 @@ body.dark-mode #theme-toggle svg {
     color: white;
 }
 
+#theme-toggle:hover {
+    background-color: #f8f8f8;
+}
+
+body.dark-mode #theme-toggle:hover {
+    background-color: #333;
+}
+
+/* Notification Toggle - Light Mode */
+#notification-toggle {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 5px;
+    background-color: white;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Notification Toggle - Dark Mode */
+body.dark-mode #notification-toggle {
+    background-color: #181818;
+    border: 1px solid #555;
+}
+
+/* Notification Toggle Icon - Light Mode */
+#notification-toggle svg {
+    width: 24px;
+    height: 24px;
+    color: black;
+}
+
+/* Notification Toggle Icon - Dark Mode */
+body.dark-mode #notification-toggle svg {
+    color: white;
+}
+
+#notification-toggle:hover {
+    background-color: #f8f8f8;
+}
+
+body.dark-mode #notification-toggle:hover {
+    background-color: #333;
+}
+
+/* Footer */
 .footer {
-    text-align: center;
-    padding: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    gap: 10px;
+}
+
+#github-link {
+    width: 36px;
+    height: auto;
+}
+
+body.dark-mode #github-link {
+    fill: white;
 }

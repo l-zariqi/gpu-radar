@@ -1,3 +1,25 @@
+// Global variable to track sound state
+let isSoundEnabled = true;
+
+// Audio object for the notification sound
+const stockSound = new Audio('./sounds/notification.mp3');
+
+// Function to play the notification sound 3 times
+function playNotificationSound() {
+    console.log("playNotificationSound called"); // Debugging
+    let playCount = 0;
+
+    function play() {
+        if (playCount < 5) {
+            stockSound.play();
+            playCount++;
+            setTimeout(play, 1000); // 1-second delay between plays
+        }
+    }
+
+    play();
+}
+
 fetchStockData();
 async function fetchStockData() {
     const baseApiUrl = "https://api.nvidia.partners/edge/product/search";
@@ -34,8 +56,6 @@ async function fetchStockData() {
         console.error('Error fetching stock data:', error);
     }
 }
-
-const stockSound = new Audio('./sounds/notification.mp3');
 
 function updateStockStatus(products) {
     console.log("Updating stock status and prices for products:", products); // Log the products being processed
@@ -80,7 +100,7 @@ function updateStockStatus(products) {
 
                             // Play sound if the GPU is favourited and just came in stock
                             if (isFavourited && statusCell.textContent !== "In Stock") {
-                                stockSound.play();
+                                playNotificationSound();
                             }
                         } else if (product.productAvailable === false) {
                             stockStatus = "Out of Stock";

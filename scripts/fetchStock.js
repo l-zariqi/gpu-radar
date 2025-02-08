@@ -4,22 +4,24 @@ let isSoundEnabled = true;
 // Audio object for the notification sound
 const stockSound = new Audio('./sounds/notification.mp3');
 
-// Function to play the notification sound 3 times
+// Function to play the notification sound for 30 seconds
 function playNotificationSound() {
     console.log("playNotificationSound called"); // Debugging
-    let playCount = 0;
 
-    function play() {
-        if (playCount < 5) {
-            stockSound.play();
-            playCount++;
-            setTimeout(play, 1000); // 1-second delay between plays
+    const soundDuration = 30000; // 30 seconds in milliseconds
+    const startTime = Date.now(); // Record the start time
+
+    function playLoop() {
+        if (Date.now() - startTime < soundDuration) {
+            stockSound.play(); // Play the sound
+            setTimeout(playLoop, stockSound.duration * 1000); // Schedule the next play after the sound finishes
         }
     }
 
-    play();
+    playLoop(); // Start the loop
 }
 
+// Fetch stock data and update the table
 fetchStockData();
 async function fetchStockData() {
     const baseApiUrl = "https://api.nvidia.partners/edge/product/search";

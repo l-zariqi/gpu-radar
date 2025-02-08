@@ -155,7 +155,6 @@ a:hover {
 
 /* Stock Status */
 .stock-status {
-    color: white;
     min-width: 75px;
     text-align: center;
 }
@@ -185,6 +184,11 @@ a:hover {
     min-width: 75px;
     text-align: center;
     background-color: #6c757d;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+    vertical-align: middle;
 }
 
 /* Tooltip for Unknown Status */

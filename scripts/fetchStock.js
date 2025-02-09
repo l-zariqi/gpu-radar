@@ -6,30 +6,30 @@ const stockSound = new Audio('./sounds/notification.mp3');
 
 // Function to play the notification sound for 30 seconds
 function playNotificationSound() {
-    console.log("playNotificationSound called"); // Debugging
+    console.log("playNotificationSound called");
 
-    const soundDuration = 30000; // 30 seconds in milliseconds
-    const startTime = Date.now(); // Record the start time
+    const soundDuration = 30000;
+    const startTime = Date.now();
 
     function playLoop() {
         if (Date.now() - startTime < soundDuration) {
-            stockSound.play(); // Play the sound
-            setTimeout(playLoop, stockSound.duration * 1000); // Schedule the next play after the sound finishes
+            stockSound.play();
+            setTimeout(playLoop, stockSound.duration * 1000);
         }
     }
 
-    playLoop(); // Start the loop
+    playLoop();
 }
 
 // Fetch stock data and update the table
 fetchStockData();
 async function fetchStockData() {
     const baseApiUrl = "https://api.nvidia.partners/edge/product/search";
-    const limit = 9; // Number of items per page
-    const totalPages = 3; // Number of pages to fetch
+    const limit = 9;
+    const totalPages = 3;
     let allProducts = [];
 
-    console.log("Fetching stock data from API..."); // Log when fetching starts
+    console.log("Fetching stock data from API...");
 
     try {
         // Loop through multiple pages
@@ -42,7 +42,7 @@ async function fetchStockData() {
             }
 
             const data = await response.json();
-            console.log(`Data fetched successfully for page ${page}:`, data); // Log the fetched data
+            console.log(`Data fetched successfully for page ${page}:`, data);
 
             // Add products from this page to the allProducts array
             if (data.searchedProducts && data.searchedProducts.productDetails) {
@@ -60,19 +60,19 @@ async function fetchStockData() {
 }
 
 function updateStockStatus(products) {
-    console.log("Updating stock status and prices for products:", products); // Log the products being processed
+    console.log("Updating stock status and prices for products:", products);
     const gpuRows = document.querySelectorAll("tbody tr");
 
     // Clear previous statuses and prices
     gpuRows.forEach(row => {
         const statusCell = row.querySelector(".stock-status");
-        const priceCell = row.querySelector(".product-price"); // Select the price cell using the product-price class
+        const priceCell = row.querySelector(".product-price");
         if (statusCell) {
-            statusCell.textContent = ""; // Clear previous status
+            statusCell.textContent = "";
             statusCell.classList.remove("in-stock", "out-of-stock");
         }
         if (priceCell) {
-            priceCell.textContent = ""; // Clear previous price
+            priceCell.textContent = "";
         }
     });
 
@@ -81,12 +81,12 @@ function updateStockStatus(products) {
 
         if (isNvidiaProduct) {
             gpuRows.forEach(row => {
-                const productId = row.getAttribute("data-product-id"); // Get the productID from the row
+                const productSKU = row.getAttribute("data-product-sku"); // Get the productSKU from the row
 
-                // Match product using the productID from the API
-                if (productId && product.productID === parseInt(productId)) {
+                // Match product using the productSKU from the API
+                if (productSKU && product.productSKU === productSKU) {
                     const statusCell = row.querySelector(".stock-status");
-                    const priceCell = row.querySelector(".product-price"); // Select the price cell using the product-price class
+                    const priceCell = row.querySelector(".product-price");
                     const alertIcon = row.querySelector(".alert-icon");
 
                     // Check if the GPU is favourited
@@ -109,7 +109,7 @@ function updateStockStatus(products) {
                             statusCell.classList.remove("in-stock");
                             statusCell.classList.add("out-of-stock");
                         }
-                        statusCell.textContent = stockStatus; // Update the status
+                        statusCell.textContent = stockStatus;
                     }
 
                     // Update price
@@ -118,9 +118,9 @@ function updateStockStatus(products) {
                         let price = parseFloat(priceString); // Convert the cleaned string to a number
 
                         if (!isNaN(price)) {
-                            priceCell.textContent = `£${price.toLocaleString('en-GB', { minimumFractionDigits: 2 })}`; // Format price and update if it's a valid number
+                            priceCell.textContent = `£${price.toLocaleString('en-GB', { minimumFractionDigits: 2 })}`;
                         } else {
-                            priceCell.textContent = "Unknown"; // If price is not a valid number, set as "Unknown"
+                            priceCell.textContent = "Unknown";
                         }
                     }
                 }
@@ -130,7 +130,7 @@ function updateStockStatus(products) {
 
     // Set "Unknown" status and price for GPUs not found in API response
     gpuRows.forEach(row => {
-        const productId = row.getAttribute("data-product-id");
+        const productSKU = row.getAttribute("data-product-sku");
         const statusCell = row.querySelector(".stock-status");
         const priceCell = row.querySelector(".product-price");
 
@@ -140,7 +140,7 @@ function updateStockStatus(products) {
             statusCell.classList.add("unknown-status");
         }
         if (priceCell && !priceCell.textContent) {
-            priceCell.textContent = "Unknown"; // Set price to Unknown
+            priceCell.textContent = "Unknown";
         }
     });
 }

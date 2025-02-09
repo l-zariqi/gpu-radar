@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Load favourited states from localStorage when the page loads
     favouriteIcons.forEach((icon) => {
-        const productId = icon.closest(".product-row").getAttribute("data-product-id");
+        const productId = icon.closest(".product-row").getAttribute("data-product-sku");
         const isFavourited = localStorage.getItem(`favourite-${productId}`) === "true";
 
         // Set the initial state of the bell icon
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Add click event listeners to the bell icons
     favouriteIcons.forEach((icon) => {
         icon.addEventListener("click", function () {
-            const productId = icon.closest(".product-row").getAttribute("data-product-id");
+            const productId = icon.closest(".product-row").getAttribute("data-product-sku");
             const isFavourited = icon.getAttribute("data-favourite") === "true";
 
             // Toggle the favourited state

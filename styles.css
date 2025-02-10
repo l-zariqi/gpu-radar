@@ -40,11 +40,6 @@ body.dark-mode .chart-container {
     gap: 8px;
 }
 
-.fe-radar-icon {
-    width: 32px;
-    height: auto;
-}
-
 .header-container {
     display: flex;
     flex-direction: column;
@@ -89,6 +84,10 @@ body.dark-mode th {
 
 .status-header {
     text-align: center;
+}
+
+.product-row {
+    height: 75px;
 }
 
 tr:hover {
@@ -143,46 +142,24 @@ a:hover {
     text-decoration: underline;
 }
 
-.product-link {
-    text-align: center;
-}
-
-/* Manufacturer Logo */
-.manufacturer-logo {
-    width: 100px;
-    height: auto;
-}
-
 /* Stock Status */
 .stock-status {
-    min-width: 75px;
     text-align: center;
+    color: white;
 }
 
 /* In Stock Status */
 .in-stock {
-    padding: 10px;
-    color: white;
-    min-width: 75px;
-    text-align: center;
     background-color: #28a745;
 }
 
 /* Out of Stock Status */
 .out-of-stock {
-    padding: 10px;
-    color: white;
-    min-width: 75px;
-    text-align: center;
     background-color: #dc3545;
 }
 
 /* Unknown Status */
 .unknown-status {
-    padding: 10px;
-    color: white;
-    min-width: 75px;
-    text-align: center;
     background-color: #6c757d;
 }
 

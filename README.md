@@ -1,8 +1,12 @@
 # <img src="https://raw.githubusercontent.com/l-zariqi/fe-radar/main/images/favicon.svg" alt="fe-radar-icon" width="24" height="24"> GPU-Radar
 
-Stock tracker for NVIDIA GeForce Graphics cards using an NVIDIA partner store API.
+Stock tracker for NVIDIA GeForce Founders Edition Graphics Cards using an NVIDIA partner store API.
 
-Currently only supports Founders Edition cards sold in the UK 🇬🇧 with links directing to NVIDIA UK marketplace.
+## Supported Regions
+
+- United Kingdom 
+- Germany
+- France
 
 ## GPU List
 
@@ -16,6 +20,12 @@ Currently only supports Founders Edition cards sold in the UK 🇬🇧 with link
 - NVIDIA GeForce RTX 4070 SUPER
 - NVIDIA GeForce RTX 4070	
 - NVIDIA GeForce RTX 4060 Ti
+
+## Guide
+
+- 🌍 Select region from the dropdown menu
+- 🔔 Click the bell icon in the alerts column to enable drop alerts
+- 🔃 Enable Auto Refresh to automatically update the stock status
 
 ## Status Legend
 

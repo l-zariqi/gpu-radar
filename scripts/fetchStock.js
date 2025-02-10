@@ -52,7 +52,7 @@ async function fetchStockData() {
             }
         }
 
-        // Update stock status with all products
+        // Update stock status and data-product-sku with all products
         updateStockStatus(allProducts);
     } catch (error) {
         console.error('Error fetching stock data:', error);
@@ -60,7 +60,7 @@ async function fetchStockData() {
 }
 
 function updateStockStatus(products) {
-    console.log("Updating stock status and prices for products:", products);
+    console.log("Updating stock status, prices, and data-product-sku for products:", products);
     const gpuRows = document.querySelectorAll("tbody tr");
 
     // Clear previous statuses and prices
@@ -81,10 +81,13 @@ function updateStockStatus(products) {
 
         if (isNvidiaProduct) {
             gpuRows.forEach(row => {
-                const productSKU = row.getAttribute("data-product-sku"); // Get the productSKU from the row
+                const productModel = row.querySelector(".product-model").textContent; // Get the GPU model name from the row
 
-                // Match product using the productSKU from the API
-                if (productSKU && product.productSKU === productSKU) {
+                // Match product using the GPU model name from the API
+                if (productModel && product.productTitle === productModel) {
+                    // Update the data-product-sku attribute with the productSKU from the API
+                    row.setAttribute("data-product-sku", product.productSKU);
+
                     const statusCell = row.querySelector(".stock-status");
                     const priceCell = row.querySelector(".product-price");
                     const alertIcon = row.querySelector(".alert-icon");

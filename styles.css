@@ -40,6 +40,63 @@ body.dark-mode .chart-container {
     gap: 8px;
 }
 
+/* Page Guide */
+#page-guide {
+    position: relative;
+    padding: 10px;
+    color: #31708f;
+    background-color: #d9edf7;
+    border-radius: 5px;
+}
+
+body.dark-mode #page-guide {
+    background-color: #143a534d;
+    color: #bbe4f7;
+}
+
+#page-guide ol {
+    list-style-type: none;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+#page-guide ol li {
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 8px;
+}
+
+#page-guide ol li::before {
+    position: absolute;
+    left: 0;
+    font-size: 16px;
+}
+
+#page-guide ol li:nth-child(1)::before {
+    content: "🌍";
+}
+
+#page-guide ol li:nth-child(2)::before {
+    content: "🔔";
+}
+
+#page-guide ol li:nth-child(3)::before {
+    content: "🔃";
+}
+
+.close-button {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    font-size: 25px;
+    cursor: pointer;
+    color: #31708f;
+}
+
+body.dark-mode .close-button {
+    color: rgb(187, 228, 247); /* Adjust color for dark mode */
+}
+
 .header-container {
     display: flex;
     flex-direction: column;
@@ -84,10 +141,11 @@ body.dark-mode th {
 
 .status-header {
     text-align: center;
+    width: 115px;
 }
 
 .product-row {
-    height: 75px;
+    height: 80px;
 }
 
 tr:hover {
@@ -270,6 +328,42 @@ body.dark-mode .dropdown-option.selected {
     background-color: #444;
 }
 
+/* Locale Dropdown */
+#locale-dropdown {
+    height: 42px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+    font-family: system-ui, sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode #locale-dropdown {
+    color: white;
+    background-color: #181818;
+    border-color: #555;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+#locale-dropdown:hover {
+    background-color: #f8f8f8;
+}
+
+body.dark-mode #locale-dropdown:hover {
+    background-color: #333;
+}
+
+option {
+    background-color: white;
+}
+
+body.dark-mode option {
+    background-color: #181818;
+}
+
 /* Toggle Switch Container */
 .toggle-switch {
     display: flex;
@@ -292,7 +386,7 @@ body.dark-mode .toggle-switch {
     display: none;
 }
 
-/* Toggle Label - Container for the switch */
+/* Toggle Label */
 .toggle-label {
     position: relative;
     display: inline-block;
@@ -301,7 +395,7 @@ body.dark-mode .toggle-switch {
     cursor: pointer;
 }
 
-/* Toggle Slider - The actual switch */
+/* Toggle Slider */
 .toggle-slider {
     position: absolute;
     top: 0;
@@ -313,7 +407,6 @@ body.dark-mode .toggle-switch {
     transition: background-color 0.2s ease;
 }
 
-/* Toggle Slider - Circle inside the switch */
 .toggle-slider::before {
     content: "";
     position: absolute;

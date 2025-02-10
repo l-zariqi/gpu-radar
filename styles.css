@@ -164,11 +164,10 @@ body.dark-mode tr:hover {
 
 .alert-cell {
     text-align: center;
-    cursor: pointer;
 }
 
 .alert-icon {
-    font-size: 18px;
+    font-size: 20px;
     cursor: pointer;
     color: grey;
 }

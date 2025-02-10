@@ -21,8 +21,27 @@ function playNotificationSound() {
     playLoop();
 }
 
-// Fetch stock data and update the table
-fetchStockData();
+// Global variable to store the current locale
+let currentLocale = localStorage.getItem("selectedLocale") || "en-gb"; // Default to "en-gb" if no locale is saved
+
+// Event listener for locale dropdown
+document.addEventListener("DOMContentLoaded", function () {
+    const localeDropdown = document.getElementById("locale-dropdown");
+
+    if (localeDropdown) {
+        // Set the dropdown to the saved locale (or default)
+        localeDropdown.value = currentLocale;
+
+        // Add event listener for locale changes
+        localeDropdown.addEventListener("change", function (event) {
+            currentLocale = event.target.value; // Update the current locale
+            localStorage.setItem("selectedLocale", currentLocale); // Save the selected locale to localStorage
+            fetchStockData(); // Refresh the stock data with the new locale
+        });
+    }
+});
+
+// Function to fetch stock data with the selected locale
 async function fetchStockData() {
     const baseApiUrl = "https://api.nvidia.partners/edge/product/search";
     const limit = 9;
@@ -34,7 +53,7 @@ async function fetchStockData() {
     try {
         // Loop through multiple pages
         for (let page = 1; page <= totalPages; page++) {
-            const apiUrl = `${baseApiUrl}?page=${page}&limit=${limit}&locale=en-gb`;
+            const apiUrl = `${baseApiUrl}?page=${page}&limit=${limit}&locale=${currentLocale}`;
             const response = await fetch(apiUrl);
 
             if (!response.ok) {
@@ -52,27 +71,35 @@ async function fetchStockData() {
             }
         }
 
-        // Update stock status and data-product-sku with all products
+        // Update stock status with all products
         updateStockStatus(allProducts);
     } catch (error) {
         console.error('Error fetching stock data:', error);
     }
 }
 
+// Initial fetch
+fetchStockData();
+
+// Function to update stock status and prices
 function updateStockStatus(products) {
-    console.log("Updating stock status, prices, and data-product-sku for products:", products);
+    console.log("Updating stock status, prices, and links for products:", products);
     const gpuRows = document.querySelectorAll("tbody tr");
 
-    // Clear previous statuses and prices
+    // Clear previous statuses, prices, and links
     gpuRows.forEach(row => {
         const statusCell = row.querySelector(".stock-status");
         const priceCell = row.querySelector(".product-price");
+        const linkCell = row.querySelector(".product-link");
         if (statusCell) {
             statusCell.textContent = "";
             statusCell.classList.remove("in-stock", "out-of-stock");
         }
         if (priceCell) {
             priceCell.textContent = "";
+        }
+        if (linkCell) {
+            linkCell.innerHTML = ""; // Clear the link cell
         }
     });
 
@@ -81,15 +108,13 @@ function updateStockStatus(products) {
 
         if (isNvidiaProduct) {
             gpuRows.forEach(row => {
-                const productModel = row.querySelector(".product-model").textContent; // Get the GPU model name from the row
+                const productModel = row.querySelector(".product-model").textContent;
 
                 // Match product using the GPU model name from the API
                 if (productModel && product.productTitle === productModel) {
-                    // Update the data-product-sku attribute with the productSKU from the API
-                    row.setAttribute("data-product-sku", product.productSKU);
-
                     const statusCell = row.querySelector(".stock-status");
                     const priceCell = row.querySelector(".product-price");
+                    const linkCell = row.querySelector(".product-link");
                     const alertIcon = row.querySelector(".alert-icon");
 
                     // Check if the GPU is favourited
@@ -117,33 +142,37 @@ function updateStockStatus(products) {
 
                     // Update price
                     if (priceCell && product.productPrice) {
-                        let priceString = product.productPrice.replace(/[^0-9.]/g, ''); // Remove non-numeric characters
-                        let price = parseFloat(priceString); // Convert the cleaned string to a number
+                        priceCell.textContent = product.productPrice; // Display the price string as-is
+                    }
 
-                        if (!isNaN(price)) {
-                            priceCell.textContent = `£${price.toLocaleString('en-GB', { minimumFractionDigits: 2 })}`;
-                        } else {
-                            priceCell.textContent = "Unknown";
-                        }
+                    // Update link
+                    if (linkCell && product.internalLink) {
+                        linkCell.innerHTML = `<a href="${product.internalLink}" target="_blank" rel="noopener noreferrer">View</a>`;
+                    } else {
+                        linkCell.innerHTML = `<a href="#" target="_blank" rel="noopener noreferrer">View</a>`; // Default link if internalLink is missing
                     }
                 }
             });
         }
     });
 
-    // Set "Unknown" status and price for GPUs not found in API response
+    // Set "Unknown" status, price, and link for GPUs not found in API response
     gpuRows.forEach(row => {
         const productSKU = row.getAttribute("data-product-sku");
         const statusCell = row.querySelector(".stock-status");
         const priceCell = row.querySelector(".product-price");
+        const linkCell = row.querySelector(".product-link");
 
-        // Check if the status or price cells are still empty
+        // Check if the status, price, or link cells are still empty
         if (statusCell && !statusCell.textContent) {
             statusCell.textContent = "Unknown";
             statusCell.classList.add("unknown-status");
         }
         if (priceCell && !priceCell.textContent) {
             priceCell.textContent = "Unknown";
+        }
+        if (linkCell && !linkCell.innerHTML) {
+            linkCell.innerHTML = `<a href="#" target="_blank" rel="noopener noreferrer">View</a>`; // Default link
         }
     });
 }

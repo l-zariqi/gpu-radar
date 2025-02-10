@@ -11,13 +11,27 @@
     <script src="./scripts/seriesFilter.js" defer></script>
     <script src="./scripts/autoRefresh.js" defer></script>
     <script src="./scripts/favourites.js" defer></script>
+    <script src="./scripts/pageGuide.js" defer></script>
     <script src="https://kit.fontawesome.com/89895eaa3a.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="chart-container">
         <div class="header-container">
             <h1 id="chart-title">GPU-Radar</h1>
+            <div id="page-guide">
+                <span id="close-guide" class="close-button">×</span>
+                <ol>
+                    <li>Select region from the dropdown menu</li>
+                    <li>Click the bell icon in the alerts column to enable drop alerts</li>
+                    <li>Enable Auto Refresh to automatically update the stock status</li>
+                </ol>
+            </div>
             <div class="header-buttons">
+                <select id="locale-dropdown">
+                    <option value="en-gb">United Kingdom</option>
+                    <option value="de-de">Germany</option>
+                    <option value="fr-fr">France</option>
+                </select>
                 <div id="auto-refresh-toggle" class="toggle-switch">
                     <span class="toggle-text">Auto Refresh (30s)</span>
                     <input type="checkbox" id="auto-refresh-checkbox" />
@@ -55,7 +69,7 @@
                     </td>
                     <td class="product-model">NVIDIA GeForce RTX 5090</td>
                     <td class="product-price"><svg class="loading-spinner" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="16" stroke-dashoffset="16" d="M12 3c4.97 0 9 4.03 9 9"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="16;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path><path stroke-dasharray="64" stroke-dashoffset="64" stroke-opacity="0.3" d="M12 3c4.97 0 9 4.03 9 9c0 4.97 -4.03 9 -9 9c-4.97 0 -9 -4.03 -9 -9c0 -4.97 4.03 -9 9 -9Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.2s" values="64;0"/></path></g></svg></td>
-                    <td class="product-link"><a href="https://marketplace.nvidia.com/en-gb/consumer/graphics-cards/nvidia-geforce-rtx-5090/" target="_blank" rel="noopener noreferrer">View</a></td>
+                    <td class="product-link"></td>
                     <td class="stock-status" ><svg class="loading-spinner" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="16" stroke-dashoffset="16" d="M12 3c4.97 0 9 4.03 9 9"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="16;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path><path stroke-dasharray="64" stroke-dashoffset="64" stroke-opacity="0.3" d="M12 3c4.97 0 9 4.03 9 9c0 4.97 -4.03 9 -9 9c-4.97 0 -9 -4.03 -9 -9c0 -4.97 4.03 -9 9 -9Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.2s" values="64;0"/></path></g></svg></td>
                 </tr>
                 <tr class="product-row" data-product-sku="">

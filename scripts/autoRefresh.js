@@ -1,3 +1,5 @@
+import { fetchStockData } from './fetchStock.js';
+
 let autoRefreshInterval = null; // Variable to store the auto-refresh interval ID
 let countdownInterval = null; // Variable to store the countdown interval ID
 const countdownDuration = 30; // Countdown duration in seconds

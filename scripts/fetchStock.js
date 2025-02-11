@@ -1,3 +1,6 @@
+// Import the functions from favourites.js
+import { loadFavourites } from './favourites.js';
+
 // Global variable to track sound state
 let isSoundEnabled = true;
 
@@ -42,7 +45,8 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Function to fetch stock data with the selected locale
-async function fetchStockData() {
+fetchStockData();
+export async function fetchStockData() {
     const baseApiUrl = "https://api.nvidia.partners/edge/product/search";
     const limit = 9;
     const totalPages = 3;
@@ -78,9 +82,6 @@ async function fetchStockData() {
     }
 }
 
-// Initial fetch
-fetchStockData();
-
 // Function to update stock status and prices
 function updateStockStatus(products) {
     console.log("Updating stock status, prices, and links for products:", products);
@@ -110,8 +111,22 @@ function updateStockStatus(products) {
             gpuRows.forEach(row => {
                 const productModel = row.querySelector(".product-model").textContent;
 
-                // Match product using the GPU model name from the API
+                // Match product using the GPU model name from the API (productTitle)
                 if (productModel && product.productTitle === productModel) {
+                    // Set the data-product-sku attribute dynamically
+                    row.setAttribute("data-product-sku", product.productSKU);
+
+                    // Migrate the favourite state from the model name to the SKU
+                    const oldIdentifier = productModel; // Fallback identifier
+                    const newIdentifier = product.productSKU; // New identifier
+                    const isFavouritedMigration = localStorage.getItem(`favourite-${oldIdentifier}`) === "true";
+
+                    if (isFavouritedMigration) {
+                        // Migrate the favourite state to the new identifier
+                        localStorage.setItem(`favourite-${newIdentifier}`, true);
+                        localStorage.removeItem(`favourite-${oldIdentifier}`);
+                    }
+
                     const statusCell = row.querySelector(".stock-status");
                     const priceCell = row.querySelector(".product-price");
                     const linkCell = row.querySelector(".product-link");
@@ -172,7 +187,10 @@ function updateStockStatus(products) {
             priceCell.textContent = "Unknown";
         }
         if (linkCell && !linkCell.innerHTML) {
-            linkCell.innerHTML = `<a href="#" target="_blank" rel="noopener noreferrer">View</a>`; // Default link
+            linkCell.innerHTML = `<a href="#" target="_blank" rel="noopener noreferrer">View</a>`; // Default link if Unknown
         }
     });
+
+    // Load favourites and setup favourite icons after the table is populated
+    loadFavourites();
 }

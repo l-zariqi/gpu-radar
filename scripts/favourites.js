@@ -1,77 +1,69 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const favouriteIcons = document.querySelectorAll(".alert-icon");
+// Function to load favourites from localStorage
+export function loadFavourites() {
+    const favouriteGPUs = JSON.parse(localStorage.getItem("favouriteGPUs")) || [];
+    
+    document.querySelectorAll(".product-row").forEach(row => {
+        const productModel = row.querySelector(".product-model").textContent;
+        const bellIcon = row.querySelector(".alert-icon");
 
-    // Update the dimming of rows based on favourited state
-    function updateDimmedRows() {
-        const tableRows = document.querySelectorAll(".product-row");
-        let anyFavourited = false;
-
-        // Check if any row is favourited
-        tableRows.forEach((row) => {
-            const rowIcon = row.querySelector(".alert-icon");
-            if (rowIcon.getAttribute("data-favourite") === "true") {
-                anyFavourited = true;
-            }
-        });
-
-        // Dim or undim rows based on whether any row is favourited
-        tableRows.forEach((row) => {
-            const rowIcon = row.querySelector(".alert-icon");
-            if (anyFavourited) {
-                if (rowIcon.getAttribute("data-favourite") === "false") {
-                    row.classList.add("dimmed-row");
-                } else {
-                    row.classList.remove("dimmed-row");
-                }
-            } else {
-                row.classList.remove("dimmed-row"); // Remove dimming if no rows are favourited
-            }
-        });
-    }
-
-    // Load favourited states from localStorage when the page loads
-    favouriteIcons.forEach((icon) => {
-        const productId = icon.closest(".product-row").getAttribute("data-product-sku");
-        const isFavourited = localStorage.getItem(`favourite-${productId}`) === "true";
-
-        // Set the initial state of the bell icon
-        if (isFavourited) {
-            icon.setAttribute("data-favourite", "true");
-            icon.classList.remove("fa-regular", "fa-bell");
-            icon.classList.add("fa-solid", "fa-bell");
+        if (favouriteGPUs.includes(productModel)) {
+            bellIcon.classList.add("fa-solid");
+            bellIcon.classList.remove("fa-regular");
+            bellIcon.setAttribute("data-favourite", "true");
         } else {
-            icon.setAttribute("data-favourite", "false");
-            icon.classList.remove("fa-solid", "fa-bell");
-            icon.classList.add("fa-regular", "fa-bell");
+            bellIcon.classList.add("fa-regular");
+            bellIcon.classList.remove("fa-solid");
+            bellIcon.setAttribute("data-favourite", "false");
         }
     });
 
-    // Update dimmed rows based on initial favourited states
     updateDimmedRows();
+}
 
-    // Add click event listeners to the bell icons
-    favouriteIcons.forEach((icon) => {
-        icon.addEventListener("click", function () {
-            const productId = icon.closest(".product-row").getAttribute("data-product-sku");
-            const isFavourited = icon.getAttribute("data-favourite") === "true";
-
-            // Toggle the favourited state
-            icon.setAttribute("data-favourite", !isFavourited);
-
-            // Save the favourited state to localStorage
-            localStorage.setItem(`favourite-${productId}`, !isFavourited);
-
-            // Toggle between outlined and filled bell
-            if (isFavourited) {
-                icon.classList.remove("fa-solid", "fa-bell"); // Remove filled bell
-                icon.classList.add("fa-regular", "fa-bell"); // Add outlined bell
-            } else {
-                icon.classList.remove("fa-regular", "fa-bell"); // Remove outlined bell
-                icon.classList.add("fa-solid", "fa-bell"); // Add filled bell
-            }
-
-            // Update the dimming of rows
-            updateDimmedRows();
-        });
-    });
+// Function to handle bell icon clicks using event delegation
+document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("alert-icon")) {
+        toggleFavourite(event.target);
+    }
 });
+
+// Function to toggle favourite status
+function toggleFavourite(icon) {
+    const productRow = icon.closest(".product-row");
+    const productModel = productRow.querySelector(".product-model").textContent;
+
+    let favouriteGPUs = JSON.parse(localStorage.getItem("favouriteGPUs")) || [];
+
+    if (favouriteGPUs.includes(productModel)) {
+        favouriteGPUs = favouriteGPUs.filter(gpu => gpu !== productModel);
+        icon.classList.add("fa-regular");
+        icon.classList.remove("fa-solid");
+        icon.setAttribute("data-favourite", "false");
+    } else {
+        favouriteGPUs.push(productModel);
+        icon.classList.add("fa-solid");
+        icon.classList.remove("fa-regular");
+        icon.setAttribute("data-favourite", "true");
+    }
+
+    localStorage.setItem("favouriteGPUs", JSON.stringify(favouriteGPUs));
+    updateDimmedRows();
+}
+
+// Function to dim rows that aren't favourited
+function updateDimmedRows() {
+    const favouriteGPUs = JSON.parse(localStorage.getItem("favouriteGPUs")) || [];
+    const productRows = document.querySelectorAll(".product-row");
+
+    productRows.forEach(row => {
+        const productModel = row.querySelector(".product-model").textContent;
+        if (favouriteGPUs.length > 0 && !favouriteGPUs.includes(productModel)) {
+            row.classList.add("dimmed-row");
+        } else {
+            row.classList.remove("dimmed-row");
+        }
+    });
+}
+
+// Load favourites when the page loads
+document.addEventListener("DOMContentLoaded", loadFavourites);

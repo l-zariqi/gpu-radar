@@ -4,11 +4,17 @@ Stock tracker for NVIDIA GeForce Founders Edition Graphics Cards using an NVIDIA
 
 ## Supported Regions
 
-- United Kingdom 
-- Deutschland
-- España
+- Austria
+- Denmark
+- Germany
+- Spain
+- Finland
 - France
-- Italia
+- Italy
+- Netherlands
+- Norway
+- Sweden
+- United Kingdom
 
 ## GPU List
 

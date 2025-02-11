@@ -5,8 +5,10 @@ Stock tracker for NVIDIA GeForce Founders Edition Graphics Cards using an NVIDIA
 ## Supported Regions
 
 - United Kingdom 
-- Germany
+- Deutschland
+- España
 - France
+- Italia
 
 ## GPU List
 
@@ -25,10 +27,10 @@ Stock tracker for NVIDIA GeForce Founders Edition Graphics Cards using an NVIDIA
 
 - 🌍 Select region from the dropdown menu
 - 🔔 Click the bell icon in the alerts column to enable drop alerts
-- 🔃 Enable Auto Refresh to automatically update the stock status
+- 🔃 Enable Auto Refresh for automatic stock updates
 
 ## Status Legend
 
 - 🟩 In Stock
 - 🟥 Out of Stock
-- ⚠️ **Unknown Status** - GPU has either been delisted or the API can't find it
+- ⚠️ Unknown Status - GPU has either been delisted or the API can't find it

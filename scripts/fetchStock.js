@@ -180,11 +180,11 @@ function updateStockStatus(products) {
 
         // Check if the status, price, or link cells are still empty
         if (statusCell && !statusCell.textContent) {
-            statusCell.textContent = "Unknown";
+            statusCell.textContent = "Not Available";
             statusCell.classList.add("unknown-status");
         }
         if (priceCell && !priceCell.textContent) {
-            priceCell.textContent = "Unknown";
+            priceCell.textContent = "Not Available";
         }
         if (linkCell && !linkCell.innerHTML) {
             linkCell.innerHTML = `<a href="#" target="_blank" rel="noopener noreferrer">View</a>`; // Default link if Unknown

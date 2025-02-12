@@ -34,6 +34,7 @@ Stock tracker for NVIDIA GeForce Founders Edition Graphics Cards using an NVIDIA
 - 🌍 Select region from the dropdown menu
 - 🔔 Click the bell icon in the alerts column to enable drop alerts
 - 🔃 Enable Auto Refresh for automatic stock updates
+- 🔊 Select your preferred alarm from the dropdown
 
 ## Status Legend
 

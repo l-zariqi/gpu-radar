@@ -26,12 +26,12 @@ Stock tracker for NVIDIA GeForce Founders Edition Graphics Cards using an NVIDIA
 - NVIDIA GeForce RTX 4080 SUPER
 - NVIDIA GeForce RTX 4080
 - NVIDIA GeForce RTX 4070 SUPER
-- NVIDIA GeForce RTX 4070	
+- NVIDIA GeForce RTX 4070
 - NVIDIA GeForce RTX 4060 Ti
 
 ## Guide
 
-- 🌍 Select region from the dropdown menu
+- 🌍 Select your region from the dropdown
 - 🔔 Click the bell icon in the alerts column to enable drop alerts
 - 🔃 Enable Auto Refresh for automatic stock updates
 - 🔊 Select your preferred alarm from the dropdown

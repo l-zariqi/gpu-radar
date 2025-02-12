@@ -38,7 +38,7 @@ function startCountdown() {
 function stopCountdown() {
     clearInterval(countdownInterval); // Stop the countdown
     const toggleText = document.querySelector(".toggle-text");
-    toggleText.textContent = `Auto Refresh (${timeLeft}s)`; // Show the remaining time
+    toggleText.textContent = `Auto Refresh (${timeLeft}s)`;
 }
 
 // Function to toggle auto-refresh
@@ -46,21 +46,18 @@ function toggleAutoRefresh() {
     const autoRefreshCheckbox = document.getElementById("auto-refresh-checkbox");
 
     if (autoRefreshCheckbox.checked) {
-        // If auto-refresh is enabled
         isAutoRefreshEnabled = true;
         if (!autoRefreshInterval) {
-            // Start the countdown from the remaining time
             startCountdown();
             console.log("Auto refresh enabled. Checking API every 30 seconds.");
         }
     } else {
-        // If auto-refresh is disabled
         isAutoRefreshEnabled = false;
         if (autoRefreshInterval) {
             clearInterval(autoRefreshInterval);
             autoRefreshInterval = null;
         }
-        stopCountdown(); // Stop the countdown but keep the remaining time
+        stopCountdown();
         console.log("Auto refresh disabled.");
     }
 }

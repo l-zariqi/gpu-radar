@@ -1,10 +1,10 @@
 body {
-    font-family: system-ui, sans-serif;
-    background-color: #f8f8f8;
     margin: 0;
     padding: 20px;
     display: block;
     height: auto;
+    font-family: system-ui, sans-serif;
+    background-color: #f8f8f8;
     transition: background-color 0.2s ease-in-out;
 }
 
@@ -31,7 +31,6 @@ body.dark-mode {
 body.dark-mode .chart-container {
     background-color: #181818;
     border: 1px solid #333;
-    /* box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 15px, rgba(255, 255, 255, 0.15) 0px 0px 3px 1px; */
 }
 
 #chart-title {
@@ -84,6 +83,10 @@ body.dark-mode #page-guide {
     content: "🔃";
 }
 
+#page-guide ol li:nth-child(4)::before {
+    content: "🔊";
+}
+
 .close-button {
     position: absolute;
     top: 0px;
@@ -94,7 +97,7 @@ body.dark-mode #page-guide {
 }
 
 body.dark-mode .close-button {
-    color: rgb(187, 228, 247); /* Adjust color for dark mode */
+    color: rgb(187, 228, 247);
 }
 
 .header-container {
@@ -247,18 +250,18 @@ a:hover {
     visibility: hidden;
     transition: opacity 0.2s ease, visibility 0.2s ease;
     z-index: 100;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 body:not(.dark-mode) .stock-status.unknown-status::after {
-    background-color: white;
     color: black;
+    background-color: white;
     border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 body.dark-mode .stock-status.unknown-status::after {
-    background-color: #181818;
     color: white;
+    background-color: #181818;
     border: 1px solid #333;
 }
 
@@ -349,6 +352,7 @@ body.dark-mode #locale-dropdown {
 
 #locale-dropdown:hover {
     background-color: #f8f8f8;
+    
 }
 
 body.dark-mode #locale-dropdown:hover {
@@ -363,7 +367,44 @@ body.dark-mode option {
     background-color: #181818;
 }
 
-/* Toggle Switch Container */
+/* Sound Dropdown */
+#sound-dropdown {
+    height: 42px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+    font-family: system-ui, sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode #sound-dropdown {
+    color: white;
+    background-color: #181818;
+    border-color: #555;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+#sound-dropdown:hover {
+    background-color: #f8f8f8;
+    
+}
+
+body.dark-mode #sound-dropdown:hover {
+    background-color: #333;
+}
+
+option {
+    background-color: white;
+}
+
+body.dark-mode option {
+    background-color: #181818;
+}
+
+/* Auto Refresh Toggle Switch Container */
 .toggle-switch {
     display: flex;
     align-items: center;
@@ -385,7 +426,7 @@ body.dark-mode .toggle-switch {
     display: none;
 }
 
-/* Toggle Label */
+/* Auto Refresh Toggle Label */
 .toggle-label {
     position: relative;
     display: inline-block;
@@ -394,7 +435,7 @@ body.dark-mode .toggle-switch {
     cursor: pointer;
 }
 
-/* Toggle Slider */
+/* Auto Refresh Toggle Slider */
 .toggle-slider {
     position: absolute;
     top: 0;
@@ -432,17 +473,17 @@ body.dark-mode .toggle-slider {
 
 /* Theme Toggle Button */
 #theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 42px;
     height: 42px;
     padding: 0;
     border-radius: 5px;
     background-color: white;
     border: 1px solid #ddd;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
 }
 
 body.dark-mode #theme-toggle {
@@ -452,8 +493,6 @@ body.dark-mode #theme-toggle {
 }
 
 #theme-toggle svg {
-    width: 24px;
-    height: 24px;
     color: black;
 }
 
@@ -467,6 +506,76 @@ body.dark-mode #theme-toggle svg {
 
 body.dark-mode #theme-toggle:hover {
     background-color: #333;
+}
+
+/* Sound Test Button */
+#sound-test-button {
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border-radius: 5px;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+body.dark-mode #sound-test-button {
+    background-color: #181818;
+    border: 1px solid #555;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+#sound-test-button #sound-icon {
+    color: black;
+}
+
+body.dark-mode #sound-test-button #sound-icon {
+    color: white;
+}
+
+#sound-test-button:hover {
+    background-color: #f8f8f8;
+}
+
+body.dark-mode #sound-test-button:hover {
+    background-color: #333;
+}
+
+/* Custom Tooltip */
+#sound-test-button .sound-tooltip {
+    visibility: hidden;
+    width: 100px;
+    color: black;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -50px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+body.dark-mode #sound-test-button .sound-tooltip {
+    color: white;
+    background-color: #181818;
+    border-color: #555;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+#sound-test-button:hover .sound-tooltip {
+    visibility: visible;
+    opacity: 1;
 }
 
 /* Footer */

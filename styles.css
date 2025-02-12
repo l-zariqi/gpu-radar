@@ -595,3 +595,57 @@ body.dark-mode #sound-test-button .sound-tooltip {
 body.dark-mode #github-link {
     fill: white;
 }
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .chart-container {
+        max-width: 100%;
+        padding: 10px;
+    }
+
+    table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    th, td {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .header-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .header-buttons {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    #locale-dropdown, #sound-dropdown, #theme-toggle, #sound-test-button {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    .chart-container {
+        padding: 10px;
+    }
+
+    th, td {
+        padding: 6px;
+        font-size: 12px;
+    }
+
+    .header-buttons {
+        margin: 10px 0;
+    }
+}

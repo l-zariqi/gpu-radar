@@ -5,19 +5,20 @@ import { loadFavourites } from './favourites.js';
 let isSoundEnabled = true;
 
 // Audio object for the notification sound
-const stockSound = new Audio('./sounds/notification.mp3');
+let stockSound = new Audio('./sounds/notification.mp3');
 
 // Function to play the notification sound for 30 seconds
 function playNotificationSound() {
     console.log("playNotificationSound called");
 
-    const soundDuration = 30000;
+    const soundDuration = 30000; // Total duration to play the sound (30 seconds)
+    const playbackInterval = 1000; // Delay between playbacks in milliseconds (1 second)
     const startTime = Date.now();
 
     function playLoop() {
         if (Date.now() - startTime < soundDuration) {
             stockSound.play();
-            setTimeout(playLoop, stockSound.duration * 1000);
+            setTimeout(playLoop, playbackInterval);
         }
     }
 
@@ -30,6 +31,7 @@ let currentLocale = localStorage.getItem("selectedLocale") || "en-gb"; // Defaul
 // Event listener for locale dropdown
 document.addEventListener("DOMContentLoaded", function () {
     const localeDropdown = document.getElementById("locale-dropdown");
+    const soundDropdown = document.getElementById("sound-dropdown");
 
     if (localeDropdown) {
         // Set the dropdown to the saved locale (or default)
@@ -42,14 +44,25 @@ document.addEventListener("DOMContentLoaded", function () {
             fetchStockData(); // Refresh the stock data with the new locale
         });
     }
+
+    if (soundDropdown) {
+        // Add event listener for sound changes
+        soundDropdown.addEventListener("change", function (event) {
+            const selectedSound = event.target.value;
+            stockSound = new Audio(selectedSound);
+            console.log("Sound changed to:", selectedSound);
+        });
+    }
 });
+
 
 // Function to fetch stock data with the selected locale
 fetchStockData();
 export async function fetchStockData() {
+    // const baseApiUrl = "http://localhost:8000/mock-api.json"; MOCK API
     const baseApiUrl = "https://api.nvidia.partners/edge/product/search";
     const limit = 9;
-    const totalPages = 3;
+    const totalPages = 1;
     let allProducts = [];
 
     console.log("Fetching stock data from API...");
@@ -100,7 +113,7 @@ function updateStockStatus(products) {
             priceCell.textContent = "";
         }
         if (linkCell) {
-            linkCell.innerHTML = ""; // Clear the link cell
+            linkCell.innerHTML = "";
         }
     });
 
@@ -157,7 +170,7 @@ function updateStockStatus(products) {
 
                     // Update price
                     if (priceCell && product.productPrice) {
-                        priceCell.textContent = product.productPrice; // Display the price string as-is
+                        priceCell.textContent = product.productPrice; // Display the price string
                     }
 
                     // Update link

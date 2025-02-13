@@ -460,7 +460,7 @@ body.dark-mode .toggle-switch {
 }
 
 #auto-refresh-checkbox:checked + .toggle-label .toggle-slider {
-    background-color: #28a745;
+    background-color: rgb(52, 199, 89);
 }
 
 #auto-refresh-checkbox:checked + .toggle-label .toggle-slider::before {

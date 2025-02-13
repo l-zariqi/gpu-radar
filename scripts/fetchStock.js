@@ -1,18 +1,3 @@
-const ws = new WebSocket('wss://gpu-radar.onrender.com');
-
-ws.addEventListener('message', (event) => {
-    const data = JSON.parse(event.data);
-    updateStockStatus(data.searchedProducts.productDetails); // Update the UI
-});
-
-ws.addEventListener('open', () => {
-    console.log('Connected to WebSocket server');
-});
-
-ws.addEventListener('close', () => {
-    console.log('Disconnected from WebSocket server');
-});
-
 // Import the functions from favourites.js
 import { loadFavourites } from './favourites.js';
 

@@ -1,3 +1,18 @@
+const ws = new WebSocket('wss://gpu-radar.onrender.com');
+
+ws.addEventListener('message', (event) => {
+    const data = JSON.parse(event.data);
+    updateStockStatus(data.searchedProducts.productDetails); // Update the UI
+});
+
+ws.addEventListener('open', () => {
+    console.log('Connected to WebSocket server');
+});
+
+ws.addEventListener('close', () => {
+    console.log('Disconnected from WebSocket server');
+});
+
 // Import the functions from favourites.js
 import { loadFavourites } from './favourites.js';
 
@@ -55,11 +70,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-
 // Function to fetch stock data with the selected locale
-fetchStockData();
 export async function fetchStockData() {
-    // const baseApiUrl = "http://localhost:8000/mock-api.json"; MOCK API
     const baseApiUrl = "https://api.nvidia.partners/edge/product/search";
     const limit = 9;
     const totalPages = 1;
@@ -92,6 +104,8 @@ export async function fetchStockData() {
         updateStockStatus(allProducts);
     } catch (error) {
         console.error('Error fetching stock data:', error);
+        // Retry fetching data after 5 seconds in case of an error
+        setTimeout(fetchStockData, 5000);
     }
 }
 
@@ -207,3 +221,6 @@ function updateStockStatus(products) {
     // Load favourites and setup favourite icons after the table is populated
     loadFavourites();
 }
+
+// Fetch stock data when the script loads
+fetchStockData();

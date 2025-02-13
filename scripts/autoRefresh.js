@@ -26,9 +26,19 @@ function startCountdown() {
             toggleText.textContent = "Auto Refresh (30s)"; // Reset text
 
             if (isAutoRefreshEnabled) {
-                fetchStockData(); // Fetch data only when the timer reaches 0
-                timeLeft = countdownDuration; // Reset the timer
-                startCountdown(); // Restart the countdown
+                fetchStockData() // Fetch data only when the timer reaches 0
+                    .then(() => {
+                        timeLeft = countdownDuration; // Reset the timer
+                        startCountdown(); // Restart the countdown
+                    })
+                    .catch((error) => {
+                        console.error('Error during auto-refresh:', error);
+                        // Retry after 5 seconds if there's an error
+                        setTimeout(() => {
+                            timeLeft = countdownDuration;
+                            startCountdown();
+                        }, 5000);
+                    });
             }
         }
     }, 1000);

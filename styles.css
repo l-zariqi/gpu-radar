@@ -87,6 +87,10 @@ body.dark-mode #page-guide {
     content: "🔊";
 }
 
+#page-guide ol li:nth-child(5)::before {
+    content: "⏰";
+}
+
 .close-button {
     position: absolute;
     top: 0px;
@@ -97,7 +101,7 @@ body.dark-mode #page-guide {
 }
 
 body.dark-mode .close-button {
-    color: rgb(187, 228, 247);
+    color: #bbe4f7;
 }
 
 .header-container {
@@ -471,43 +475,6 @@ body.dark-mode .toggle-slider {
     background-color: #555;
 }
 
-/* Theme Toggle Button */
-#theme-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 42px;
-    height: 42px;
-    padding: 0;
-    border-radius: 5px;
-    background-color: white;
-    border: 1px solid #ddd;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-}
-
-body.dark-mode #theme-toggle {
-    background-color: #181818;
-    border: 1px solid #555;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-}
-
-#theme-toggle svg {
-    color: black;
-}
-
-body.dark-mode #theme-toggle svg {
-    color: white;
-}
-
-#theme-toggle:hover {
-    background-color: #f8f8f8;
-}
-
-body.dark-mode #theme-toggle:hover {
-    background-color: #333;
-}
-
 /* Sound Test Button */
 #sound-test-button {
     width: 42px;
@@ -576,6 +543,43 @@ body.dark-mode #sound-test-button .sound-tooltip {
 #sound-test-button:hover .sound-tooltip {
     visibility: visible;
     opacity: 1;
+}
+
+/* Theme Toggle Button */
+#theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border-radius: 5px;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+body.dark-mode #theme-toggle {
+    background-color: #181818;
+    border: 1px solid #555;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+#theme-toggle svg {
+    color: black;
+}
+
+body.dark-mode #theme-toggle svg {
+    color: white;
+}
+
+#theme-toggle:hover {
+    background-color: #f8f8f8;
+}
+
+body.dark-mode #theme-toggle:hover {
+    background-color: #333;
 }
 
 /* Footer */

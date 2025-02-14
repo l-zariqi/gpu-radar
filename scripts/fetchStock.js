@@ -1,65 +1,48 @@
-import { loadFavourites } from './favourites.js';
+import { loadFavourites } from './favourites.js'; // Import loadFavourites
 
-// Global variable to track sound state
-let isSoundEnabled = true;
+window.currentLocale = localStorage.getItem("selectedLocale") || "en-gb"; // Define globally
+console.log('Current Locale:', window.currentLocale); // Verify the value
 
-// Audio object for the notification sound
-let stockSound = new Audio('./sounds/notification.mp3');
-
-// Function to play the notification sound for 30 seconds
-function playNotificationSound() {
-    console.log("playNotificationSound called");
-
-    const soundDuration = 30000; // Total duration to play the sound (30 seconds)
-    const playbackInterval = 1000; // Delay between playbacks in milliseconds (1 second)
-    const startTime = Date.now();
-
-    function playLoop() {
-        if (Date.now() - startTime < soundDuration) {
-            stockSound.play();
-            setTimeout(playLoop, playbackInterval);
+// Initialize the fetchWorker if it doesn't already exist
+if (!window.fetchWorker) {
+    window.fetchWorker = new Worker('./scripts/fetchWorker.js');
+    window.fetchWorker.addEventListener('message', (event) => {
+        const data = event.data;
+        if (data && data.searchedProducts && data.searchedProducts.productDetails) {
+            updateStockStatus(data.searchedProducts.productDetails); // Update the table
         }
-    }
-
-    playLoop();
+    });
+    console.log('Fetch Worker initialized.');
 }
 
-// Event listener for locale dropdown
+// Function to fetch stock data (runs in the main thread)
+function fetchStockData() {
+    if (window.fetchWorker) {
+        console.log('Fetching data for locale:', window.currentLocale); // Debugging
+        window.fetchWorker.postMessage({ type: 'fetch', locale: window.currentLocale }); // Use window.currentLocale
+    } else {
+        console.error('Fetch Worker is not initialized.');
+        // Optionally, initialize the fetchWorker here if it's not already initialized
+        if (!window.fetchWorker) {
+            window.fetchWorker = new Worker('./scripts/fetchWorker.js');
+            window.fetchWorker.addEventListener('message', (event) => {
+                const data = event.data;
+                if (data && data.searchedProducts && data.searchedProducts.productDetails) {
+                    updateStockStatus(data.searchedProducts.productDetails); // Update the table
+                }
+            });
+            console.log('Fetch Worker initialized in fetchStockData.');
+        }
+    }
+}
+
+// Trigger initial fetch when the page loads
 document.addEventListener("DOMContentLoaded", function () {
-    const localeDropdown = document.getElementById("locale-dropdown");
-    const soundDropdown = document.getElementById("sound-dropdown");
-
-    if (localeDropdown) {
-        // Set the dropdown to the saved locale (or default)
-        localeDropdown.value = window.currentLocale || "en-gb";
-
-        // Add event listener for locale changes
-        localeDropdown.addEventListener("change", function (event) {
-            window.currentLocale = event.target.value; // Update the current locale
-            localStorage.setItem("selectedLocale", window.currentLocale); // Save the selected locale to localStorage
-
-            // Send a message to the Web Worker to fetch data with the new locale
-            if (window.worker) {
-                console.log('Locale changed. Fetching data for:', window.currentLocale);
-                window.worker.postMessage({ type: 'fetch', locale: window.currentLocale });
-            } else {
-                console.error('Web Worker is not initialized.');
-            }
-        });
-    }
-
-    if (soundDropdown) {
-        // Add event listener for sound changes
-        soundDropdown.addEventListener("change", function (event) {
-            const selectedSound = event.target.value;
-            stockSound = new Audio(selectedSound);
-            console.log("Sound changed to:", selectedSound);
-        });
-    }
+    console.log('DOM fully loaded. Fetching initial data...');
+    fetchStockData(); // Fetch data for the default locale
 });
 
 // Function to update stock status and prices
-// fetchStock.js
 export function updateStockStatus(products) {
     console.log("Updating stock status, prices, and links for products:", products);
     const gpuRows = document.querySelectorAll("tbody tr");
@@ -161,3 +144,69 @@ export function updateStockStatus(products) {
     // Load favourites and setup favourite icons after the table is populated
     loadFavourites();
 }
+
+// Function to play the notification sound for 30 seconds
+function playNotificationSound() {
+    console.log("playNotificationSound called");
+
+    const soundDuration = 30000; // Total duration to play the sound (30 seconds)
+    const playbackInterval = 1000; // Delay between playbacks in milliseconds (1 second)
+    const startTime = Date.now();
+
+    function playLoop() {
+        if (Date.now() - startTime < soundDuration) {
+            stockSound.play();
+            setTimeout(playLoop, playbackInterval);
+        }
+    }
+
+    playLoop();
+}
+
+// Event listener for locale dropdown
+document.addEventListener("DOMContentLoaded", function () {
+    const localeDropdown = document.getElementById("locale-dropdown");
+    const soundDropdown = document.getElementById("sound-dropdown");
+
+    if (localeDropdown) {
+        // Set the dropdown to the saved locale (or default)
+        localeDropdown.value = window.currentLocale || "en-gb";
+
+        // Add event listener for locale changes
+        localeDropdown.addEventListener("change", function (event) {
+            window.currentLocale = event.target.value; // Update the current locale
+            localStorage.setItem("selectedLocale", window.currentLocale); // Save the selected locale to localStorage
+
+            // Send a message to the Web Worker to fetch data with the new locale
+            if (window.fetchWorker) {
+                console.log('Locale changed. Fetching data for:', window.currentLocale);
+                window.fetchWorker.postMessage({ type: 'fetch', locale: window.currentLocale });
+            } else {
+                console.error('Fetch Worker is not initialized.');
+                // Initialize the fetchWorker if it's not already initialized
+                if (!window.fetchWorker) {
+                    window.fetchWorker = new Worker('./scripts/fetchWorker.js');
+                    window.fetchWorker.addEventListener('message', (event) => {
+                        const data = event.data;
+                        if (data && data.searchedProducts && data.searchedProducts.productDetails) {
+                            updateStockStatus(data.searchedProducts.productDetails); // Update the table
+                        }
+                    });
+                    console.log('Fetch Worker initialized in locale dropdown handler.');
+                }
+            }
+        });
+    }
+
+    if (soundDropdown) {
+        // Add event listener for sound changes
+        soundDropdown.addEventListener("change", function (event) {
+            const selectedSound = event.target.value;
+            stockSound = new Audio(selectedSound);
+            console.log("Sound changed to:", selectedSound);
+        });
+    }
+});
+
+// Audio object for the notification sound
+let stockSound = new Audio('./sounds/notification.mp3');

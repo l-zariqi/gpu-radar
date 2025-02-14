@@ -12,14 +12,14 @@ if (!window.fetchWorker) {
             updateStockStatus(data.searchedProducts.productDetails); // Update the table
         }
     });
-    console.log('Fetch Worker started.');
+    console.log('Fetch Worker initialized.');
 }
 
 // Function to fetch stock data (runs in the main thread)
 function fetchStockData() {
     if (window.fetchWorker) {
         // console.log('Fetching data for locale:', window.currentLocale);
-        window.fetchWorker.postMessage({ type: 'fetch', locale: window.currentLocale }); // Use window.currentLocale
+        window.fetchWorker.postMessage({ type: 'fetch', locale: window.currentLocale });
     } else {
         console.error('Fetch Worker is not initialized.');
         // Optionally, initialize the fetchWorker here if it's not already initialized
@@ -28,7 +28,7 @@ function fetchStockData() {
             window.fetchWorker.addEventListener('message', (event) => {
                 const data = event.data;
                 if (data && data.searchedProducts && data.searchedProducts.productDetails) {
-                    updateStockStatus(data.searchedProducts.productDetails); // Update the table
+                    updateStockStatus(data.searchedProducts.productDetails);
                 }
             });
             // console.log('Fetch Worker started in fetchStockData.');
@@ -39,7 +39,7 @@ function fetchStockData() {
 // Trigger initial fetch when the page loads
 document.addEventListener("DOMContentLoaded", function () {
     // console.log('DOM fully loaded. Fetching initial data...');
-    fetchStockData(); // Fetch data for the default locale
+    fetchStockData();
 });
 
 // Function to update stock status and prices

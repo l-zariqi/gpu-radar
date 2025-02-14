@@ -1,4 +1,3 @@
-// autoRefresh.js
 let autoRefreshWorker;
 let isAutoRefreshEnabled = false;
 const countdownDuration = 15; // Countdown duration in seconds
@@ -10,14 +9,12 @@ function startAutoRefreshWorker() {
         autoRefreshWorker.addEventListener('message', (event) => {
             const data = event.data;
             if (data.type === 'countdown') {
-                // Update the UI with the remaining time
                 const toggleText = document.querySelector(".toggle-text");
                 toggleText.textContent = `Auto Refresh (${data.timeLeft}s)`;
                 timeLeft = data.timeLeft; // Update timeLeft in the main thread
             } else if (data.type === 'fetch') {
-                // Trigger a fetch when the countdown reaches zero
-                console.log('Countdown reached zero. Fetching data...');
-                fetchStockData(); // Call the fetch function in the main thread
+                // console.log('Countdown reached zero. Fetching data...');
+                fetchStockData();
             }
         });
         console.log('Auto Refresh Worker started.');
@@ -37,7 +34,7 @@ function toggleAutoRefresh() {
     if (autoRefreshCheckbox.checked) {
         isAutoRefreshEnabled = true;
         if (autoRefreshWorker) {
-            autoRefreshWorker.postMessage({ type: 'start', duration: countdownDuration, timeLeft }); // Send current timeLeft
+            autoRefreshWorker.postMessage({ type: 'start', duration: countdownDuration, timeLeft });
         }
     } else {
         isAutoRefreshEnabled = false;
@@ -50,7 +47,7 @@ function toggleAutoRefresh() {
 // Function to fetch stock data (runs in the main thread)
 function fetchStockData() {
     if (window.fetchWorker) {
-        window.fetchWorker.postMessage({ type: 'fetch', locale: window.currentLocale }); // Use window.currentLocale
+        window.fetchWorker.postMessage({ type: 'fetch', locale: window.currentLocale });
     } else {
         console.error('Fetch Worker is not initialized.');
         // Optionally, initialize the fetchWorker here if it's not already initialized
@@ -59,7 +56,7 @@ function fetchStockData() {
             window.fetchWorker.addEventListener('message', (event) => {
                 const data = event.data;
                 if (data && data.searchedProducts && data.searchedProducts.productDetails) {
-                    updateStockStatus(data.searchedProducts.productDetails); // Update the table
+                    updateStockStatus(data.searchedProducts.productDetails);
                 }
             });
             console.log('Fetch Worker initialized in autoRefresh.js');

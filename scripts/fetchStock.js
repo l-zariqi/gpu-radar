@@ -1,7 +1,7 @@
 import { loadFavourites } from './favourites.js'; // Import loadFavourites
 
 window.currentLocale = localStorage.getItem("selectedLocale") || "en-gb"; // Define globally
-console.log('Current Locale:', window.currentLocale); // Verify the value
+// console.log('Current Locale:', window.currentLocale);
 
 // Initialize the fetchWorker if it doesn't already exist
 if (!window.fetchWorker) {
@@ -12,13 +12,13 @@ if (!window.fetchWorker) {
             updateStockStatus(data.searchedProducts.productDetails); // Update the table
         }
     });
-    console.log('Fetch Worker initialized.');
+    console.log('Fetch Worker started.');
 }
 
 // Function to fetch stock data (runs in the main thread)
 function fetchStockData() {
     if (window.fetchWorker) {
-        console.log('Fetching data for locale:', window.currentLocale); // Debugging
+        // console.log('Fetching data for locale:', window.currentLocale);
         window.fetchWorker.postMessage({ type: 'fetch', locale: window.currentLocale }); // Use window.currentLocale
     } else {
         console.error('Fetch Worker is not initialized.');
@@ -31,14 +31,14 @@ function fetchStockData() {
                     updateStockStatus(data.searchedProducts.productDetails); // Update the table
                 }
             });
-            console.log('Fetch Worker initialized in fetchStockData.');
+            // console.log('Fetch Worker started in fetchStockData.');
         }
     }
 }
 
 // Trigger initial fetch when the page loads
 document.addEventListener("DOMContentLoaded", function () {
-    console.log('DOM fully loaded. Fetching initial data...');
+    // console.log('DOM fully loaded. Fetching initial data...');
     fetchStockData(); // Fetch data for the default locale
 });
 
@@ -179,7 +179,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Send a message to the Web Worker to fetch data with the new locale
             if (window.fetchWorker) {
-                console.log('Locale changed. Fetching data for:', window.currentLocale);
+                // console.log('Locale changed. Fetching data for:', window.currentLocale);
                 window.fetchWorker.postMessage({ type: 'fetch', locale: window.currentLocale });
             } else {
                 console.error('Fetch Worker is not initialized.');

@@ -1,5 +1,5 @@
 self.addEventListener('message', (event) => {
-    console.log('Worker received message:', event.data);
+    // console.log('Worker received message:', event.data);
 
     if (event.data.type === 'fetch') {
         const locale = event.data.locale || 'en-gb'; // Default to 'en-gb' if no locale is provided

@@ -19,11 +19,11 @@ document.addEventListener("DOMContentLoaded", function () {
     if (soundTestButton && soundDropdown) {
         // Play sound when the button is clicked
         soundTestButton.addEventListener("click", function () {
-            console.log("Playing sound...");
+            // console.log("Playing sound...");
             stockSound.play().then(() => {
-                console.log("Sound played successfully.");
+                console.log("Alert test played successfully.");
             }).catch((error) => {
-                console.error("Error playing sound:", error);
+                console.error("Error playing alert test:", error);
             });
         });
 
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
         soundDropdown.addEventListener("change", function (event) {
             const selectedSound = event.target.value;
             stockSound = new Audio(selectedSound);
-            console.log("Sound changed to:", selectedSound);
+            // console.log("Sound changed to:", selectedSound);
         });
     }
 });

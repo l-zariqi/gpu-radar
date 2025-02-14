@@ -72,9 +72,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (selectedSeries === "all" ||
                     (selectedSeries === "4000" && modelText.includes("40")) ||
                     (selectedSeries === "5000" && modelText.includes("50"))) {
-                    row.style.display = ""; // Show row
+                    row.style.display = "";
                 } else {
-                    row.style.display = "none"; // Hide row
+                    row.style.display = "none";
                 }
             }
         });

@@ -1,10 +1,13 @@
-import { fetchStockData } from './fetchStock.js';
+import { updateStockStatus } from './fetchStock.js';
 
-let autoRefreshInterval = null; // Variable to store the auto-refresh interval ID
-let countdownInterval = null; // Variable to store the countdown interval ID
+let worker;
+let isAutoRefreshEnabled = false;
+let countdownInterval = null;
 const countdownDuration = 30; // Countdown duration in seconds
-let timeLeft = countdownDuration; // Variable to track the remaining time
-let isAutoRefreshEnabled = false; // Variable to track if auto-refresh is enabled
+let timeLeft = countdownDuration;
+
+// Define currentLocale globally
+let currentLocale = localStorage.getItem("selectedLocale") || "en-gb"; // Default to "en-gb" if no locale is saved
 
 // Function to start the countdown timer
 function startCountdown() {
@@ -26,19 +29,15 @@ function startCountdown() {
             toggleText.textContent = "Auto Refresh (30s)"; // Reset text
 
             if (isAutoRefreshEnabled) {
-                fetchStockData() // Fetch data only when the timer reaches 0
-                    .then(() => {
-                        timeLeft = countdownDuration; // Reset the timer
-                        startCountdown(); // Restart the countdown
-                    })
-                    .catch((error) => {
-                        console.error('Error during auto-refresh:', error);
-                        // Retry after 5 seconds if there's an error
-                        setTimeout(() => {
-                            timeLeft = countdownDuration;
-                            startCountdown();
-                        }, 5000);
-                    });
+                console.log('Timer reached zero. Fetching data...');
+                // Fetch data by sending a message to the worker
+                if (window.worker) {
+                    window.worker.postMessage({ type: 'fetch', locale: currentLocale });
+                } else {
+                    console.error('Web Worker is not initialized.');
+                }
+                timeLeft = countdownDuration; // Reset the timer
+                startCountdown(); // Restart the countdown
             }
         }
     }, 1000);
@@ -51,26 +50,60 @@ function stopCountdown() {
     toggleText.textContent = `Auto Refresh (${timeLeft}s)`;
 }
 
+// Function to start the Web Worker
+function startWorker() {
+    if (!window.worker) {
+        window.worker = new Worker('./scripts/fetchWorker.js');
+
+        // Listen for messages from the worker (fetched data)
+        window.worker.addEventListener('message', (event) => {
+            const data = event.data;
+            console.log('Data received from worker:', data);
+
+            // Ensure the data structure is correct before updating the UI
+            if (data && data.searchedProducts && data.searchedProducts.productDetails) {
+                updateStockStatus(data.searchedProducts.productDetails); // Update the UI with fetched data
+            } else {
+                console.error('Invalid data structure received from worker:', data);
+            }
+        });
+
+        console.log('Web Worker started.');
+    }
+}
+
+// Function to stop the Web Worker
+function stopWorker() {
+    if (window.worker) {
+        window.worker.terminate(); // Clean up the worker
+        window.worker = null;
+        console.log('Web Worker stopped.');
+    }
+}
+
 // Function to toggle auto-refresh
 function toggleAutoRefresh() {
     const autoRefreshCheckbox = document.getElementById("auto-refresh-checkbox");
 
     if (autoRefreshCheckbox.checked) {
         isAutoRefreshEnabled = true;
-        if (!autoRefreshInterval) {
-            startCountdown();
-            console.log("Auto refresh enabled. Checking API every 30 seconds.");
-        }
+        startCountdown(); // Start the countdown
     } else {
         isAutoRefreshEnabled = false;
-        if (autoRefreshInterval) {
-            clearInterval(autoRefreshInterval);
-            autoRefreshInterval = null;
-        }
-        stopCountdown();
-        console.log("Auto refresh disabled.");
+        stopCountdown(); // Stop the countdown
     }
 }
 
 // Add event listener to the checkbox
 document.getElementById("auto-refresh-checkbox").addEventListener("change", toggleAutoRefresh);
+
+// Make currentLocale globally accessible
+window.currentLocale = currentLocale;
+
+// Start the worker when the page loads
+startWorker();
+
+// Trigger an initial fetch when the page loads
+if (window.worker) {
+    window.worker.postMessage({ type: 'fetch', locale: currentLocale });
+}

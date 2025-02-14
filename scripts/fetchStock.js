@@ -1,4 +1,3 @@
-// Import the functions from favourites.js
 import { loadFavourites } from './favourites.js';
 
 // Global variable to track sound state
@@ -25,9 +24,6 @@ function playNotificationSound() {
     playLoop();
 }
 
-// Global variable to store the current locale
-let currentLocale = localStorage.getItem("selectedLocale") || "en-gb"; // Default to "en-gb" if no locale is saved
-
 // Event listener for locale dropdown
 document.addEventListener("DOMContentLoaded", function () {
     const localeDropdown = document.getElementById("locale-dropdown");
@@ -35,13 +31,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (localeDropdown) {
         // Set the dropdown to the saved locale (or default)
-        localeDropdown.value = currentLocale;
+        localeDropdown.value = window.currentLocale || "en-gb";
 
         // Add event listener for locale changes
         localeDropdown.addEventListener("change", function (event) {
-            currentLocale = event.target.value; // Update the current locale
-            localStorage.setItem("selectedLocale", currentLocale); // Save the selected locale to localStorage
-            fetchStockData(); // Refresh the stock data with the new locale
+            window.currentLocale = event.target.value; // Update the current locale
+            localStorage.setItem("selectedLocale", window.currentLocale); // Save the selected locale to localStorage
+
+            // Send a message to the Web Worker to fetch data with the new locale
+            if (window.worker) {
+                console.log('Locale changed. Fetching data for:', window.currentLocale);
+                window.worker.postMessage({ type: 'fetch', locale: window.currentLocale });
+            } else {
+                console.error('Web Worker is not initialized.');
+            }
         });
     }
 
@@ -55,49 +58,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-// Function to fetch stock data with the selected locale
-export async function fetchStockData() {
-    const baseApiUrl = "https://api.nvidia.partners/edge/product/search";
-    const limit = 9;
-    const totalPages = 1;
-    let allProducts = [];
-
-    console.log("Fetching stock data from API...");
-
-    try {
-        // Loop through multiple pages
-        for (let page = 1; page <= totalPages; page++) {
-            const apiUrl = `${baseApiUrl}?page=${page}&limit=${limit}&locale=${currentLocale}`;
-            const response = await fetch(apiUrl);
-
-            if (!response.ok) {
-                throw new Error(`Network response was not OK for page ${page}: ${response.statusText}`);
-            }
-
-            const data = await response.json();
-            console.log(`Data fetched successfully for page ${page}:`, data);
-
-            // Add products from this page to the allProducts array
-            if (data.searchedProducts && data.searchedProducts.productDetails) {
-                allProducts = allProducts.concat(data.searchedProducts.productDetails);
-            } else {
-                console.error(`Error: No 'productDetails' key in 'searchedProducts' for page ${page}.`);
-            }
-        }
-
-        // Update stock status with all products
-        updateStockStatus(allProducts);
-    } catch (error) {
-        console.error('Error fetching stock data:', error);
-        // Retry fetching data after 5 seconds in case of an error
-        setTimeout(fetchStockData, 5000);
-    }
-}
-
 // Function to update stock status and prices
-function updateStockStatus(products) {
+// fetchStock.js
+export function updateStockStatus(products) {
     console.log("Updating stock status, prices, and links for products:", products);
     const gpuRows = document.querySelectorAll("tbody tr");
+
+    // Create a set of GPU models from the fetched data
+    const fetchedGpuModels = new Set(products.map(product => product.productTitle));
 
     // Clear previous statuses, prices, and links
     gpuRows.forEach(row => {
@@ -106,7 +74,7 @@ function updateStockStatus(products) {
         const linkCell = row.querySelector(".product-link");
         if (statusCell) {
             statusCell.textContent = "";
-            statusCell.classList.remove("in-stock", "out-of-stock");
+            statusCell.classList.remove("in-stock", "out-of-stock", "unknown-status");
         }
         if (priceCell) {
             priceCell.textContent = "";
@@ -116,6 +84,7 @@ function updateStockStatus(products) {
         }
     });
 
+    // Update the table with the fetched data
     products.forEach(product => {
         const isNvidiaProduct = product.manufacturer === "NVIDIA";
 
@@ -125,20 +94,6 @@ function updateStockStatus(products) {
 
                 // Match product using the GPU model name from the API (productTitle)
                 if (productModel && product.productTitle === productModel) {
-                    // Set the data-product-sku attribute dynamically
-                    row.setAttribute("data-product-sku", product.productSKU);
-
-                    // Migrate the favourite state from the model name to the SKU
-                    const oldIdentifier = productModel; // Fallback identifier
-                    const newIdentifier = product.productSKU; // New identifier
-                    const isFavouritedMigration = localStorage.getItem(`favourite-${oldIdentifier}`) === "true";
-
-                    if (isFavouritedMigration) {
-                        // Migrate the favourite state to the new identifier
-                        localStorage.setItem(`favourite-${newIdentifier}`, true);
-                        localStorage.removeItem(`favourite-${oldIdentifier}`);
-                    }
-
                     const statusCell = row.querySelector(".stock-status");
                     const priceCell = row.querySelector(".product-price");
                     const linkCell = row.querySelector(".product-link");
@@ -152,7 +107,7 @@ function updateStockStatus(products) {
                         let stockStatus = "";
                         if (product.productAvailable === true) {
                             stockStatus = "In Stock";
-                            statusCell.classList.remove("out-of-stock");
+                            statusCell.classList.remove("out-of-stock", "unknown-status");
                             statusCell.classList.add("in-stock");
 
                             // Play sound if the GPU is favourited and just came in stock
@@ -161,7 +116,7 @@ function updateStockStatus(products) {
                             }
                         } else if (product.productAvailable === false) {
                             stockStatus = "Out of Stock";
-                            statusCell.classList.remove("in-stock");
+                            statusCell.classList.remove("in-stock", "unknown-status");
                             statusCell.classList.add("out-of-stock");
                         }
                         statusCell.textContent = stockStatus;
@@ -169,14 +124,12 @@ function updateStockStatus(products) {
 
                     // Update price
                     if (priceCell && product.productPrice) {
-                        priceCell.textContent = product.productPrice; // Display the price string
+                        priceCell.textContent = product.productPrice;
                     }
 
                     // Update link
                     if (linkCell && product.internalLink) {
                         linkCell.innerHTML = `<a href="${product.internalLink}" target="_blank" rel="noopener noreferrer">View</a>`;
-                    } else {
-                        linkCell.innerHTML = `<a href="#" target="_blank" rel="noopener noreferrer">View</a>`; // Default link if internalLink is missing
                     }
                 }
             });
@@ -185,27 +138,26 @@ function updateStockStatus(products) {
 
     // Set "Unknown" status, price, and link for GPUs not found in API response
     gpuRows.forEach(row => {
-        const productSKU = row.getAttribute("data-product-sku");
+        const productModel = row.querySelector(".product-model").textContent;
         const statusCell = row.querySelector(".stock-status");
         const priceCell = row.querySelector(".product-price");
         const linkCell = row.querySelector(".product-link");
 
-        // Check if the status, price, or link cells are still empty
-        if (statusCell && !statusCell.textContent) {
-            statusCell.textContent = "Not Available";
-            statusCell.classList.add("unknown-status");
-        }
-        if (priceCell && !priceCell.textContent) {
-            priceCell.textContent = "Not Available";
-        }
-        if (linkCell && !linkCell.innerHTML) {
-            linkCell.innerHTML = `<a href="#" target="_blank" rel="noopener noreferrer">View</a>`; // Default link if Unknown
+        // Check if the GPU model is not in the fetched data
+        if (!fetchedGpuModels.has(productModel)) {
+            if (statusCell) {
+                statusCell.textContent = "Not Available";
+                statusCell.classList.add("unknown-status");
+            }
+            if (priceCell) {
+                priceCell.textContent = "Not Available";
+            }
+            if (linkCell) {
+                linkCell.innerHTML = `<a href="#" rel="noopener noreferrer">N/A</a>`;
+            }
         }
     });
 
     // Load favourites and setup favourite icons after the table is populated
     loadFavourites();
 }
-
-// Fetch stock data when the script loads
-fetchStockData();

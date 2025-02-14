@@ -6,14 +6,17 @@
     <title>GPU-Radar</title>
     <link rel="icon" type="image/x-con" href="images/favicon.ico">
     <link rel="stylesheet" href="styles.css">
-    <script src="./scripts/darkMode.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icons/6.6.6/css/flag-icons.min.css">
     <script src="./scripts/fetchStock.js" type="module" defer></script>
-    <script src="./scripts/seriesFilter.js" defer></script>
     <script src="./scripts/autoRefresh.js" type="module" defer></script>
     <script src="./scripts/favourites.js" type="module" defer></script>
+    <!-- <script src="./scripts/fetchWorker.js" defer></script> -->
+    <script src="./scripts/seriesFilter.js" defer></script>
     <script src="./scripts/pageGuide.js" defer></script>
     <script src="./scripts/soundTest.js" defer></script>
+    <script src="./scripts/darkMode.js" defer></script>
     <script src="https://kit.fontawesome.com/89895eaa3a.js" crossorigin="anonymous"></script>
+    
 </head>
 <body>
     <div class="chart-container">
@@ -25,20 +28,21 @@
                     <li>Select your region from the dropdown</li>
                     <li>Click the bell icon in the alerts column to enable drop alerts</li>
                     <li>Enable Auto Refresh for automatic stock updates</li>
-                    <li>Select your preferred alarm from the dropdown</li>
+                    <li>Select your preferred alert sound from the dropdown</li>
+                    <li>Alerts will play for 30 seconds</li>
                 </ol>
             </div>
             <div class="header-buttons">
                 <select id="locale-dropdown">
                     <option value="de-at">Austria</option>
                     <option value="da-dk">Denmark</option>
-                    <option value="de-de">Germany</option>
-                    <option value="es-es">Spain</option>
                     <option value="fi-fi">Finland</option>
                     <option value="fr-fr">France</option>
+                    <option value="de-de">Germany</option>
                     <option value="it-it">Italy</option>
                     <option value="nl-nl">Netherlands</option>
                     <option value="nb-no">Norway</option>
+                    <option value="es-es">Spain</option>
                     <option value="sv-se">Sweden</option>
                     <option value="en-gb">United Kingdom</option>
                 </select>
@@ -52,6 +56,7 @@
                 <select id="sound-dropdown">
                     <option value="./sounds/notification.mp3">Default Sound</option>
                     <option value="./sounds/sound1.mp3">Sound 1</option>
+                    <option value="./sounds/sound2.mp3">Sound 2</option>
                 </select>
                 <button id="sound-test-button">
                     <svg id="sound-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 14.959V9.04C2 8.466 2.448 8 3 8h3.586a.98.98 0 0 0 .707-.305l3-3.388c.63-.656 1.707-.191 1.707.736v13.914c0 .934-1.09 1.395-1.716.726l-2.99-3.369A.98.98 0 0 0 6.578 16H3c-.552 0-1-.466-1-1.041M16 8.5c1.333 1.778 1.333 5.222 0 7M19 5c3.988 3.808 4.012 10.217 0 14"/></svg>

@@ -1,6 +1,6 @@
 let autoRefreshWorker;
 let isAutoRefreshEnabled = false;
-const countdownDuration = 15; // Countdown duration in seconds
+const countdownDuration = 25; // Countdown duration in seconds
 let timeLeft = countdownDuration; // Track timeLeft in the main thread
 
 function startAutoRefreshWorker() {

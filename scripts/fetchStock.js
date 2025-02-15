@@ -119,6 +119,7 @@ export function updateStockStatus(products) {
                     // Update link
                     if (linkCell && product.internalLink) {
                         linkCell.innerHTML = `<a href="${product.internalLink}" target="_blank" rel="noopener noreferrer">View</a>`;
+                        // <svg class="url-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 10.5L21 3m-5 0h5v5m0 6v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>
                     }
 
                     // Update SKU
@@ -146,10 +147,11 @@ export function updateStockStatus(products) {
                 statusCell.classList.add("unknown-status");
             }
             if (priceCell) {
-                priceCell.textContent = "Not Available";
+                priceCell.textContent = "N/A";
+                priceCell.style.color = "#666";
             }
             if (linkCell) {
-                linkCell.innerHTML = `<a href="#" rel="noopener noreferrer">N/A</a>`;
+                linkCell.innerHTML = `<a href="#" style="color:#666;" rel="noopener noreferrer">N/A</a>`;
             }
             if (skuSpan) {
                 skuSpan.textContent = "SKU: N/A";

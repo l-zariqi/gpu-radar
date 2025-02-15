@@ -9,7 +9,7 @@ if (!window.fetchWorker) {
     window.fetchWorker.addEventListener('message', (event) => {
         const data = event.data;
         if (data && data.searchedProducts && data.searchedProducts.productDetails) {
-            updateStockStatus(data.searchedProducts.productDetails); // Update the table
+            updateStockStatus(data.searchedProducts.productDetails);
         }
     });
     console.log('Fetch Worker initialized.');
@@ -55,6 +55,7 @@ export function updateStockStatus(products) {
         const statusCell = row.querySelector(".stock-status");
         const priceCell = row.querySelector(".product-price");
         const linkCell = row.querySelector(".product-link");
+        const skuSpan = row.querySelector(".product-sku");
         if (statusCell) {
             statusCell.textContent = "";
             statusCell.classList.remove("in-stock", "out-of-stock", "unknown-status");
@@ -65,6 +66,9 @@ export function updateStockStatus(products) {
         if (linkCell) {
             linkCell.innerHTML = "";
         }
+        if (skuSpan) {
+            skuSpan.textContent = "";
+        }
     });
 
     // Update the table with the fetched data
@@ -73,13 +77,15 @@ export function updateStockStatus(products) {
 
         if (isNvidiaProduct) {
             gpuRows.forEach(row => {
-                const productModel = row.querySelector(".product-model").textContent;
+                const modelNameSpan = row.querySelector(".model-name");
+                const productModel = modelNameSpan ? modelNameSpan.textContent : "";
 
                 // Match product using the GPU model name from the API (productTitle)
                 if (productModel && product.productTitle === productModel) {
                     const statusCell = row.querySelector(".stock-status");
                     const priceCell = row.querySelector(".product-price");
                     const linkCell = row.querySelector(".product-link");
+                    const skuSpan = row.querySelector(".product-sku");
                     const alertIcon = row.querySelector(".alert-icon");
 
                     // Check if the GPU is favourited
@@ -114,6 +120,11 @@ export function updateStockStatus(products) {
                     if (linkCell && product.internalLink) {
                         linkCell.innerHTML = `<a href="${product.internalLink}" target="_blank" rel="noopener noreferrer">View</a>`;
                     }
+
+                    // Update SKU
+                    if (skuSpan && product.productSKU) {
+                        skuSpan.textContent = `SKU: ${product.productSKU}`;
+                    }
                 }
             });
         }
@@ -121,10 +132,12 @@ export function updateStockStatus(products) {
 
     // Set "Unknown" status, price, and link for GPUs not found in API response
     gpuRows.forEach(row => {
-        const productModel = row.querySelector(".product-model").textContent;
+        const modelNameSpan = row.querySelector(".model-name");
+        const productModel = modelNameSpan ? modelNameSpan.textContent : "";
         const statusCell = row.querySelector(".stock-status");
         const priceCell = row.querySelector(".product-price");
         const linkCell = row.querySelector(".product-link");
+        const skuSpan = row.querySelector(".product-sku");
 
         // Check if the GPU model is not in the fetched data
         if (!fetchedGpuModels.has(productModel)) {
@@ -137,6 +150,9 @@ export function updateStockStatus(products) {
             }
             if (linkCell) {
                 linkCell.innerHTML = `<a href="#" rel="noopener noreferrer">N/A</a>`;
+            }
+            if (skuSpan) {
+                skuSpan.textContent = "SKU: N/A";
             }
         }
     });
@@ -189,7 +205,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     window.fetchWorker.addEventListener('message', (event) => {
                         const data = event.data;
                         if (data && data.searchedProducts && data.searchedProducts.productDetails) {
-                            updateStockStatus(data.searchedProducts.productDetails); // Update the table
+                            updateStockStatus(data.searchedProducts.productDetails);
                         }
                     });
                     console.log('Fetch Worker initialized in locale dropdown handler.');

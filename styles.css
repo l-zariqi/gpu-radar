@@ -174,9 +174,10 @@ body.dark-mode tr:hover {
 }
 
 .alert-icon {
+    vertical-align: middle;
     font-size: 20px;
     cursor: pointer;
-    color: grey;
+    color: #666;
 }
 
 .alert-icon:hover {
@@ -600,6 +601,12 @@ body.dark-mode #github-link {
     fill: white;
 }
 
+.product-sku {
+    font-size: 0.9em;
+    color: #666;
+    display: block;
+}
+
 /* Responsive Styles */
 @media (max-width: 768px) {
     .chart-container {
@@ -608,10 +615,10 @@ body.dark-mode #github-link {
     }
 
     table {
-        display: block;
-        width: 100%;
-        overflow-x: auto;
-        white-space: nowrap;
+        /* display: block; */
+        /* width: 100%; */
+        /* overflow-x: auto; */
+        /* white-space: nowrap; */
     }
 
     th, td {

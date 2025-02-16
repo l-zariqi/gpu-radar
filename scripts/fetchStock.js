@@ -93,9 +93,11 @@ export function updateStockStatus(products) {
         }
         if (priceCell) {
             priceCell.textContent = "";
+            priceCell.style.color = ""; // Reset the color to default
         }
         if (linkCell) {
             linkCell.innerHTML = "";
+            linkCell.style.color = ""; // Reset the color to default
         }
         if (skuSpan) {
             skuSpan.textContent = "";
@@ -122,13 +124,13 @@ export function updateStockStatus(products) {
                     // Check if the GPU is favourited
                     const isFavourited = alertIcon.getAttribute("data-favourite") === "true";
 
-                    // Update stock status based on productAvailable
+                    // Update stock status based on prdStatus
                     if (statusCell) {
                         const previousStatus = statusCell.textContent;
-                        const currentStatus = product.productAvailable ? "In Stock" : "Out of Stock";
+                        const currentStatus = product.prdStatus === "buy_now" ? "In Stock" : "Out of Stock";
 
                         let stockStatus = "";
-                        if (product.productAvailable === true) {
+                        if (product.prdStatus === "buy_now") {
                             stockStatus = "In Stock";
                             statusCell.classList.remove("out-of-stock", "unknown-status");
                             statusCell.classList.add("in-stock");
@@ -137,7 +139,7 @@ export function updateStockStatus(products) {
                             if (isFavourited && previousStatus !== "In Stock") {
                                 playNotificationSound();
                             }
-                        } else if (product.productAvailable === false) {
+                        } else if (product.prdStatus === "out_of_stock") {
                             stockStatus = "Out of Stock";
                             statusCell.classList.remove("in-stock", "unknown-status");
                             statusCell.classList.add("out-of-stock");
@@ -148,11 +150,13 @@ export function updateStockStatus(products) {
                     // Update price
                     if (priceCell && product.productPrice) {
                         priceCell.textContent = product.productPrice;
+                        priceCell.style.color = ""; // Reset the color to default
                     }
 
                     // Update link
                     if (linkCell && product.internalLink) {
                         linkCell.innerHTML = `<a href="${product.internalLink}" target="_blank" rel="noopener noreferrer">View</a>`;
+                        linkCell.style.color = ""; // Reset the color to default
                     }
 
                     // Update SKU
@@ -181,7 +185,7 @@ export function updateStockStatus(products) {
             }
             if (priceCell) {
                 priceCell.textContent = "N/A";
-                priceCell.style.color = "#666";
+                priceCell.style.color = "#666"; // Set grey color for unavailable products
             }
             if (linkCell) {
                 linkCell.innerHTML = `<a href="#" style="color:#666;" rel="noopener noreferrer">N/A</a>`;

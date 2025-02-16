@@ -625,7 +625,7 @@ body.dark-mode #github-link {
     }
 
     table {
-        /* display: block; */
+        display: block;
         width: 100%;
         overflow-x: auto;
         white-space: nowrap;

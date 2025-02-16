@@ -15,6 +15,7 @@ GPU stock tracker and notifier for NVIDIA GeForce Founders Edition Graphics Card
 - Spain
 - Sweden
 - United Kingdom
+- United States
 
 ## GPU List
 
@@ -35,7 +36,7 @@ GPU stock tracker and notifier for NVIDIA GeForce Founders Edition Graphics Card
 - 🔔 Click the bell icon in the alerts column to enable drop alerts
 - 🔃 Enable Auto Refresh for automatic stock updates
 - 🔊 Select your preferred alert sound from the dropdown
-- ⏰ Alert sounds will play for 30 seconds
+- ⏰ Alerts will play for 30 seconds if a GPU is "In Stock" or API is down
 
 ## Status Legend
 

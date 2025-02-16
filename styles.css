@@ -480,6 +480,11 @@ body.dark-mode .toggle-slider {
     background-color: #555;
 }
 
+.fetch-time {
+    font-size: 0.9em;
+    color: #666;
+}
+
 /* Sound Test Button */
 #sound-test-button {
     width: 42px;
@@ -620,9 +625,9 @@ body.dark-mode #github-link {
 
     table {
         /* display: block; */
-        /* width: 100%; */
-        /* overflow-x: auto; */
-        /* white-space: nowrap; */
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
     }
 
     th, td {

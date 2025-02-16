@@ -1,7 +1,6 @@
-import { loadFavourites } from './favourites.js'; // Import loadFavourites
+import { loadFavourites } from './favourites.js';
 
 window.currentLocale = localStorage.getItem("selectedLocale") || "en-gb"; // Define globally
-// console.log('Current Locale:', window.currentLocale);
 
 // Initialize the fetchWorker if it doesn't already exist
 if (!window.fetchWorker) {
@@ -18,7 +17,6 @@ if (!window.fetchWorker) {
 // Function to fetch stock data (runs in the main thread)
 function fetchStockData() {
     if (window.fetchWorker) {
-        // console.log('Fetching data for locale:', window.currentLocale);
         window.fetchWorker.postMessage({ type: 'fetch', locale: window.currentLocale });
     } else {
         console.error('Fetch Worker is not initialized.');
@@ -29,23 +27,52 @@ function fetchStockData() {
                 const data = event.data;
                 if (data && data.searchedProducts && data.searchedProducts.productDetails) {
                     updateStockStatus(data.searchedProducts.productDetails);
+                    isApiDown = false;
+                } else {
+                    // API is down or returned an error
+                    if (!isApiDown) {
+                        isApiDown = true;
+                        playNotificationSound();
+                    }
                 }
             });
-            // console.log('Fetch Worker started in fetchStockData.');
+            console.log('Fetch Worker initialized in fetchStockData.');
         }
     }
 }
 
 // Trigger initial fetch when the page loads
 document.addEventListener("DOMContentLoaded", function () {
-    // console.log('DOM fully loaded. Fetching initial data...');
     fetchStockData();
+
+    // Optionally, set an initial fetch time if needed
+    const fetchTimeElement = document.getElementById("fetch-time");
+    if (fetchTimeElement) {
+        fetchTimeElement.textContent = `Last fetch: ${formatLastFetchTime()}`;
+    }
 });
 
-// Function to update stock status and prices
+// Function to format the last fetched time
+function formatLastFetchTime() {
+    const now = new Date();
+    return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }); // Format: 03:45:00 PM
+}
+
+let lastFetchTime = null; // Track the last fetch time globally
+
+// Update table data function
 export function updateStockStatus(products) {
-    console.log("Updating stock status, prices, and links for products:", products);
+    console.log("Updating table data:", products);
     const gpuRows = document.querySelectorAll("tbody tr");
+
+    // Update the last fetch time
+    lastFetchTime = formatLastFetchTime();
+
+    // Update the fetch time in the auto-refresh button
+    const fetchTimeElement = document.getElementById("fetch-time");
+    if (fetchTimeElement) {
+        fetchTimeElement.textContent = `Last fetch: ${lastFetchTime}`;
+    }
 
     // Create a set of GPU models from the fetched data
     const fetchedGpuModels = new Set(products.map(product => product.productTitle));
@@ -56,7 +83,11 @@ export function updateStockStatus(products) {
         const priceCell = row.querySelector(".product-price");
         const linkCell = row.querySelector(".product-link");
         const skuSpan = row.querySelector(".product-sku");
+
         if (statusCell) {
+            const previousStatus = statusCell.textContent;
+
+            // Clear the status cell
             statusCell.textContent = "";
             statusCell.classList.remove("in-stock", "out-of-stock", "unknown-status");
         }
@@ -93,6 +124,9 @@ export function updateStockStatus(products) {
 
                     // Update stock status based on productAvailable
                     if (statusCell) {
+                        const previousStatus = statusCell.textContent;
+                        const currentStatus = product.productAvailable ? "In Stock" : "Out of Stock";
+
                         let stockStatus = "";
                         if (product.productAvailable === true) {
                             stockStatus = "In Stock";
@@ -100,7 +134,7 @@ export function updateStockStatus(products) {
                             statusCell.classList.add("in-stock");
 
                             // Play sound if the GPU is favourited and just came in stock
-                            if (isFavourited && statusCell.textContent !== "In Stock") {
+                            if (isFavourited && previousStatus !== "In Stock") {
                                 playNotificationSound();
                             }
                         } else if (product.productAvailable === false) {
@@ -119,7 +153,6 @@ export function updateStockStatus(products) {
                     // Update link
                     if (linkCell && product.internalLink) {
                         linkCell.innerHTML = `<a href="${product.internalLink}" target="_blank" rel="noopener noreferrer">View</a>`;
-                        // <svg class="url-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 10.5L21 3m-5 0h5v5m0 6v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>
                     }
 
                     // Update SKU
@@ -197,7 +230,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Send a message to the Web Worker to fetch data with the new locale
             if (window.fetchWorker) {
-                // console.log('Locale changed. Fetching data for:', window.currentLocale);
                 window.fetchWorker.postMessage({ type: 'fetch', locale: window.currentLocale });
             } else {
                 console.error('Fetch Worker is not initialized.');
@@ -227,4 +259,4 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Audio object for the notification sound
-let stockSound = new Audio('./sounds/notification.mp3');
+let stockSound = new Audio('./sounds/notification.mp3'); // Default sound

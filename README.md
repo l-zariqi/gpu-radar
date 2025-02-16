@@ -1,6 +1,6 @@
 # <img src="https://raw.githubusercontent.com/l-zariqi/fe-radar/main/images/favicon.svg" alt="fe-radar-icon" width="24" height="24"> GPU-Radar
 
-Stock tracker for NVIDIA GeForce Founders Edition Graphics Cards using an NVIDIA partner store API.
+GPU stock tracker and notifier for NVIDIA GeForce Founders Edition Graphics Cards using an NVIDIA partner store API.
 
 ## Supported Regions
 

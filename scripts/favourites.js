@@ -3,7 +3,8 @@ export function loadFavourites() {
     const favouriteGPUs = JSON.parse(localStorage.getItem("favouriteGPUs")) || [];
     
     document.querySelectorAll(".product-row").forEach(row => {
-        const productModel = row.querySelector(".product-model").textContent;
+        const modelNameSpan = row.querySelector(".model-name");
+        const productModel = modelNameSpan ? modelNameSpan.textContent.trim() : ""; // Use model-name
         const bellIcon = row.querySelector(".alert-icon");
 
         if (favouriteGPUs.includes(productModel)) {
@@ -30,12 +31,13 @@ document.addEventListener("click", function (event) {
 // Function to toggle favourite status
 function toggleFavourite(icon) {
     const productRow = icon.closest(".product-row");
-    const productModel = productRow.querySelector(".product-model").textContent;
+    const modelNameSpan = productRow.querySelector(".model-name");
+    const productModel = modelNameSpan ? modelNameSpan.textContent.trim() : ""; // Use model-name
 
     let favouriteGPUs = JSON.parse(localStorage.getItem("favouriteGPUs")) || [];
 
     if (favouriteGPUs.includes(productModel)) {
-        favouriteGPUs = favouriteGPUs.filter(gpu => gpu !== productModel);
+        favouriteGPUs = favouriteGPUs.filter(model => model !== productModel);
         icon.classList.add("fa-regular");
         icon.classList.remove("fa-solid");
         icon.setAttribute("data-favourite", "false");
@@ -56,7 +58,9 @@ function updateDimmedRows() {
     const productRows = document.querySelectorAll(".product-row");
 
     productRows.forEach(row => {
-        const productModel = row.querySelector(".product-model").textContent;
+        const modelNameSpan = row.querySelector(".model-name");
+        const productModel = modelNameSpan ? modelNameSpan.textContent.trim() : ""; // Use model-name
+
         if (favouriteGPUs.length > 0 && !favouriteGPUs.includes(productModel)) {
             row.classList.add("dimmed-row");
         } else {

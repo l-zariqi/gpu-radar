@@ -152,7 +152,7 @@ body.dark-mode th {
 }
 
 .product-row {
-    height: 80px;
+    height: 70px;
 }
 
 tr:hover {
@@ -343,12 +343,13 @@ body.dark-mode .dropdown-option.selected {
 #locale-dropdown {
     height: 42px;
     padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: white;
-    font-family: system-ui, sans-serif;
     font-size: 16px;
+    font-family: system-ui, sans-serif;
     cursor: pointer;
+    border-radius: 5px;
+    color: black;
+    background-color: white;
+    border: 1px solid #ddd;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -380,13 +381,14 @@ body.dark-mode option {
 #sound-dropdown {
     height: 42px;
     padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: white;
-    font-family: system-ui, sans-serif;
     font-size: 16px;
+    font-family: system-ui, sans-serif;
     cursor: pointer;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    color: black;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);    
 }
 
 body.dark-mode #sound-dropdown {
@@ -481,7 +483,6 @@ body.dark-mode .toggle-slider {
 }
 
 .fetch-time {
-    font-size: 0.9em;
     color: #666;
 }
 

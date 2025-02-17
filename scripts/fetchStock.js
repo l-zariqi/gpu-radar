@@ -75,7 +75,7 @@ export function updateStockStatus(products) {
     }
 
     // Create a set of GPU models from the fetched data
-    const fetchedGpuModels = new Set(products.map(product => product.productTitle));
+    const fetchedGpuModels = new Set(products.map(product => product.displayName));
 
     // Clear previous statuses, prices, and links
     gpuRows.forEach(row => {
@@ -113,8 +113,8 @@ export function updateStockStatus(products) {
                 const modelNameSpan = row.querySelector(".model-name");
                 const productModel = modelNameSpan ? modelNameSpan.textContent : "";
 
-                // Match product using the GPU model name from the API (productTitle)
-                if (productModel && product.productTitle === productModel) {
+                // Match product using the GPU model name from the API (displayName)
+                if (productModel && product.displayName === productModel) {
                     const statusCell = row.querySelector(".stock-status");
                     const priceCell = row.querySelector(".product-price");
                     const linkCell = row.querySelector(".product-link");

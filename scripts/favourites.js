@@ -22,13 +22,14 @@ function showMigrationMessage() {
     message.style.right = "20px";
     message.style.padding = "10px";
     message.style.backgroundColor = "#ffcc00";
+    message.style.color = "black"
     message.style.borderRadius = "5px";
     message.style.zIndex = "1000";
     document.body.appendChild(message);
 
     setTimeout(() => {
         message.remove();
-    }, 5000); // Remove the message after 5 seconds
+    }, 10000); // Remove the message after 5 seconds
 }
 
 // Function to load favourites from localStorage

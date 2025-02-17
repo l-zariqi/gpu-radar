@@ -9,7 +9,9 @@ GPU stock tracker and notifier for NVIDIA GeForce Founders Edition Graphics Card
 - Finland
 - France
 - Germany
+- India
 - Italy
+- Japan
 - Netherlands
 - Norway
 - Spain

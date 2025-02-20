@@ -1,5 +1,5 @@
 // Versioning system for localStorage
-const STORAGE_VERSION = "2.0"; // Increment this when you make breaking changes
+const STORAGE_VERSION = "2.0";
 
 // Function to check and update the localStorage version
 function checkStorageVersion() {
@@ -16,7 +16,7 @@ function checkStorageVersion() {
 // Function to show a migration message to the user
 function showMigrationMessage() {
     const message = document.createElement("div");
-    message.textContent = "We've updated our system. Your favourites have been reset.";
+    message.textContent = "Your favourites have been reset.";
     message.style.position = "fixed";
     message.style.bottom = "20px";
     message.style.right = "20px";
@@ -29,7 +29,7 @@ function showMigrationMessage() {
 
     setTimeout(() => {
         message.remove();
-    }, 10000); // Remove the message after 5 seconds
+    }, 10000); // Remove the message after 10 seconds
 }
 
 // Function to load favourites from localStorage

@@ -1,4 +1,4 @@
-# <img src="https://raw.githubusercontent.com/l-zariqi/fe-radar/main/images/favicon.svg" alt="fe-radar-icon" width="24" height="24"> GPU-Radar
+# <img src="https://raw.githubusercontent.com/l-zariqi/fe-radar/main/images/favicon.svg" alt="gpu-radar-icon" width="24" height="24"> GPU-Radar
 
 GPU stock tracker and notifier for NVIDIA GeForce Founders Edition Graphics Cards using an NVIDIA partner store API.
 
@@ -14,6 +14,7 @@ GPU stock tracker and notifier for NVIDIA GeForce Founders Edition Graphics Card
 - Japan
 - Netherlands
 - Norway
+- Poland
 - Spain
 - Sweden
 - United Kingdom

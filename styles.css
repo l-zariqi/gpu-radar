@@ -3,7 +3,7 @@ body {
     padding: 20px;
     display: block;
     height: auto;
-    font-family: system-ui, sans-serif;
+    font-family: 'Open Sans';
     background-color: #f8f8f8;
     transition: background-color 0.2s ease-in-out;
 }
@@ -68,7 +68,7 @@ body.dark-mode #page-guide {
 #page-guide ol li::before {
     position: absolute;
     left: 0;
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 #page-guide ol li:nth-child(1)::before {
@@ -212,23 +212,29 @@ a:hover {
 }
 
 /* Stock Status */
-.stock-status {
+/* .stock-status {
     text-align: center;
     color: white;
-}
+} */
 
 /* In Stock Status */
 .in-stock {
+    text-align: center;
+    color: white;
     background-color: #28a745;
 }
 
 /* Out of Stock Status */
 .out-of-stock {
+    text-align: center;
+    color: white;
     background-color: #dc3545;
 }
 
 /* Unknown Status */
 .unknown-status {
+    text-align: center;
+    color: white;
     background-color: #6c757d;
 }
 
@@ -237,21 +243,21 @@ a:hover {
     vertical-align: middle;
 }
 
-/* Tooltip for Unknown Status */
-.stock-status.unknown-status {
+/* Tooltip for All Stock Statuses */
+.stock-status {
     position: relative;
     cursor: help;
 }
 
-.stock-status.unknown-status::after {
-    content: "⚠️This GPU may have been delisted or the API can't find it.";
+.stock-status::after {
+    content: attr(data-tooltip); /* Use the data-tooltip attribute for content */
     position: absolute;
     top: 50%;
     left: calc(100% + 30px);
     transform: translateY(-50%);
     padding: 12px;
     border-radius: 5px;
-    font-size: 14px;
+    font-size: 0.9rem;
     white-space: normal;
     width: 200px;
     text-align: left;
@@ -261,20 +267,20 @@ a:hover {
     z-index: 100;
 }
 
-body:not(.dark-mode) .stock-status.unknown-status::after {
+body:not(.dark-mode) .stock-status::after {
     color: black;
     background-color: white;
     border: 1px solid #ddd;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-body.dark-mode .stock-status.unknown-status::after {
+body.dark-mode .stock-status::after {
     color: white;
     background-color: #181818;
     border: 1px solid #333;
 }
 
-.stock-status.unknown-status:hover::after {
+.stock-status:hover::after {
     opacity: 1;
     visibility: visible;
 }
@@ -343,8 +349,8 @@ body.dark-mode .dropdown-option.selected {
 #locale-dropdown {
     height: 42px;
     padding: 8px;
-    font-size: 16px;
-    font-family: system-ui, sans-serif;
+    font-size: 1rem;
+    font-family: 'Open Sans';
     cursor: pointer;
     border-radius: 5px;
     color: black;
@@ -381,8 +387,8 @@ body.dark-mode option {
 #sound-dropdown {
     height: 42px;
     padding: 8px;
-    font-size: 16px;
-    font-family: system-ui, sans-serif;
+    font-size: 1rem;
+    font-family: 'Open Sans';
     cursor: pointer;
     border-radius: 5px;
     color: black;

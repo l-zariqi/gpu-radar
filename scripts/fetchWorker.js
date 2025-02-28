@@ -2,7 +2,7 @@ self.addEventListener('message', (event) => {
     // console.log('Worker received message:', event.data);
 
     if (event.data.type === 'fetch') {
-        const locale = event.data.locale || 'en-gb'; // Default to 'en-gb' if no locale is provided
+        const locale = event.data.locale || 'en-gb';
 
         console.log('Fetching data for locale:', locale);
 
@@ -16,12 +16,10 @@ self.addEventListener('message', (event) => {
             })
             .then(data => {
                 console.log('Data fetched successfully:', data);
-                // Send the fetched data back to the main thread
                 self.postMessage(data);
             })
             .catch(error => {
                 console.error('Fetch error:', error);
-                // Send an empty object or error message back to the main thread
                 self.postMessage({});
             });
     }

@@ -1,6 +1,23 @@
 import { loadFavourites } from './favourites.js';
+import lastInStockTimes from './lastInStockTimes.js';
 
 window.currentLocale = localStorage.getItem("selectedLocale") || "en-gb"; // Define globally
+
+// Retrieve saved data from localStorage (if any)
+const savedLastInStockTimes = JSON.parse(localStorage.getItem("lastInStockTimes")) || {};
+Object.assign(lastInStockTimes, savedLastInStockTimes);
+
+// Function to update the last in-stock time for a specific GPU and locale
+function updateLastInStockTime(productModel, locale) {
+    const now = new Date();
+    if (!lastInStockTimes[productModel]) {
+        lastInStockTimes[productModel] = {}; // Initialize the nested object if it doesn't exist
+    }
+    lastInStockTimes[productModel][locale] = now.toLocaleString(); // Store the current date and time
+
+    // Save the updated object to localStorage
+    localStorage.setItem("lastInStockTimes", JSON.stringify(lastInStockTimes));
+}
 
 // Initialize the fetchWorker if it doesn't already exist
 if (!window.fetchWorker) {
@@ -135,6 +152,9 @@ export function updateStockStatus(products) {
                             statusCell.classList.remove("out-of-stock", "unknown-status");
                             statusCell.classList.add("in-stock");
 
+                            // Update the last in-stock time for this GPU and locale
+                            updateLastInStockTime(productModel, window.currentLocale);
+
                             // Play sound if the GPU is favourited and just came in stock
                             if (isFavourited && previousStatus !== "In Stock") {
                                 playNotificationSound();
@@ -145,6 +165,10 @@ export function updateStockStatus(products) {
                             statusCell.classList.add("out-of-stock");
                         }
                         statusCell.textContent = stockStatus;
+
+                        // Add tooltip for all statuses
+                        const lastInStockTime = lastInStockTimes[productModel]?.[window.currentLocale] || "N/A";
+                        statusCell.setAttribute("data-tooltip", `Last In Stock: ${lastInStockTime}`);
                     }
 
                     // Update price
@@ -182,6 +206,10 @@ export function updateStockStatus(products) {
             if (statusCell) {
                 statusCell.textContent = "Not Available";
                 statusCell.classList.add("unknown-status");
+
+                // Update the tooltip to show the last in-stock time for this GPU and locale
+                const lastInStockTime = lastInStockTimes[productModel]?.[window.currentLocale] || "N/A";
+                statusCell.setAttribute("data-tooltip", `Last In Stock: ${lastInStockTime}`);
             }
             if (priceCell) {
                 priceCell.textContent = "N/A";

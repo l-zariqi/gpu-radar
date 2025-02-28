@@ -1,0 +1,58 @@
+// Initialize lastInStockTimes for each GPU model and locale
+const lastInStockTimes = {
+    "NVIDIA RTX 5090": {
+        "de-at": "",
+        "da-dk": "",
+        "fi-fi": "",
+        "fr-fr": "",
+        "de-de": "",
+        "en-in": "",
+        "it-it": "",
+        "ja-jp": "",
+        "nl-nl": "",
+        "nb-no": "",
+        "pl-pl": "",
+        "es-es": "",
+        "sv-se": "",
+        "en-gb": "",
+        "en-us": "",
+    },
+    "NVIDIA RTX 5080": {
+        "de-at": "",
+        "da-dk": "",
+        "fi-fi": "",
+        "fr-fr": "",
+        "de-de": "",
+        "en-in": "",
+        "it-it": "",
+        "ja-jp": "",
+        "nl-nl": "",
+        "nb-no": "",
+        "pl-pl": "",
+        "es-es": "",
+        "sv-se": "",
+        "en-gb": "",
+        "en-us": "",
+    },
+    "NVIDIA RTX 5070": {
+        "de-at": "",
+        "da-dk": "",
+        "fi-fi": "",
+        "fr-fr": "",
+        "de-de": "",
+        "en-in": "",
+        "it-it": "",
+        "ja-jp": "",
+        "nl-nl": "",
+        "nb-no": "",
+        "pl-pl": "",
+        "es-es": "",
+        "sv-se": "",
+        "en-gb": "",
+        "en-us": "",
+    },
+    
+};
+
+
+export default lastInStockTimes;

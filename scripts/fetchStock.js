@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // Function to format the last fetched time
 function formatLastFetchTime() {
     const now = new Date();
-    return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }); // Format: 03:45:00 PM
+    return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 }
 
 let lastFetchTime = null; // Track the last fetch time globally
@@ -291,4 +291,4 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Audio object for the notification sound
-let stockSound = new Audio('./sounds/notification.mp3'); // Default sound
+let stockSound = new Audio('./sounds/notification.mp3');

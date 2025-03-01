@@ -3,7 +3,7 @@ body {
     padding: 20px;
     display: block;
     height: auto;
-    font-family: 'Open Sans';
+    font-family: 'Open Sans', sans-serif;
     background-color: #f8f8f8;
     transition: background-color 0.2s ease-in-out;
 }
@@ -250,7 +250,7 @@ a:hover {
 }
 
 .stock-status::after {
-    content: attr(data-tooltip); /* Use the data-tooltip attribute for content */
+    content: attr(data-tooltip);
     position: absolute;
     top: 50%;
     left: calc(100% + 30px);
@@ -350,7 +350,7 @@ body.dark-mode .dropdown-option.selected {
     height: 42px;
     padding: 8px;
     font-size: 1rem;
-    font-family: 'Open Sans';
+    font-family: 'Open Sans', sans-serif;
     cursor: pointer;
     border-radius: 5px;
     color: black;
@@ -388,7 +388,7 @@ body.dark-mode option {
     height: 42px;
     padding: 8px;
     font-size: 1rem;
-    font-family: 'Open Sans';
+    font-family: 'Open Sans', sans-serif;
     cursor: pointer;
     border-radius: 5px;
     color: black;

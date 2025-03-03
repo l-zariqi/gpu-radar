@@ -611,9 +611,15 @@ body.dark-mode #theme-toggle:hover {
 #github-link {
     width: 36px;
     height: auto;
+    fill: #666;
 }
 
-body.dark-mode #github-link {
+#github-link:hover {
+    fill: black;
+    transition: 0.2s;
+}
+
+body.dark-mode #github-link:hover {
     fill: white;
 }
 

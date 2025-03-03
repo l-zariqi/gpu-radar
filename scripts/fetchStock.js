@@ -7,13 +7,13 @@ window.currentLocale = localStorage.getItem("selectedLocale") || "en-gb"; // Def
 const savedLastInStockTimes = JSON.parse(localStorage.getItem("lastInStockTimes")) || {};
 Object.assign(lastInStockTimes, savedLastInStockTimes);
 
-// Function to update the last in-stock time for a specific GPU and locale
+// Update the last in-stock time for a specific GPU and locale
 function updateLastInStockTime(productModel, locale) {
     const now = new Date();
     if (!lastInStockTimes[productModel]) {
         lastInStockTimes[productModel] = {}; // Initialize the nested object if it doesn't exist
     }
-    lastInStockTimes[productModel][locale] = now.toLocaleString(); // Store the current date and time
+    lastInStockTimes[productModel][locale] = now.toLocaleString(); // Store current date and time
 
     // Save the updated object to localStorage
     localStorage.setItem("lastInStockTimes", JSON.stringify(lastInStockTimes));
@@ -31,13 +31,13 @@ if (!window.fetchWorker) {
     console.log('Fetch Worker initialized.');
 }
 
-// Function to fetch stock data (runs in the main thread)
+// Fetch stock data (main thread)
 function fetchStockData() {
     if (window.fetchWorker) {
         window.fetchWorker.postMessage({ type: 'fetch', locale: window.currentLocale });
     } else {
         console.error('Fetch Worker is not initialized.');
-        // Optionally, initialize the fetchWorker here if it's not already initialized
+        // Initialize the fetchWorker if it's not already initialized
         if (!window.fetchWorker) {
             window.fetchWorker = new Worker('./scripts/fetchWorker.js');
             window.fetchWorker.addEventListener('message', (event) => {
@@ -62,14 +62,14 @@ function fetchStockData() {
 document.addEventListener("DOMContentLoaded", function () {
     fetchStockData();
 
-    // Optionally, set an initial fetch time if needed
+    // Set an initial fetch time if needed
     const fetchTimeElement = document.getElementById("fetch-time");
     if (fetchTimeElement) {
         fetchTimeElement.textContent = `Last fetch: ${formatLastFetchTime()}`;
     }
 });
 
-// Function to format the last fetched time
+// Format the last fetched time
 function formatLastFetchTime() {
     const now = new Date();
     return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
@@ -77,7 +77,7 @@ function formatLastFetchTime() {
 
 let lastFetchTime = null; // Track the last fetch time globally
 
-// Update table data function
+// Update table data
 export function updateStockStatus(products) {
     console.log("Updating table data:", products);
     const gpuRows = document.querySelectorAll("tbody tr");
@@ -94,7 +94,7 @@ export function updateStockStatus(products) {
     // Create a set of GPU models from the fetched data
     const fetchedGpuModels = new Set(products.map(product => product.displayName));
 
-    // Clear previous statuses, prices, and links
+    // Clear previous table data
     gpuRows.forEach(row => {
         const statusCell = row.querySelector(".stock-status");
         const priceCell = row.querySelector(".product-price");
@@ -110,11 +110,11 @@ export function updateStockStatus(products) {
         }
         if (priceCell) {
             priceCell.textContent = "";
-            priceCell.style.color = ""; // Reset the color to default
+            priceCell.style.color = "";
         }
         if (linkCell) {
             linkCell.innerHTML = "";
-            linkCell.style.color = ""; // Reset the color to default
+            linkCell.style.color = "";
         }
         if (skuSpan) {
             skuSpan.textContent = "";
@@ -174,13 +174,13 @@ export function updateStockStatus(products) {
                     // Update price
                     if (priceCell && product.productPrice) {
                         priceCell.textContent = product.productPrice;
-                        priceCell.style.color = ""; // Reset the color to default
+                        priceCell.style.color = "";
                     }
 
                     // Update link
                     if (linkCell && product.internalLink) {
                         linkCell.innerHTML = `<a href="${product.internalLink}" target="_blank" rel="noopener noreferrer">View<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M5 17.59L15.59 7H9V5h10v10h-2V8.41L6.41 19z"/></svg></a>`;
-                        linkCell.style.color = ""; // Reset the color to default
+                        linkCell.style.color = "";
                     }
 
                     // Update SKU
@@ -213,7 +213,7 @@ export function updateStockStatus(products) {
             }
             if (priceCell) {
                 priceCell.textContent = "N/A";
-                priceCell.style.color = "#666"; // Set grey color for unavailable products
+                priceCell.style.color = "#666";
             }
             if (linkCell) {
                 linkCell.innerHTML = `<a href="#" style="color:#666;" rel="noopener noreferrer">N/A</a>`;
@@ -228,7 +228,7 @@ export function updateStockStatus(products) {
     loadFavourites();
 }
 
-// Function to play the notification sound for 30 seconds
+// Play the notification sound for 30 seconds
 function playNotificationSound() {
     console.log("playNotificationSound called");
 

@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const gpuRows = document.querySelectorAll("tbody tr");
     const modelHeaderText = document.getElementById("model-header-text");
 
-    // Retrieve the selected option from localStorage
+    // Retrieve selected option from localStorage
     const selectedSeries = localStorage.getItem("selectedSeries");
     if (selectedSeries) {
         const selectedOption = document.querySelector(`.dropdown-option[data-series="${selectedSeries}"]`);
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
         modelDropdown.style.display = isDropdownVisible ? "none" : "block";
     });
 
-    // Filter rows based on selected series
+    // Filter rows based on selected model series
     dropdownOptions.forEach(option => {
         option.addEventListener("click", function (event) {
             event.stopPropagation(); // Prevent document click listener from firing

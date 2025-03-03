@@ -1,7 +1,7 @@
 // Versioning system for localStorage
 const STORAGE_VERSION = "2.0";
 
-// Function to check and update the localStorage version
+// Check and update the localStorage version
 function checkStorageVersion() {
     const currentVersion = localStorage.getItem("favouriteGPUsVersion");
 
@@ -9,11 +9,11 @@ function checkStorageVersion() {
     if (currentVersion !== STORAGE_VERSION) {
         localStorage.removeItem("favouriteGPUs"); // Clear old favourites
         localStorage.setItem("favouriteGPUsVersion", STORAGE_VERSION); // Update to the new version
-        showMigrationMessage(); // Notify the user
+        showMigrationMessage(); // Notify user
     }
 }
 
-// Function to show a migration message to the user
+// Show migration message function
 function showMigrationMessage() {
     const message = document.createElement("div");
     message.textContent = "Your favourites have been reset.";
@@ -29,16 +29,16 @@ function showMigrationMessage() {
 
     setTimeout(() => {
         message.remove();
-    }, 10000); // Remove the message after 10 seconds
+    }, 10000); // Remove message after 10 seconds
 }
 
-// Function to load favourites from localStorage
+// Load favourites from localStorage
 export function loadFavourites() {
     const favouriteGPUs = JSON.parse(localStorage.getItem("favouriteGPUs")) || [];
     
     document.querySelectorAll(".product-row").forEach(row => {
         const modelNameSpan = row.querySelector(".model-name");
-        const productModel = modelNameSpan ? modelNameSpan.textContent.trim() : ""; // Use model-name
+        const productModel = modelNameSpan ? modelNameSpan.textContent.trim() : "";
         const bellIcon = row.querySelector(".alert-icon");
 
         if (favouriteGPUs.includes(productModel)) {
@@ -55,18 +55,18 @@ export function loadFavourites() {
     updateDimmedRows();
 }
 
-// Function to handle bell icon clicks using event delegation
+// Handle bell icon clicks using event delegation
 document.addEventListener("click", function (event) {
     if (event.target.classList.contains("alert-icon")) {
         toggleFavourite(event.target);
     }
 });
 
-// Function to toggle favourite status
+// Toggle favourite status function
 function toggleFavourite(icon) {
     const productRow = icon.closest(".product-row");
     const modelNameSpan = productRow.querySelector(".model-name");
-    const productModel = modelNameSpan ? modelNameSpan.textContent.trim() : ""; // Use model-name
+    const productModel = modelNameSpan ? modelNameSpan.textContent.trim() : "";
 
     let favouriteGPUs = JSON.parse(localStorage.getItem("favouriteGPUs")) || [];
 
@@ -93,7 +93,7 @@ function updateDimmedRows() {
 
     productRows.forEach(row => {
         const modelNameSpan = row.querySelector(".model-name");
-        const productModel = modelNameSpan ? modelNameSpan.textContent.trim() : ""; // Use model-name
+        const productModel = modelNameSpan ? modelNameSpan.textContent.trim() : "";
 
         if (favouriteGPUs.length > 0 && !favouriteGPUs.includes(productModel)) {
             row.classList.add("dimmed-row");
@@ -105,6 +105,6 @@ function updateDimmedRows() {
 
 // Check storage version and load favourites when the page loads
 document.addEventListener("DOMContentLoaded", function () {
-    checkStorageVersion(); // Check and update the version
-    loadFavourites(); // Load favourites
+    checkStorageVersion();
+    loadFavourites();
 });

@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
         moonIcon.style.display = "none";
     }
 
-    // Listen for system theme changes (optional)
+    // Listen for system theme changes
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
         const newColorScheme = event.matches ? "dark" : "light";
         if (newColorScheme === "dark") {

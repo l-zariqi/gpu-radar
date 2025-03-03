@@ -4,7 +4,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (closeButton && pageGuide) {
         closeButton.addEventListener("click", function () {
-            pageGuide.style.display = "none"; // Hide the page guide when the close button is clicked
+            pageGuide.style.transition = "opacity 0.5s ease";
+            pageGuide.style.opacity = "0";
+            setTimeout(function () {
+                pageGuide.style.display = "none";
+            }, 500);
         });
     }
 });

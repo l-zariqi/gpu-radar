@@ -50,7 +50,7 @@ function fetchStockData() {
         window.fetchWorker.postMessage({ type: 'fetch', locale: window.currentLocale });
     } else {
         console.error('Fetch Worker is not initialized.');
-        // Optionally, initialize the fetchWorker here if it's not already initialized
+        // Initialize the fetchWorker here if it's not already initialized
         if (!window.fetchWorker) {
             window.fetchWorker = new Worker('./scripts/fetchWorker.js');
             window.fetchWorker.addEventListener('message', (event) => {

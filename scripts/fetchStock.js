@@ -32,7 +32,7 @@ if (!window.fetchWorker) {
 }
 
 // Fetch stock data (main thread)
-function fetchStockData() {
+export function fetchStockData() {
     if (window.fetchWorker) {
         window.fetchWorker.postMessage({ type: 'fetch', locale: window.currentLocale });
     } else {

@@ -52,9 +52,8 @@
                 </select>
                 <div id="auto-refresh-toggle" class="toggle-switch">
                     <div class="toggle-text-container">
-                        <span class="toggle-text">Auto Refresh (15s)</span>
-                        <br>
-                        <span id="fetch-time" class="fetch-time"></span>
+                        <span class="toggle-text">Auto Refresh (s)</span>
+                        <input type="number" id="refresh-time-input" min="1" max="60" value="11"/>
                     </div>
                     <input type="checkbox" id="auto-refresh-checkbox" />
                     <label for="auto-refresh-checkbox" class="toggle-label">
@@ -76,6 +75,10 @@
                 </button>
             </div>
         </div>
+        <div class="fetch-time-container">
+            <span id="fetch-time" class="fetch-time"></span>
+        </div>
+        <br>
         <table>
             <thead>
                 <tr class="table-header-row">

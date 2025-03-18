@@ -1,8 +1,11 @@
+import { fetchStockData } from './fetchStock.js';
+
 let autoRefreshWorker;
 let isAutoRefreshEnabled = false;
-const countdownDuration = 15; // Countdown duration in seconds
+let countdownDuration = 11; // Default countdown duration in seconds
 let timeLeft = countdownDuration; // Track timeLeft in the main thread
 
+// Function to start the auto-refresh worker
 function startAutoRefreshWorker() {
     if (!autoRefreshWorker) {
         autoRefreshWorker = new Worker('./scripts/autoRefreshWorker.js');
@@ -13,7 +16,6 @@ function startAutoRefreshWorker() {
                 toggleText.textContent = `Auto Refresh (${data.timeLeft}s)`;
                 timeLeft = data.timeLeft; // Update timeLeft in the main thread
             } else if (data.type === 'fetch') {
-                // console.log('Countdown reached zero. Fetching data...');
                 fetchStockData();
             }
         });
@@ -21,6 +23,7 @@ function startAutoRefreshWorker() {
     }
 }
 
+// Function to stop the auto-refresh worker
 function stopAutoRefreshWorker() {
     if (autoRefreshWorker) {
         autoRefreshWorker.terminate();
@@ -29,6 +32,7 @@ function stopAutoRefreshWorker() {
     }
 }
 
+// Function to toggle auto-refresh
 function toggleAutoRefresh() {
     const autoRefreshCheckbox = document.getElementById("auto-refresh-checkbox");
     if (autoRefreshCheckbox.checked) {
@@ -44,25 +48,26 @@ function toggleAutoRefresh() {
     }
 }
 
-// Function to fetch stock data (runs in the main thread)
-function fetchStockData() {
-    if (window.fetchWorker) {
-        window.fetchWorker.postMessage({ type: 'fetch', locale: window.currentLocale });
-    } else {
-        console.error('Fetch Worker is not initialized.');
-        // Initialize the fetchWorker here if it's not already initialized
-        if (!window.fetchWorker) {
-            window.fetchWorker = new Worker('./scripts/fetchWorker.js');
-            window.fetchWorker.addEventListener('message', (event) => {
-                const data = event.data;
-                if (data && data.searchedProducts && data.searchedProducts.productDetails) {
-                    updateStockStatus(data.searchedProducts.productDetails);
-                }
-            });
-            console.log('Fetch Worker initialized in autoRefresh.js');
+// Function to handle user input for refresh time
+function handleRefreshTimeInput() {
+    const refreshTimeInput = document.getElementById("refresh-time-input");
+    refreshTimeInput.addEventListener("input", (event) => {
+        const newDuration = parseInt(event.target.value, 10);
+        if (!isNaN(newDuration) && newDuration > 0) {
+            countdownDuration = newDuration;
+            timeLeft = newDuration; // Reset timeLeft to the new duration
+            if (autoRefreshWorker && isAutoRefreshEnabled) {
+                autoRefreshWorker.postMessage({ type: 'start', duration: countdownDuration, timeLeft });
+            }
         }
-    }
+    });
 }
 
+// Initialize the refresh time input handler
+handleRefreshTimeInput();
+
+// Add event listener for the auto-refresh checkbox
 document.getElementById("auto-refresh-checkbox").addEventListener("change", toggleAutoRefresh);
+
+// Start the auto-refresh worker
 startAutoRefreshWorker();

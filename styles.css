@@ -211,12 +211,6 @@ a:hover {
     vertical-align: top;
 }
 
-/* Stock Status */
-/* .stock-status {
-    text-align: center;
-    color: white;
-} */
-
 /* In Stock Status */
 .in-stock {
     text-align: center;
@@ -356,14 +350,12 @@ body.dark-mode .dropdown-option.selected {
     color: black;
     background-color: white;
     border: 1px solid #ddd;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 body.dark-mode #locale-dropdown {
     color: white;
     background-color: #181818;
     border-color: #555;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
 #locale-dropdown:hover {
@@ -394,14 +386,12 @@ body.dark-mode option {
     color: black;
     background-color: white;
     border: 1px solid #ddd;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);    
 }
 
 body.dark-mode #sound-dropdown {
     color: white;
     background-color: #181818;
     border-color: #555;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
 #sound-dropdown:hover {
@@ -430,13 +420,11 @@ body.dark-mode option {
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 body.dark-mode .toggle-switch {
     background-color: #181818;
     border: 1px solid #555;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
 #auto-refresh-checkbox {
@@ -488,6 +476,30 @@ body.dark-mode .toggle-slider {
     background-color: #555;
 }
 
+/* Auto Refresh Timer Input */
+#refresh-time-input {
+    font-size: 1em;
+    width: 40px;
+    padding: 2px;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
+
+body.dark-mode #refresh-time-input {
+    color: white;
+    background-color: #181818;
+    border: 1px solid #555;
+}
+
+
+.fetch-time-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .fetch-time {
     font-size: 0.9em;
     color: #666;
@@ -501,7 +513,6 @@ body.dark-mode .toggle-slider {
     border-radius: 5px;
     background-color: white;
     border: 1px solid #ddd;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -512,7 +523,6 @@ body.dark-mode .toggle-slider {
 body.dark-mode #sound-test-button {
     background-color: #181818;
     border: 1px solid #555;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
 #sound-test-button #sound-icon {
@@ -538,7 +548,6 @@ body.dark-mode #sound-test-button:hover {
     color: black;
     background-color: white;
     border: 1px solid #ddd;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
     border-radius: 5px;
     padding: 5px;
@@ -555,7 +564,6 @@ body.dark-mode #sound-test-button .sound-tooltip {
     color: white;
     background-color: #181818;
     border-color: #555;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
 #sound-test-button:hover .sound-tooltip {
@@ -574,14 +582,12 @@ body.dark-mode #sound-test-button .sound-tooltip {
     border-radius: 5px;
     background-color: white;
     border: 1px solid #ddd;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     cursor: pointer;
 }
 
 body.dark-mode #theme-toggle {
     background-color: #181818;
     border: 1px solid #555;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
 #theme-toggle svg {
@@ -617,7 +623,6 @@ body.dark-mode #theme-toggle:hover {
 
 #github-link:hover {
     fill: black;
-    transition: 0.2s;
 }
 
 body.dark-mode #github-link:hover {

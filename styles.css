@@ -184,6 +184,14 @@ body.dark-mode tr:hover {
     color: gold;
 }
 
+.alert-icon.fa-bell-slash:hover {
+    color: black;
+}
+
+body.dark-mode .alert-icon.fa-bell-slash:hover {
+    color: white;
+}
+
 .dimmed-row {
     opacity: 0.5;
     transition: opacity 0.2s ease;

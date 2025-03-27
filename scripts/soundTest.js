@@ -1,5 +1,5 @@
 // Define the Audio object
-let stockSound = new Audio('./sounds/notification.mp3');
+let stockSound = new Audio('./sounds/sound1.mp3');
 
 // Log when the audio is loaded and ready to play
 stockSound.addEventListener("canplaythrough", function () {

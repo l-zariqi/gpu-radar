@@ -3,7 +3,7 @@ body {
     padding: 20px;
     display: block;
     height: auto;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
     background-color: #f8f8f8;
     transition: background-color 0.2s ease-in-out;
 }

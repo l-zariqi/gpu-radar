@@ -348,7 +348,7 @@ body.dark-mode .dropdown-option.selected {
     height: 42px;
     padding: 8px;
     font-size: 1rem;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
     cursor: pointer;
     border-radius: 5px;
     color: black;
@@ -384,7 +384,7 @@ body.dark-mode option {
     height: 42px;
     padding: 8px;
     font-size: 1rem;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
     cursor: pointer;
     border-radius: 5px;
     color: black;

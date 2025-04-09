@@ -130,8 +130,13 @@ export function updateStockStatus(products) {
 
                     // Update other cells
                     if (priceCell && product.productPrice) {
-                        priceCell.textContent = product.productPrice;
+                        // Create a temporary element to decode HTML entities
+                        const tempElement = document.createElement('div');
+                        tempElement.innerHTML = product.productPrice;
+                        // Set the decoded text content
+                        priceCell.textContent = tempElement.textContent;
                         priceCell.style.color = "";
+                        tempElement.remove();
                     }
                     if (linkCell && product.internalLink) {
                         linkCell.innerHTML = `<a href="${product.internalLink}" target="_blank" rel="noopener noreferrer">View<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M5 17.59L15.59 7H9V5h10v10h-2V8.41L6.41 19z"/></svg></a>`;

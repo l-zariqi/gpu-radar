@@ -488,7 +488,7 @@ body.dark-mode .toggle-slider {
     margin: 0 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    text-align: right;
+    text-align: center;
     font-family: 'Inter', sans-serif;
 }
 

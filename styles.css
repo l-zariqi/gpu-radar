@@ -484,11 +484,12 @@ body.dark-mode .toggle-slider {
 #refresh-time-input {
     font-size: 1em;
     width: 40px;
-    padding: 2px;
+    /* padding-left: 1em; */
     margin: 0 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    text-align: center;
+    text-align: right;
+    font-family: 'Inter', sans-serif;
 }
 
 body.dark-mode #refresh-time-input {
@@ -497,6 +498,20 @@ body.dark-mode #refresh-time-input {
     border: 1px solid #555;
 }
 
+@keyframes flash-border {
+    0% {
+      border-color: rgb(52, 199, 89);
+      box-shadow: 0 0 0 3px rgba(52, 199, 89, 0.33);
+    }
+    100% {
+      border-color: rgb(52, 199, 89, 0.33);
+      box-shadow: none;
+    }
+  }
+  
+  #refresh-time-input.flash {
+    animation: flash-border 1s;
+  }
 
 .fetch-time-container {
     display: flex;

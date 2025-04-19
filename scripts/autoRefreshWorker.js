@@ -15,19 +15,24 @@ self.addEventListener('message', (event) => {
 });
 
 function startCountdown() {
-    clearInterval(countdownInterval); // Clear any existing interval
-    countdownInterval = setInterval(() => {
-        timeLeft -= 1;
-        self.postMessage({ type: 'countdown', timeLeft });
+    clearInterval(countdownInterval);
 
-        if (timeLeft <= 0) {
+    // Immediately send the initial timeLeft before any decrement
+    self.postMessage({ type: 'countdown', timeLeft });
+
+    countdownInterval = setInterval(() => {
+        if (timeLeft > 1) {
+            timeLeft -= 1;
+            self.postMessage({ type: 'countdown', timeLeft });
+        } else {
+            self.postMessage({ type: 'countdown', timeLeft });
             self.postMessage({ type: 'fetch' });
-            timeLeft = countdownDuration; // Reset the countdown
+            timeLeft = countdownDuration;
+            self.postMessage({ type: 'countdown', timeLeft });
         }
     }, 1000);
 }
 
 function stopCountdown() {
     clearInterval(countdownInterval);
-    self.postMessage({ type: 'countdown', timeLeft }); // Send the current timeLeft back to the main thread
 }

@@ -12,8 +12,16 @@ function startAutoRefreshWorker() {
         autoRefreshWorker.addEventListener('message', (event) => {
             const data = event.data;
             if (data.type === 'countdown') {
-                const toggleText = document.querySelector(".toggle-text");
-                toggleText.textContent = `Auto Refresh (${data.timeLeft}s)`;
+                const refreshInput = document.getElementById("refresh-time-input");
+                if (isAutoRefreshEnabled && refreshInput) {
+                    refreshInput.value = data.timeLeft;
+                    refreshInput.readOnly = true;
+                
+                    // Flash effect
+                    refreshInput.classList.remove("flash"); // Reset if already applied
+                    void refreshInput.offsetWidth; // Force reflow to restart the animation
+                    refreshInput.classList.add("flash");
+                }                                                         
                 timeLeft = data.timeLeft; // Update timeLeft in the main thread
             } else if (data.type === 'fetch') {
                 fetchStockData();
@@ -35,13 +43,17 @@ function stopAutoRefreshWorker() {
 // Function to toggle auto-refresh
 function toggleAutoRefresh() {
     const autoRefreshCheckbox = document.getElementById("auto-refresh-checkbox");
+    const refreshInput = document.getElementById("refresh-time-input");
+
     if (autoRefreshCheckbox.checked) {
         isAutoRefreshEnabled = true;
+        refreshInput.readOnly = true;
         if (autoRefreshWorker) {
             autoRefreshWorker.postMessage({ type: 'start', duration: countdownDuration, timeLeft });
         }
     } else {
         isAutoRefreshEnabled = false;
+        refreshInput.readOnly = false;
         if (autoRefreshWorker) {
             autoRefreshWorker.postMessage({ type: 'stop' });
         }
@@ -62,6 +74,18 @@ function handleRefreshTimeInput() {
         }
     });
 }
+
+// Function to limit user input characters
+document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('refresh-time-input');
+    const maxLength = 2;
+  
+    input.addEventListener('input', () => {
+      if (input.value.length > maxLength) {
+        input.value = input.value.slice(0, maxLength);
+      }
+    });
+  });
 
 // Initialize the refresh time input handler
 handleRefreshTimeInput();

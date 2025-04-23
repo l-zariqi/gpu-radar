@@ -22,7 +22,7 @@ self.addEventListener('message', async (event) => {
             // 2. Process each product to get inventory status
             const results = [];
             for (const product of productData.searchedProducts.productDetails) {
-                if (!product.productSKU) continue;
+                if (product.manufacturer !== 'NVIDIA') continue;            
                 
                 try {
                     const inventoryResponse = await fetch(

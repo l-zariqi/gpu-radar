@@ -65,13 +65,18 @@ function handleRefreshTimeInput() {
     const refreshTimeInput = document.getElementById("refresh-time-input");
     refreshTimeInput.addEventListener("input", (event) => {
         const newDuration = parseInt(event.target.value, 10);
-        if (!isNaN(newDuration) && newDuration > 0) {
+        const MIN_DURATION = 5;
+        if (!isNaN(newDuration) && newDuration >= MIN_DURATION) {
             countdownDuration = newDuration;
-            timeLeft = newDuration; // Reset timeLeft to the new duration
+            timeLeft = newDuration;
             if (autoRefreshWorker && isAutoRefreshEnabled) {
                 autoRefreshWorker.postMessage({ type: 'start', duration: countdownDuration, timeLeft });
             }
-        }
+        } else if (newDuration < MIN_DURATION) {
+            refreshTimeInput.value = MIN_DURATION;
+            countdownDuration = MIN_DURATION;
+            timeLeft = MIN_DURATION;
+        }        
     });
 }
 

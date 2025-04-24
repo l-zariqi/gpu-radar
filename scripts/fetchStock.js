@@ -119,7 +119,6 @@ export function updateStockStatus(inventoryData) {
 
         const item = inventoryMap[rowModelName];
         const isFavourited = alertIcon?.getAttribute("data-favourite") === "true";
-        const previousStatus = statusCell?.textContent;
 
         // Reset cell styling
         [statusCell, priceCell, linkCell, skuSpan].forEach(cell => {
@@ -149,24 +148,25 @@ export function updateStockStatus(inventoryData) {
             return;
         }
 
-        // Update status cell with full styling
+        // Update status cell
         if (statusCell) {
             const isInStock = item.inventory?.listMap?.some(i => i.is_active === "true");
             statusCell.textContent = isInStock ? "In Stock" : "Out of Stock";
             statusCell.classList.add(isInStock ? "in-stock" : "out-of-stock");
             
+            // Update last in-stock time and play sound if favourited
             if (isInStock) {
                 updateLastInStockTime(rowModelName, window.currentLocale);
-                if (isFavourited && previousStatus !== "In Stock") {
+                if (isFavourited) {
                     playNotificationSound();
                 }
             }
-
+        
             const lastTime = lastInStockTimes[rowModelName]?.[window.currentLocale];
             statusCell.setAttribute("data-tooltip", `Last In Stock: ${formatDisplayTime(lastTime)}`);
         }
 
-        // Update price cell with full styling
+        // Update price cell
         if (priceCell) {
             if (item.productPrice) {
                 const temp = document.createElement('div');
@@ -179,7 +179,7 @@ export function updateStockStatus(inventoryData) {
             }
         }
 
-        // Update link cell with full styling
+        // Update link cell
         if (linkCell) {
             const url = item.inventory?.listMap?.[0]?.product_url || item.internalLink;
             if (url) {

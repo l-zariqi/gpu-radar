@@ -4,9 +4,9 @@ self.addEventListener('message', async (event) => {
         console.log('Fetching data for locale:', locale);
 
         try {
-            // 1. Get product data (for prices and SKUs)
+            // Get product data (for prices and SKUs)
             const productResponse = await fetch(
-                `https://api.nvidia.partners/edge/product/search?locale=${locale}&page=1&limit=12&manufacturer=NVIDIA&category=GPU`
+                `https://api.nvidia.partners/edge/product/search?page=1&limit=12&locale=${locale}&category=GPU`
             );
             
             if (!productResponse.ok) {
@@ -19,7 +19,7 @@ self.addEventListener('message', async (event) => {
                 throw new Error('No product details found');
             }
 
-            // 2. Process each product to get inventory status
+            // Process each product to get inventory status
             const results = [];
             for (const product of productData.searchedProducts.productDetails) {
                 if (product.manufacturer !== 'NVIDIA') continue;            

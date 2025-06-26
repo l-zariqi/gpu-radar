@@ -520,6 +520,7 @@ body.dark-mode #refresh-time-input {
 }
 
 .fetch-time {
+    padding: 10px;
     font-size: 0.9em;
     color: #666;
 }
@@ -651,12 +652,6 @@ body.dark-mode #github-link:hover {
 #kofi-link {
     width: 36px;
     height: auto;
-    opacity: 0.7;
-    fill: #666;
-}
-
-#kofi-link:hover {
-    opacity: 1;
 }
 
 #icon-attribution {

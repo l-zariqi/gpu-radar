@@ -16,12 +16,12 @@ function startAutoRefreshWorker() {
                 if (isAutoRefreshEnabled && refreshInput) {
                     refreshInput.value = data.timeLeft;
                     refreshInput.readOnly = true;
-                
+
                     // Flash effect
                     refreshInput.classList.remove("flash"); // Reset if already applied
                     void refreshInput.offsetWidth; // Force reflow to restart the animation
                     refreshInput.classList.add("flash");
-                }                                                         
+                }
                 timeLeft = data.timeLeft; // Update timeLeft in the main thread
             } else if (data.type === 'fetch') {
                 fetchStockData();
@@ -76,7 +76,7 @@ function handleRefreshTimeInput() {
             refreshTimeInput.value = MIN_DURATION;
             countdownDuration = MIN_DURATION;
             timeLeft = MIN_DURATION;
-        }        
+        }
     });
 }
 
@@ -84,13 +84,13 @@ function handleRefreshTimeInput() {
 document.addEventListener('DOMContentLoaded', () => {
     const input = document.getElementById('refresh-time-input');
     const maxLength = 2;
-  
+
     input.addEventListener('input', () => {
-      if (input.value.length > maxLength) {
-        input.value = input.value.slice(0, maxLength);
-      }
+        if (input.value.length > maxLength) {
+            input.value = input.value.slice(0, maxLength);
+        }
     });
-  });
+});
 
 // Initialize the refresh time input handler
 handleRefreshTimeInput();

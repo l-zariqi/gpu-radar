@@ -11,7 +11,6 @@ stockSound.addEventListener("error", function (e) {
     console.error("Error loading audio:", e);
 });
 
-// Wait for the DOM to load
 document.addEventListener("DOMContentLoaded", function () {
     const soundTestButton = document.getElementById("sound-test-button");
     const soundDropdown = document.getElementById("sound-dropdown");

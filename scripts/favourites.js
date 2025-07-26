@@ -7,9 +7,9 @@ function checkStorageVersion() {
 
     // If the version is outdated or doesn't exist, clear or migrate old data
     if (currentVersion !== STORAGE_VERSION) {
-        localStorage.removeItem("favouriteGPUs"); // Clear old favourites
-        localStorage.setItem("favouriteGPUsVersion", STORAGE_VERSION); // Update to the new version
-        showMigrationMessage(); // Notify user
+        localStorage.removeItem("favouriteGPUs");
+        localStorage.setItem("favouriteGPUsVersion", STORAGE_VERSION);
+        showMigrationMessage();
     }
 }
 
@@ -35,7 +35,7 @@ function showMigrationMessage() {
 // Load favourites from localStorage
 export function loadFavourites() {
     const favouriteGPUs = JSON.parse(localStorage.getItem("favouriteGPUs")) || [];
-    
+
     document.querySelectorAll(".product-row").forEach(row => {
         const modelNameSpan = row.querySelector(".model-name");
         const productModel = modelNameSpan ? modelNameSpan.textContent.trim() : "";

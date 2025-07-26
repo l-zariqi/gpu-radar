@@ -8,13 +8,13 @@ self.addEventListener('message', async (event) => {
             const productResponse = await fetch(
                 `https://api.nvidia.partners/edge/product/search?page=1&limit=12&locale=${locale}&category=GPU`
             );
-            
+
             if (!productResponse.ok) {
                 throw new Error(`Product API failed: ${productResponse.statusText}`);
             }
-            
+
             const productData = await productResponse.json();
-            
+
             if (!productData?.searchedProducts?.productDetails) {
                 throw new Error('No product details found');
             }
@@ -22,15 +22,15 @@ self.addEventListener('message', async (event) => {
             // Process each product to get inventory status
             const results = [];
             for (const product of productData.searchedProducts.productDetails) {
-                if (product.manufacturer !== 'NVIDIA') continue;            
-                
+                if (product.manufacturer !== 'NVIDIA') continue;
+
                 try {
                     const inventoryResponse = await fetch(
                         `https://api.store.nvidia.com/partner/v1/feinventory?status=1&skus=${product.productSKU}&locale=${locale}`
                     );
-                    
-                    const inventoryData = inventoryResponse.ok 
-                        ? await inventoryResponse.json() 
+
+                    const inventoryData = inventoryResponse.ok
+                        ? await inventoryResponse.json()
                         : null;
 
                     results.push({

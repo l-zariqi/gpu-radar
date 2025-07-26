@@ -4,7 +4,7 @@ import lastInStockTimes from './lastInStockTimes.js';
 window.currentLocale = localStorage.getItem("selectedLocale") || "en-gb";
 let isLocaleChanging = false;
 
-// Helper function to format display time
+// Format display time
 function formatDisplayTime(isoString) {
     if (!isoString) return "N/A";
     const date = new Date(isoString);
@@ -71,8 +71,8 @@ function showLoadingSpinners() {
         cells.forEach(cell => {
             if (cell) {
                 cell.innerHTML = spinnerHTML;
-                cell.style.color = ""; // Reset to default
-                cell.className = cell.className.split(' ')[0]; // Keep base class
+                cell.style.color = "";
+                cell.className = cell.className.split(' ')[0];
             }
         });
     });
@@ -123,7 +123,7 @@ export function updateStockStatus(inventoryData) {
         // Reset cell styling
         [statusCell, priceCell, linkCell, skuSpan].forEach(cell => {
             if (cell) {
-                cell.className = cell.className.split(' ')[0]; // Keep base class
+                cell.className = cell.className.split(' ')[0];
                 cell.style.color = "";
             }
         });

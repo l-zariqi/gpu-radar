@@ -652,6 +652,20 @@ body.dark-mode #github-link:hover {
 #kofi-link {
     width: 36px;
     height: auto;
+    cursor: pointer;
+    filter: grayscale(100%);
+}
+
+#kofi-link:hover {
+    filter: none
+}
+
+body.dark-mode #kofi-link {
+    filter: grayscale(100%) brightness(50%);
+}
+
+body.dark-mode #kofi-link:hover {
+    filter: none;
 }
 
 #icon-attribution {

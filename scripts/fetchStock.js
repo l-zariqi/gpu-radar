@@ -67,7 +67,7 @@ function showLoadingSpinners() {
             row.querySelector(".product-price"),
             row.querySelector(".product-link")
         ];
-        
+
         cells.forEach(cell => {
             if (cell) {
                 cell.innerHTML = spinnerHTML;
@@ -153,7 +153,7 @@ export function updateStockStatus(inventoryData) {
             const isInStock = item.inventory?.listMap?.some(i => i.is_active === "true");
             statusCell.textContent = isInStock ? "In Stock" : "Out of Stock";
             statusCell.classList.add(isInStock ? "in-stock" : "out-of-stock");
-            
+
             // Update last in-stock time and play sound if favourited
             if (isInStock) {
                 updateLastInStockTime(rowModelName, window.currentLocale);
@@ -161,7 +161,7 @@ export function updateStockStatus(inventoryData) {
                     playNotificationSound();
                 }
             }
-        
+
             const lastTime = lastInStockTimes[rowModelName]?.[window.currentLocale];
             statusCell.setAttribute("data-tooltip", `Last In Stock: ${formatDisplayTime(lastTime)}`);
         }

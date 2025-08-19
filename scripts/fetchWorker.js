@@ -37,12 +37,11 @@ self.addEventListener('message', async (event) => {
                         displayName: product.displayName,
                         productSKU: product.productSKU,
                         productPrice: product.productPrice, // From original API
-                        internalLink: product.internalLink,  // From original API
-                        inventory: inventoryData             // From inventory API
+                        internalLink: product.internalLink, // From original API
+                        inventory: inventoryData // From inventory API
                     });
                 } catch (err) {
                     console.warn(`Error processing ${product.productSKU}:`, err);
-                    // Still include the product with basic info
                     results.push({
                         displayName: product.displayName,
                         productSKU: product.productSKU,

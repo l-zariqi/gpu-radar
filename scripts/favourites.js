@@ -18,21 +18,36 @@ function showMigrationMessage() {
     const message = document.createElement("div");
     message.textContent = "Your favourites have been reset.";
     message.style.position = "fixed";
-    message.style.bottom = "20px";
+    message.style.top = "20px";
     message.style.right = "20px";
     message.style.padding = "10px";
     message.style.backgroundColor = "#ffcc00";
-    message.style.color = "black"
+    message.style.color = "black";
     message.style.borderRadius = "5px";
     message.style.zIndex = "1000";
+
+    // Start hidden above the screen & transparent
+    message.style.transform = "translateY(-100%)";
+    message.style.opacity = "0";
+    message.style.transition = "transform 0.5s ease, opacity 0.5s ease";
+
     document.body.appendChild(message);
 
+    requestAnimationFrame(() => {
+        message.style.transform = "translateY(0)";
+        message.style.opacity = "1";
+    });
+
     setTimeout(() => {
-        message.remove();
-    }, 10000); // Remove message after 10 seconds
+        message.style.transform = "translateY(-100%)";
+        message.style.opacity = "0";
+        message.addEventListener("transitionend", () => {
+            message.remove();
+        }, { once: true });
+    }, 5000);
 }
 
-// Load favourites from localStorage
+
 export function loadFavourites() {
     const favouriteGPUs = JSON.parse(localStorage.getItem("favouriteGPUs")) || [];
 
@@ -42,12 +57,10 @@ export function loadFavourites() {
         const bellIcon = row.querySelector(".alert-icon");
 
         if (favouriteGPUs.includes(productModel)) {
-            // If the product is favourited, show the filled bell icon
             bellIcon.classList.remove("fa-bell-slash");
             bellIcon.classList.add("fa-solid", "fa-bell");
             bellIcon.setAttribute("data-favourite", "true");
         } else {
-            // If the product is not favourited, show the bell-slash icon
             bellIcon.classList.remove("fa-bell", "fa-solid");
             bellIcon.classList.add("fa-solid", "fa-bell-slash");
             bellIcon.setAttribute("data-favourite", "false");
@@ -73,13 +86,11 @@ function toggleFavourite(icon) {
     let favouriteGPUs = JSON.parse(localStorage.getItem("favouriteGPUs")) || [];
 
     if (favouriteGPUs.includes(productModel)) {
-        // If the product is already favourited, remove it and show the bell-slash icon
         favouriteGPUs = favouriteGPUs.filter(model => model !== productModel);
         icon.classList.remove("fa-bell", "fa-solid");
         icon.classList.add("fa-solid", "fa-bell-slash");
         icon.setAttribute("data-favourite", "false");
     } else {
-        // If the product is not favourited, add it and show the filled bell icon
         favouriteGPUs.push(productModel);
         icon.classList.remove("fa-bell-slash");
         icon.classList.add("fa-solid", "fa-bell");

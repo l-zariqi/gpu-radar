@@ -36,12 +36,39 @@ if (!window.fetchWorker) {
             isApiDown = false;
         } else {
             console.error('Fetch error:', event.data?.error || 'Unknown error');
+
+            const gpuRows = document.querySelectorAll("tbody tr");
+            gpuRows.forEach(row => {
+                const statusCell = row.querySelector(".stock-status");
+                const priceCell = row.querySelector(".product-price");
+                const linkCell = row.querySelector(".product-link");
+                const skuSpan = row.querySelector(".product-sku");
+
+                if (statusCell) {
+                    statusCell.textContent = "Not Available";
+                    statusCell.className = "stock-status unknown-status";
+                    statusCell.removeAttribute("data-tooltip");
+                }
+                if (priceCell) {
+                    priceCell.textContent = "N/A";
+                    priceCell.style.color = "#666";
+                }
+                if (linkCell) {
+                    linkCell.innerHTML = '<a href="#" style="color:#666;">N/A</a>';
+                }
+                if (skuSpan) {
+                    skuSpan.textContent = "SKU: N/A";
+                }
+            });
+
             if (!isApiDown) {
                 isApiDown = true;
-                playNotificationSound();
             }
-            document.getElementById("fetch-time").textContent = `Error: ${event.data?.error || 'API request failed'}`;
+
+            document.getElementById("fetch-time").textContent =
+                `Error: ${event.data?.error || 'API request failed'}`;
         }
+
         isLocaleChanging = false;
     });
 }
@@ -87,7 +114,6 @@ export function fetchStockData() {
     }
 }
 
-// Format the last fetched time
 function formatLastFetchTime() {
     const now = new Date();
     return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
@@ -220,7 +246,6 @@ function playNotificationSound() {
     playLoop();
 }
 
-// Initialize audio
 let stockSound = new Audio('./sounds/sound1.mp3');
 
 // Event listeners

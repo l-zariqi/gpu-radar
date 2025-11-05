@@ -3,6 +3,21 @@ self.addEventListener('message', async (event) => {
         const locale = event.data.locale || 'en-gb';
         console.log('Fetching data for locale:', locale);
 
+        // Helper function to safely parse JSON
+        async function safeJsonParse(response) {
+            const text = await response.text();
+            if (!text.trim().startsWith('{') && !text.trim().startsWith('[')) {
+                console.warn("Invalid JSON response (not JSON):", text.slice(0, 200));
+                return null;
+            }
+            try {
+                return JSON.parse(text);
+            } catch (err) {
+                console.warn("Failed to parse JSON:", err, "Response snippet:", text.slice(0, 200));
+                return null;
+            }
+        }
+
         try {
             // Get product data (for prices and SKUs)
             const productResponse = await fetch(
@@ -13,10 +28,10 @@ self.addEventListener('message', async (event) => {
                 throw new Error(`Product API failed: ${productResponse.statusText}`);
             }
 
-            const productData = await productResponse.json();
+            const productData = await safeJsonParse(productResponse);
 
             if (!productData?.searchedProducts?.productDetails) {
-                throw new Error('No product details found');
+                throw new Error(`No valid product details found for locale "${locale}". The API may not support this region.`);
             }
 
             // Process each product to get inventory status
@@ -30,15 +45,15 @@ self.addEventListener('message', async (event) => {
                     );
 
                     const inventoryData = inventoryResponse.ok
-                        ? await inventoryResponse.json()
+                        ? await safeJsonParse(inventoryResponse)
                         : null;
 
                     results.push({
                         displayName: product.displayName,
                         productSKU: product.productSKU,
-                        productPrice: product.productPrice, // From original API
-                        internalLink: product.internalLink, // From original API
-                        inventory: inventoryData // From inventory API
+                        productPrice: product.productPrice,
+                        internalLink: product.internalLink,
+                        inventory: inventoryData
                     });
                 } catch (err) {
                     console.warn(`Error processing ${product.productSKU}:`, err);

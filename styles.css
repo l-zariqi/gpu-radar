@@ -47,11 +47,13 @@ body.dark-mode .chart-container {
     color: #31708f;
     background-color: #d9edf7;
     border-radius: 5px;
+    border: 1px solid #31708f;
 }
 
 body.dark-mode #page-guide {
     background-color: #143a534d;
     color: #bbe4f7;
+    border: 1px solid #31708f;
 }
 
 #page-guide ol {

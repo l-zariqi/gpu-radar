@@ -239,6 +239,10 @@ a:hover {
 .in-stock {
     text-align: center;
     color: white;
+    background-color: rgb(52, 199, 89);
+}
+
+body.dark-mode .in-stock {
     background-color: #28a745;
 }
 
@@ -249,11 +253,19 @@ a:hover {
     background-color: #dc3545;
 }
 
+body.dark-mode .out-of-stock {
+    background-color: #dc3545;
+}
+
 /* Unknown Status */
 .unknown-status {
     text-align: center;
     color: white;
-    background-color: #6c757d;
+    background-color: rgba(108, 117, 125, 0.678);
+}
+
+body.dark-mode .unknown-status {
+    background-color: rgb(108, 117, 125);
 }
 
 /* Loading Spinner */
@@ -504,7 +516,6 @@ body.dark-mode .toggle-slider {
 #refresh-time-input {
     font-size: 1em;
     width: 40px;
-    /* padding-left: 1em; */
     margin: 0 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -689,6 +700,7 @@ body.dark-mode #kofi-link:hover {
 }
 
 #icon-attribution {
+    padding-top: 15px;
     display: flex;
     align-items: center;
     justify-content: center;

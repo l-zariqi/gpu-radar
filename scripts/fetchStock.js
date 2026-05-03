@@ -65,8 +65,12 @@ if (!window.fetchWorker) {
                 isApiDown = true;
             }
 
-            document.getElementById("fetch-time").textContent =
+            const fetchTimeEl = document.getElementById("fetch-time");
+
+            fetchTimeEl.textContent =
                 `Error: ${event.data?.error || 'API request failed'}`;
+
+            fetchTimeEl.classList.add("error");
         }
 
         isLocaleChanging = false;
@@ -125,7 +129,11 @@ let isApiDown = false;
 export function updateStockStatus(inventoryData) {
     const gpuRows = document.querySelectorAll("tbody tr");
     lastFetchTime = formatLastFetchTime();
-    document.getElementById("fetch-time").textContent = `Last fetch: ${lastFetchTime}`;
+    const fetchTimeEl = document.getElementById("fetch-time");
+
+    fetchTimeEl.textContent = `Last fetch: ${lastFetchTime}`;
+
+    fetchTimeEl.classList.remove("error");
 
     const inventoryMap = {};
     inventoryData.forEach(item => {

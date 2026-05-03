@@ -202,6 +202,15 @@ body.dark-mode tr:hover {
 
 .alert-icon.fa-bell {
     color: gold;
+    filter: drop-shadow(1px 0 0 goldenrod)
+            drop-shadow(-1px 0 0 goldenrod)
+            drop-shadow(0 1px 0 goldenrod)
+            drop-shadow(0 -1px 0 goldenrod);
+}
+
+body.dark-mode .alert-icon.fa-bell {
+    color: gold;
+    filter: none;
 }
 
 .alert-icon.fa-bell-slash:hover {

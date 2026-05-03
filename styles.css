@@ -44,16 +44,16 @@ body.dark-mode .chart-container {
     display: none;
     position: relative;
     padding: 10px;
-    color: #31708f;
+    color: #0078b4;
     background-color: #d9edf7;
     border-radius: 5px;
-    border: 1px solid #31708f;
+    border: 1px solid #0078b4;
 }
 
 body.dark-mode #page-guide {
     background-color: #143a534d;
     color: #bbe4f7;
-    border: 1px solid #31708f;
+    border: 1px solid #0078b4;
 }
 
 #page-guide ol {
@@ -548,12 +548,26 @@ body.dark-mode #refresh-time-input {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-bottom: 15px;
 }
 
 .fetch-time {
     padding: 10px;
     font-size: 0.9em;
     color: #666;
+}
+
+.fetch-time.error {
+    color: #c90300;
+    background-color: #f2dede;
+    border: 1px solid #c90300;
+    border-radius: 5px;
+}
+
+body.dark-mode .fetch-time.error {
+    color: #f5c6cb;
+    background-color: #4a1e224d;
+    border: 1px solid #a94442;
 }
 
 /* Sound Test Button */

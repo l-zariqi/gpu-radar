@@ -26,12 +26,6 @@ GPU stock tracker and notifier for NVIDIA GeForce Founders Edition Graphics Card
 - NVIDIA GeForce RTX 5080
 - NVIDIA GeForce RTX 5070 Ti
 - NVIDIA GeForce RTX 5070
-- NVIDIA GeForce RTX 4090
-- NVIDIA GeForce RTX 4080 SUPER
-- NVIDIA GeForce RTX 4080
-- NVIDIA GeForce RTX 4070 SUPER
-- NVIDIA GeForce RTX 4070
-- NVIDIA GeForce RTX 4060 Ti
 
 ## Guide
 

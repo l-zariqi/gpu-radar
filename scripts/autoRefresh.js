@@ -100,3 +100,4 @@ document.getElementById("auto-refresh-checkbox").addEventListener("change", togg
 
 // Start the auto-refresh worker
 startAutoRefreshWorker();
+toggleAutoRefresh();

@@ -30,7 +30,7 @@ GPU stock tracker and notifier for NVIDIA GeForce Founders Edition Graphics Card
 ## Guide
 
 - 🌍 Select a region from the dropdown
-- 🔔 Enable Notifications with the bell icons
+- 🔔 Enable Notifications with the toggle sliders
 - 🔃 Toggle Auto Refresh for automatic updates
 - 🔊 Select an alert sound from the dropdown
 - ⏰ Alerts will play for 30 seconds if a GPU is In Stock

@@ -149,10 +149,10 @@ export function updateStockStatus(inventoryData) {
         const priceCell = row.querySelector(".product-price");
         const linkCell = row.querySelector(".product-link");
         const skuSpan = row.querySelector(".product-sku");
-        const alertIcon = row.querySelector(".alert-icon");
+        const alertToggle = row.querySelector(".alert-checkbox");
 
         const item = inventoryMap[rowModelName];
-        const isFavourited = alertIcon?.getAttribute("data-favourite") === "true";
+        const isFavourited = alertToggle?.getAttribute("data-favourite") === "true";
 
         // Reset cell styling
         [statusCell, priceCell, linkCell, skuSpan].forEach(cell => {

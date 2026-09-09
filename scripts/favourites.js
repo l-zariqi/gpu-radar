@@ -54,52 +54,70 @@ export function loadFavourites() {
     document.querySelectorAll(".product-row").forEach(row => {
         const modelNameSpan = row.querySelector(".model-name");
         const productModel = modelNameSpan ? modelNameSpan.textContent.trim() : "";
-        const bellIcon = row.querySelector(".alert-icon");
+        const alertToggle = row.querySelector(".alert-checkbox");
 
         if (favouriteGPUs.includes(productModel)) {
-            setBellIcon(bellIcon, true);
+            setAlertToggle(alertToggle, true);
         } else {
-            setBellIcon(bellIcon, false);
+            setAlertToggle(alertToggle, false);
         }
     });
 
     updateDimmedRows();
 }
 
-// Handle bell icon clicks using event delegation
-document.addEventListener("click", function (event) {
-    const bellIcon = event.target.closest(".alert-icon");
-    if (bellIcon) {
-        toggleFavourite(bellIcon);
+function createAlertToggles() {
+    document.querySelectorAll(".alert-icon").forEach((alertIcon, index) => {
+        const toggleId = `alert-toggle-${index}`;
+        const alertToggle = document.createElement("input");
+        alertToggle.type = "checkbox";
+        alertToggle.id = toggleId;
+        alertToggle.className = "alert-checkbox";
+        alertToggle.setAttribute("aria-label", "Enable stock alert");
+        alertToggle.checked = alertIcon.getAttribute("data-favourite") === "true";
+
+        const toggleLabel = document.createElement("label");
+        toggleLabel.className = "toggle-label";
+        toggleLabel.htmlFor = toggleId;
+        toggleLabel.setAttribute("aria-hidden", "true");
+        toggleLabel.innerHTML = '<span class="toggle-slider"></span>';
+
+        const toggleContainer = document.createElement("div");
+        toggleContainer.className = "alert-toggle";
+        toggleContainer.append(alertToggle, toggleLabel);
+        alertIcon.replaceWith(toggleContainer);
+    });
+}
+
+// Handle alert toggle changes using event delegation
+document.addEventListener("change", function (event) {
+    if (event.target.matches(".alert-checkbox")) {
+        toggleFavourite(event.target);
     }
 });
 
-const bellPath = '<path d="M0 0h16v16H0z" fill="none" /><path fill="currentColor" d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5 5 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7c0-2.42-1.72-4.44-4.005-4.901" />';
-const bellSlashPath = '<path d="M0 0h16v16H0z" fill="none" /><path fill="currentColor" d="M5.164 14H15c-.299-.199-.557-.553-.78-1c-.9-1.8-1.22-5.12-1.22-6q0-.396-.06-.776l-.938.938c.02.708.157 2.154.457 3.58c.161.767.377 1.566.663 2.258H6.164zm5.581-9.91a4 4 0 0 0-1.948-1.01L8 2.917l-.797.161A4 4 0 0 0 4 7c0 .628-.134 2.197-.459 3.742q-.075.358-.166.718l-1.653 1.653q.03-.055.059-.113C2.679 11.2 3 7.88 3 7c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0c.942.19 1.788.645 2.457 1.284zM10 15a2 2 0 1 1-4 0zm-9.375.625a.53.53 0 0 0 .75.75l14.75-14.75a.53.53 0 0 0-.75-.75z" />';
-
-function setBellIcon(icon, isFavourite) {
-    icon.classList.toggle("is-active", isFavourite);
-    icon.classList.toggle("is-inactive", !isFavourite);
-    icon.setAttribute("data-favourite", String(isFavourite));
-    icon.innerHTML = isFavourite ? bellPath : bellSlashPath;
+function setAlertToggle(toggle, isFavourite) {
+    toggle.checked = isFavourite;
+    toggle.setAttribute("data-favourite", String(isFavourite));
 }
 
 // Toggle favourite status function
-function toggleFavourite(icon) {
-    const productRow = icon.closest(".product-row");
+function toggleFavourite(toggle) {
+    const productRow = toggle.closest(".product-row");
     const modelNameSpan = productRow.querySelector(".model-name");
     const productModel = modelNameSpan ? modelNameSpan.textContent.trim() : "";
 
     let favouriteGPUs = JSON.parse(localStorage.getItem("favouriteGPUs")) || [];
 
-    if (favouriteGPUs.includes(productModel)) {
+    if (!toggle.checked) {
         favouriteGPUs = favouriteGPUs.filter(model => model !== productModel);
-        setBellIcon(icon, false);
     } else {
-        favouriteGPUs.push(productModel);
-        setBellIcon(icon, true);
+        if (!favouriteGPUs.includes(productModel)) {
+            favouriteGPUs.push(productModel);
+        }
     }
 
+    setAlertToggle(toggle, toggle.checked);
     localStorage.setItem("favouriteGPUs", JSON.stringify(favouriteGPUs));
     updateDimmedRows();
 }
@@ -120,6 +138,10 @@ function updateDimmedRows() {
         }
     });
 }
+
+// Deferred module scripts run after the table has been parsed, so replace the
+// static placeholders before the first paint.
+createAlertToggles();
 
 // Check storage version and load favourites when the page loads
 document.addEventListener("DOMContentLoaded", function () {

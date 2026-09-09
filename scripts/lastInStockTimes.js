@@ -2,13 +2,7 @@
 const lastInStockTimes = {
     "NVIDIA RTX 5090": {},
     "NVIDIA RTX 5080": {},
-    "NVIDIA RTX 5070": {},
-    "NVIDIA RTX 4090": {},
-    "NVIDIA RTX 4080 SUPER": {},
-    "NVIDIA RTX 4080": {},
-    "NVIDIA RTX 4070 SUPER": {},
-    "NVIDIA RTX 4070": {},
-    "NVIDIA RTX 4060 Ti": {}
+    "NVIDIA RTX 5070": {}
 };
 
 // Load saved data from localStorage (if any)

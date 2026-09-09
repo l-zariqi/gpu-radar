@@ -2,8 +2,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const modelHeader = document.querySelector(".model-header");
     const modelDropdown = document.getElementById("model-dropdown");
     const dropdownOptions = document.querySelectorAll(".dropdown-option");
+    document.querySelectorAll(".product-row").forEach(row => {
+        const modelName = row.querySelector(".model-name")?.textContent || "";
+        if (modelName.includes("RTX 40")) {
+            row.remove();
+        }
+    });
     const gpuRows = document.querySelectorAll("tbody tr");
     const modelHeaderText = document.getElementById("model-header-text");
+    const modelChevron = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m4 9l8 8l8-8" /></svg>';
 
     // Retrieve selected option from localStorage
     const selectedSeries = localStorage.getItem("selectedSeries");
@@ -55,11 +62,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // Function to update the model header text
     function updateModelHeaderText(selectedSeries) {
         if (selectedSeries === "all") {
-            modelHeaderText.innerHTML = `Model <i class="fa-solid fa-chevron-down"></i>`;
-        } else if (selectedSeries === "4000") {
-            modelHeaderText.innerHTML = `40 Series <i class="fa-solid fa-chevron-down"></i>`;
+            modelHeaderText.innerHTML = `Model ${modelChevron}`;
         } else if (selectedSeries === "5000") {
-            modelHeaderText.innerHTML = `50 Series <i class="fa-solid fa-chevron-down"></i>`;
+            modelHeaderText.innerHTML = `50 Series ${modelChevron}`;
         }
     }
 
@@ -70,7 +75,6 @@ document.addEventListener("DOMContentLoaded", function () {
             if (modelCell) {
                 const modelText = modelCell.textContent;
                 if (selectedSeries === "all" ||
-                    (selectedSeries === "4000" && modelText.includes("40")) ||
                     (selectedSeries === "5000" && modelText.includes("50"))) {
                     row.style.display = "";
                 } else {

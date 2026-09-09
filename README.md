@@ -2,6 +2,8 @@
 
 GPU stock tracker and notifier for NVIDIA GeForce Founders Edition Graphics Cards using an NVIDIA partner store API.
 
+Available here: https://l-zariqi.github.io/gpu-radar/
+
 ## Supported Regions
 
 - Austria

@@ -4,6 +4,13 @@ import lastInStockTimes from './lastInStockTimes.js';
 window.currentLocale = localStorage.getItem("selectedLocale") || "en-gb";
 let isLocaleChanging = false;
 
+function updateNvidiaStoreLink(locale) {
+    const nvidiaStoreLink = document.getElementById("nvidia-store-link");
+    if (nvidiaStoreLink) {
+        nvidiaStoreLink.href = `https://marketplace.nvidia.com/${locale}/consumer/graphics-cards/?locale=${locale}&manufacturer=NVIDIA`;
+    }
+}
+
 // Format display time
 function formatDisplayTime(isoString) {
     if (!isoString) return "N/A";
@@ -258,6 +265,7 @@ let stockSound = new Audio('./sounds/sound1.mp3');
 
 // Event listeners
 document.addEventListener("DOMContentLoaded", () => {
+    updateNvidiaStoreLink(window.currentLocale);
     fetchStockData();
 
     const localeDropdown = document.getElementById("locale-dropdown");
@@ -269,6 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
             isLocaleChanging = true;
             window.currentLocale = event.target.value;
             localStorage.setItem("selectedLocale", window.currentLocale);
+            updateNvidiaStoreLink(window.currentLocale);
             fetchStockData();
         });
     }

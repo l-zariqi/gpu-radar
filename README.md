@@ -24,7 +24,6 @@ GPU stock tracker and notifier for NVIDIA GeForce Founders Edition Graphics Card
 
 - NVIDIA GeForce RTX 5090
 - NVIDIA GeForce RTX 5080
-- NVIDIA GeForce RTX 5070 Ti
 - NVIDIA GeForce RTX 5070
 
 ## Guide

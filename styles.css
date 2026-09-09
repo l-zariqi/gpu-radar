@@ -200,7 +200,7 @@ body.dark-mode tr:hover {
     color: #666;
 }
 
-.alert-icon.fa-bell {
+.alert-icon.is-active {
     color: gold;
     filter: drop-shadow(1px 0 0 goldenrod)
             drop-shadow(-1px 0 0 goldenrod)
@@ -208,16 +208,16 @@ body.dark-mode tr:hover {
             drop-shadow(0 -1px 0 goldenrod);
 }
 
-body.dark-mode .alert-icon.fa-bell {
+body.dark-mode .alert-icon.is-active {
     color: gold;
     filter: none;
 }
 
-.alert-icon.fa-bell-slash:hover {
+.alert-icon.is-inactive:hover {
     color: black;
 }
 
-body.dark-mode .alert-icon.fa-bell-slash:hover {
+body.dark-mode .alert-icon.is-inactive:hover {
     color: white;
 }
 

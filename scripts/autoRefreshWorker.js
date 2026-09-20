@@ -6,8 +6,12 @@ self.addEventListener('message', (event) => {
     const data = event.data;
 
     if (data.type === 'start') {
-        countdownDuration = data.duration;
-        timeLeft = data.timeLeft || countdownDuration; // Use preserved timeLeft if available
+        countdownDuration = Number.isFinite(data.duration) && data.duration > 0
+            ? data.duration
+            : 1;
+        timeLeft = Number.isFinite(data.timeLeft) && data.timeLeft > 0
+            ? data.timeLeft
+            : countdownDuration; // Use preserved timeLeft if available
         startCountdown();
     } else if (data.type === 'stop') {
         stopCountdown();
@@ -35,4 +39,5 @@ function startCountdown() {
 
 function stopCountdown() {
     clearInterval(countdownInterval);
+    countdownInterval = null;
 }

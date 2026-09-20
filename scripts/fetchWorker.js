@@ -1,7 +1,12 @@
+let activeController;
+
 self.addEventListener('message', async (event) => {
     if (event.data.type === 'fetch') {
         const locale = event.data.locale || 'en-gb';
         console.log('Fetching data for locale:', locale);
+        activeController?.abort();
+        activeController = new AbortController();
+        const { signal } = activeController;
 
         // Helper function to safely parse JSON
         async function safeJsonParse(response) {
@@ -21,7 +26,8 @@ self.addEventListener('message', async (event) => {
         try {
             // Get product data (for prices and SKUs)
             const productResponse = await fetch(
-                `https://api.nvidia.partners/edge/product/search?page=1&limit=12&locale=${locale}&category=GPU`
+                `https://api.nvidia.partners/edge/product/search?page=1&limit=12&locale=${encodeURIComponent(locale)}&category=GPU`,
+                { signal }
             );
 
             if (!productResponse.ok) {
@@ -34,41 +40,43 @@ self.addEventListener('message', async (event) => {
                 throw new Error(`No valid product details found for locale "${locale}". The API may not support this region.`);
             }
 
-            // Process each product to get inventory status
-            const results = [];
-            for (const product of productData.searchedProducts.productDetails) {
-                if (product.manufacturer !== 'NVIDIA') continue;
-
+            // Inventory requests are independent; run them concurrently to reduce total latency.
+            const products = productData.searchedProducts.productDetails
+                .filter(product => product.manufacturer === 'NVIDIA');
+            const results = await Promise.all(products.map(async product => {
                 try {
                     const inventoryResponse = await fetch(
-                        `https://api.store.nvidia.com/partner/v1/feinventory?status=1&skus=${product.productSKU}&locale=${locale}`
+                        `https://api.store.nvidia.com/partner/v1/feinventory?status=1&skus=${encodeURIComponent(product.productSKU)}&locale=${encodeURIComponent(locale)}`,
+                        { signal }
                     );
 
                     const inventoryData = inventoryResponse.ok
                         ? await safeJsonParse(inventoryResponse)
                         : null;
 
-                    results.push({
+                    return {
                         displayName: product.displayName,
                         productSKU: product.productSKU,
                         productPrice: product.productPrice,
                         internalLink: product.internalLink,
                         inventory: inventoryData
-                    });
+                    };
                 } catch (err) {
+                    if (err.name === 'AbortError') throw err;
                     console.warn(`Error processing ${product.productSKU}:`, err);
-                    results.push({
+                    return {
                         displayName: product.displayName,
                         productSKU: product.productSKU,
                         productPrice: product.productPrice,
                         internalLink: product.internalLink,
                         inventory: null
-                    });
+                    };
                 }
-            }
+            }));
 
             self.postMessage({ success: true, data: results });
         } catch (error) {
+            if (error.name === 'AbortError') return;
             console.error('Main fetch error:', error);
             self.postMessage({ success: false, error: error.message });
         }

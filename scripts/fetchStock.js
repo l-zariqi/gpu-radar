@@ -31,7 +31,6 @@ function updateLastInStockTime(productModel, locale) {
         lastInStockTimes[productModel] = {};
     }
     lastInStockTimes[productModel][locale] = now.toISOString();
-    localStorage.setItem("lastInStockTimes", JSON.stringify(lastInStockTimes));
 }
 
 // Initialize the fetchWorker if it doesn't already exist
@@ -137,6 +136,7 @@ export function updateStockStatus(inventoryData) {
     const gpuRows = document.querySelectorAll("tbody tr");
     lastFetchTime = formatLastFetchTime();
     const fetchTimeEl = document.getElementById("fetch-time");
+    let lastInStockTimesChanged = false;
 
     fetchTimeEl.textContent = `Last fetch: ${lastFetchTime}`;
 
@@ -198,6 +198,7 @@ export function updateStockStatus(inventoryData) {
             // Update last in-stock time and play sound if favourited
             if (isInStock) {
                 updateLastInStockTime(rowModelName, window.currentLocale);
+                lastInStockTimesChanged = true;
                 if (isFavourited) {
                     playNotificationSound();
                 }
@@ -243,6 +244,9 @@ export function updateStockStatus(inventoryData) {
         }
     });
 
+    if (lastInStockTimesChanged) {
+        localStorage.setItem("lastInStockTimes", JSON.stringify(lastInStockTimes));
+    }
     loadFavourites();
 }
 

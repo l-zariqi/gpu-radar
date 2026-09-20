@@ -4,6 +4,25 @@ let autoRefreshWorker;
 let isAutoRefreshEnabled = false;
 let countdownDuration = 11; // Default countdown duration in seconds
 let timeLeft = countdownDuration; // Track timeLeft in the main thread
+const MIN_DURATION = 5;
+const refreshInput = document.getElementById("refresh-time-input");
+const autoRefreshCheckbox = document.getElementById("auto-refresh-checkbox");
+
+function updateCountdownDisplay(value) {
+    timeLeft = value;
+
+    if (!isAutoRefreshEnabled || !refreshInput || refreshInput.value === String(value)) {
+        return;
+    }
+
+    refreshInput.value = value;
+    refreshInput.readOnly = true;
+
+    // Flash effect
+    refreshInput.classList.remove("flash");
+    void refreshInput.offsetWidth;
+    refreshInput.classList.add("flash");
+}
 
 // Function to start the auto-refresh worker
 function startAutoRefreshWorker() {
@@ -12,17 +31,7 @@ function startAutoRefreshWorker() {
         autoRefreshWorker.addEventListener('message', (event) => {
             const data = event.data;
             if (data.type === 'countdown') {
-                const refreshInput = document.getElementById("refresh-time-input");
-                if (isAutoRefreshEnabled && refreshInput) {
-                    refreshInput.value = data.timeLeft;
-                    refreshInput.readOnly = true;
-
-                    // Flash effect
-                    refreshInput.classList.remove("flash"); // Reset if already applied
-                    void refreshInput.offsetWidth; // Force reflow to restart the animation
-                    refreshInput.classList.add("flash");
-                }
-                timeLeft = data.timeLeft; // Update timeLeft in the main thread
+                updateCountdownDisplay(data.timeLeft);
             } else if (data.type === 'fetch') {
                 fetchStockData();
             }
@@ -42,12 +51,11 @@ function stopAutoRefreshWorker() {
 
 // Function to toggle auto-refresh
 function toggleAutoRefresh() {
-    const autoRefreshCheckbox = document.getElementById("auto-refresh-checkbox");
-    const refreshInput = document.getElementById("refresh-time-input");
-
     if (autoRefreshCheckbox.checked) {
         isAutoRefreshEnabled = true;
-        refreshInput.readOnly = true;
+        if (refreshInput) {
+            refreshInput.readOnly = true;
+        }
         if (autoRefreshWorker) {
             autoRefreshWorker.postMessage({ type: 'start', duration: countdownDuration, timeLeft });
         }
@@ -62,10 +70,8 @@ function toggleAutoRefresh() {
 
 // Function to handle user input for refresh time
 function handleRefreshTimeInput() {
-    const refreshTimeInput = document.getElementById("refresh-time-input");
-    refreshTimeInput.addEventListener("input", (event) => {
+    refreshInput.addEventListener("input", (event) => {
         const newDuration = parseInt(event.target.value, 10);
-        const MIN_DURATION = 5;
         if (!isNaN(newDuration) && newDuration >= MIN_DURATION) {
             countdownDuration = newDuration;
             timeLeft = newDuration;
@@ -73,7 +79,7 @@ function handleRefreshTimeInput() {
                 autoRefreshWorker.postMessage({ type: 'start', duration: countdownDuration, timeLeft });
             }
         } else if (newDuration < MIN_DURATION) {
-            refreshTimeInput.value = MIN_DURATION;
+            refreshInput.value = MIN_DURATION;
             countdownDuration = MIN_DURATION;
             timeLeft = MIN_DURATION;
         }
@@ -96,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
 handleRefreshTimeInput();
 
 // Add event listener for the auto-refresh checkbox
-document.getElementById("auto-refresh-checkbox").addEventListener("change", toggleAutoRefresh);
+autoRefreshCheckbox.addEventListener("change", toggleAutoRefresh);
 
 // Start the auto-refresh worker
 startAutoRefreshWorker();

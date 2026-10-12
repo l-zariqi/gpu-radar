@@ -1,4 +1,4 @@
-# <img src="https://raw.githubusercontent.com/l-zariqi/fe-radar/main/images/icon.png" alt="gpu-radar-icon" width="24" height="24"> GPU-Radar
+# <img src="https://raw.githubusercontent.com/l-zariqi/fe-radar/main/images/apple-touch-icon.png" alt="gpu-radar-icon" width="48" height="48"> GPU-Radar
 
 GPU stock tracker and notifier for NVIDIA GeForce Founders Edition Graphics Cards using an NVIDIA partner store API.
 
